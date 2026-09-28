@@ -8,7 +8,7 @@
   <p><strong>Tactile, hardware-grade motion primitives for React & Tailwind CSS.</strong></p>
 
   <p>
-    <a href="https://peelui.com">Live Showcase</a> ·
+    <a href="https://peel-ui.vercel.app/">Live Showcase</a> ·
     <a href="https://github.com/Killersumit/peel-ui/stargazers">Star on GitHub</a> ·
     <a href="https://x.com/Sumit1476136">Follow on X</a> ·
     <a href="#sponsors--partnerships">Sponsor</a>
@@ -29,7 +29,7 @@
   <br />
 
   <!-- Showcase Media -->
-  <a href="https://peelui.com">
+  <a href="https://peel-ui.vercel.app/">
     <img src="https://raw.githubusercontent.com/Killersumit/peel-ui/main/public/og.png" alt="Peel UI Showcase" width="100%" style="border-radius: 12px; border: 1px solid #27272a;" />
   </a>
 </div>
@@ -132,7 +132,7 @@ Support the ongoing development of open-source hardware primitives.
   <img src="https://img.shields.io/badge/Sponsor-Peel%20UI-84ff00?style=for-the-badge&logo=githubsponsors&logoColor=08090a&labelColor=18181b" alt="Sponsor Peel UI" />
 </a>
 
-*Building a developer tool, auth service, database, or cloud platform? Dedicated showcase slots on peelui.com and the GitHub repository header are available for brand placement.*
+*Building a developer tool, auth service, database, or cloud platform? Dedicated showcase slots on peel-ui.vercel.app and the GitHub repository header are available for brand placement.*
 
 - **Inquire:** [killer1191x@gmail.com](mailto:killer1191x@gmail.com)
 - **Direct message:** [@Sumit1476136 on X](https://x.com/Sumit1476136)
