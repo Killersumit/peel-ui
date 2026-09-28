@@ -1,0 +1,46 @@
+# Peel UI
+> Tactile, hardware-grade motion primitives for React 19 and Tailwind CSS. Built on damped kinematic spring physics, Web Audio synthesis, and zero render-throttled GPU motion values.
+
+Peel UI provides copy-paste React primitives that treat digital interfaces like machined physical equipment. It uses the remote shadcn registry architecture so components can be added directly via the CLI without compiled npm package bloat.
+
+- Website: https://peelui.com
+- GitHub: https://github.com/Killersumit/peel-ui
+- Registry Index: https://peelui.com/r/index.json
+- Full Technical Specification: https://peelui.com/llms-full.txt
+
+## Core Primitives Catalog
+
+- [Voice Pill](https://peelui.com/components/voice-pill): Dynamic audio capsule with live Web Audio API AnalyserNode frequency canvas, slide-to-cancel physics, and simulated syllable fallback.
+- [Peel Card](https://peelui.com/components/peel-card): Interactive card surface featuring an elastic folded corner that peels back on hover or drag to reveal underlying code and telemetry.
+- [Slide to Confirm](https://peelui.com/components/slide-to-confirm): Mechanical verification trigger with friction drag, magnetic pull pocket at 78%, and kinetic end-stop recoil.
+- [Magnetic Split Button](https://peelui.com/components/magnetic-split-button): Dual-half action capsule with proximity separation, physical spring detachment, and latching.
+- [Tactile PIN Field](https://peelui.com/components/tactile-pin-field): Auth input chassis with a floating lens focus frame, mechanical layout glide, and tumbler micro-springs.
+- [Privacy Shutter](https://peelui.com/components/privacy-shutter): Security key shroud with spring-loaded physical peek slider, detent latching, and clipboard copy.
+
+## Installation Architecture (shadcn CLI)
+
+All primitives are standalone TypeScript modules that install directly into your project:
+
+```bash
+npx shadcn@latest add https://peelui.com/r/voice-pill.json
+npx shadcn@latest add https://peelui.com/r/peel-card.json
+npx shadcn@latest add https://peelui.com/r/slide-to-confirm.json
+npx shadcn@latest add https://peelui.com/r/magnetic-split-button.json
+npx shadcn@latest add https://peelui.com/r/tactile-otp-input.json
+npx shadcn@latest add https://peelui.com/r/privacy-shutter.json
+```
+
+## Core Requirements
+
+- React 18 or React 19
+- Tailwind CSS v3.4+ or v4.0
+- Motion (`motion` or `framer-motion`)
+- Lucide React (`lucide-react`)
+- Utilities: `clsx`, `tailwind-merge`
+
+## Design & Engineering Directives
+
+- Surface Tones: Obsidian `#101216`, Canvas `#08090a`, Structural Hairline `#232730`
+- Accents: Acid Lime `#84ff00`, Warm Coral `#ff553e`
+- Motion: Physical springs ($k=500, c=35, m=0.8$) instead of linear ease curves.
+- Zero AI Slop: No generic radial background glows, no blurry glassmorphism, no emojis in UI.

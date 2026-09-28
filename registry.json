@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "peel-ui",
+  "description": "A calm, spacious React component library and shadcn registry.",
+  "homepage": "https://peelui.dev",
+  "items": [
+    {
+      "name": "folder",
+      "type": "registry:ui",
+      "title": "3D Folder",
+      "description": "High-craft 3D interactive folder with spring-tilted front flap and layered fanning cards.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/folder.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/folder.tsx"
+        }
+      ]
+    },
+    {
+      "name": "voice-pill",
+      "type": "registry:ui",
+      "title": "Voice Pill",
+      "description": "Tactile expanding voice memo pill with live audio FFT waveform, slide-to-cancel physics, and hardware mic capture.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/voice-pill.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/voice-pill.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slide-to-confirm",
+      "type": "registry:ui",
+      "title": "Slide to Confirm",
+      "description": "Tactile slide-to-confirm track with spring recoil, dynamic constraints, and matte progress feedback.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/slide-to-confirm.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/slide-to-confirm.tsx"
+        }
+      ]
+    },
+    {
+      "name": "magnetic-split-button",
+      "type": "registry:ui",
+      "title": "Magnetic Split Button",
+      "description": "Tactile split action button with magnetic separation physics, spring recoil, and integrated dropdown menu.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/magnetic-split-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/magnetic-split-button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tactile-otp-input",
+      "type": "registry:ui",
+      "title": "Tactile OTP Input",
+      "description": "Tactile verification input with a spring-loaded floating lens focus frame, digit tumblers, and full mobile support.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tactile-otp-input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tactile-otp-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "privacy-shutter",
+      "type": "registry:ui",
+      "title": "Privacy Shutter",
+      "description": "Tactile mechanical privacy shutter primitive for sensitive credential concealment, spring peek, and latch detent.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/privacy-shutter.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/privacy-shutter.tsx"
+        }
+      ]
+    }
+  ]
+}

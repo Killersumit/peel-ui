@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   PEEL UI — Design Token Foundation
+   Palette: Folded Ribbon (Obsidian, Zinc, Acid Lime, Warm Coral)
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Canvas & Surfaces */
+  --peel-base: #08090a;
+  --peel-surface: #12141a;
+  --peel-surface-raised: #181b22;
+  --peel-surface-active: #1e2129;
+
+  /* Structural Lines */
+  --peel-border: #232730;
+  --peel-border-subtle: #1a1d24;
+  --peel-border-focus: #f5f5f7;
+
+  /* Typography */
+  --peel-text-primary: #f5f5f7;
+  --peel-text-secondary: #8a8f98;
+  --peel-text-tertiary: #51555e;
+  --peel-text-mono: #9ea3ad;
+
+  /* Accent: Acid Lime */
+  --peel-lime: #84ff00;
+  --peel-lime-foreground: #08090a;
+  --peel-lime-muted: rgba(132, 255, 0, 0.10);
+
+  /* Accent: Warm Coral */
+  --peel-coral: #ff553e;
+  --peel-coral-foreground: #ffffff;
+  --peel-coral-muted: rgba(255, 85, 62, 0.10);
+
+  /* Semantic */
+  --peel-success: #34d399;
+  --peel-danger: #ff453a;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Tailwind v4 Theme Tokens
+   ───────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-peel-base: var(--peel-base);
+  --color-peel-surface: var(--peel-surface);
+  --color-peel-surface-raised: var(--peel-surface-raised);
+  --color-peel-surface-active: var(--peel-surface-active);
+
+  --color-peel-border: var(--peel-border);
+  --color-peel-border-subtle: var(--peel-border-subtle);
+
+  --color-peel-text-primary: var(--peel-text-primary);
+  --color-peel-text-secondary: var(--peel-text-secondary);
+  --color-peel-text-tertiary: var(--peel-text-tertiary);
+  --color-peel-text-mono: var(--peel-text-mono);
+
+  --color-peel-lime: var(--peel-lime);
+  --color-peel-lime-foreground: var(--peel-lime-foreground);
+  --color-peel-lime-muted: var(--peel-lime-muted);
+
+  --color-peel-coral: var(--peel-coral);
+  --color-peel-coral-foreground: var(--peel-coral-foreground);
+  --color-peel-coral-muted: var(--peel-coral-muted);
+
+  --color-peel-success: var(--peel-success);
+  --color-peel-danger: var(--peel-danger);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Global Resets
+   ───────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--peel-base);
+  color: var(--peel-text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Smooth scrolling with a11y respect */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--peel-lime-muted);
+  color: var(--peel-text-primary);
+}
+
+/* Focus ring override: structural, not decorative */
+:focus-visible {
+  outline: 1px solid var(--peel-lime);
+  outline-offset: 2px;
+}
