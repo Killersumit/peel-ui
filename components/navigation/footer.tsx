@@ -87,8 +87,8 @@ export function Footer() {
 
         {/* ── Row 2: Sub-Floor Metadata ── */}
         <div className="flex items-center justify-between pt-4 border-t border-zinc-900 font-mono text-[10px] text-zinc-600">
-          <span>PEEL_UI // HARDWARE PRIMITIVES</span>
-          <span>MIT LICENSE · 2026</span>
+          <span>Peel UI · Tactile Primitives</span>
+          <span>MIT License · 2026</span>
           <button
             type="button"
             onClick={scrollToTop}

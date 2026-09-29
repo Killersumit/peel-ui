@@ -58,15 +58,19 @@ export function TactileOtpInput({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawVal = e.target.value.replace(/\D/g, "").slice(0, length);
-    const newValues = Array.from({ length }, (_, i) => rawVal[i] || "");
-    setValues(newValues);
+    const rawVal = e.target.value.replace(/\D/g, "");
+    const chars = rawVal.slice(0, length).split("");
+    const padded = Array(length)
+      .fill("")
+      .map((_, i) => chars[i] || "");
 
-    const nextIndex = Math.min(rawVal.length, length - 1);
+    setValues(padded);
+
+    const nextIndex = Math.min(chars.length, length - 1);
     setActiveIndex(nextIndex);
 
-    if (rawVal.length === length) {
-      onComplete?.(rawVal);
+    if (chars.length === length && onComplete) {
+      onComplete(chars.join(""));
     }
   };
 
@@ -116,7 +120,7 @@ export function TactileOtpInput({
         aria-label="Verification PIN code"
       />
 
-      {/* ── 4 Clean, High-Contrast Slot Squircles (Neutral Carbon / Zero Blue) ── */}
+      {/* ── 4 Clean, High-Contrast Slot Squircles ── */}
       {values.map((digit, index) => {
         const isActive = isFocused && activeIndex === index;
         const isFilled = Boolean(digit);
@@ -134,7 +138,7 @@ export function TactileOtpInput({
                 : "bg-[#101010] border border-[#222222]"
             )}
           >
-            {/* Numeral Display (High-Contrast White, Zero Tint) */}
+            {/* Numeral Display */}
             <AnimatePresence mode="popLayout" initial={false}>
               {digit && (
                 <motion.span

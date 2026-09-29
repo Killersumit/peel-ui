@@ -79,7 +79,7 @@ export function Hero() {
           className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-3 py-1 font-mono text-[11px] text-zinc-400 tracking-wider uppercase mb-5 sm:mb-6 backdrop-blur-sm"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#84ff00] animate-pulse" />
-          <span>PUBLIC REGISTRY // 2026</span>
+          <span>Public Registry · 2026</span>
         </motion.div>
 
         {/* Headline: Responsive Text with Overflow-Hidden Line Mask Reveal */}
@@ -165,7 +165,7 @@ export function Hero() {
 
           {/* Action Button: Full width on mobile, inline on desktop */}
           <Link
-            href="#components"
+            href="/components"
             className="whitespace-nowrap rounded-full bg-[#84ff00] px-5 py-2 text-xs font-semibold text-black hover:bg-[#96ff26] active:scale-95 transition-all w-full sm:w-auto text-center flex items-center justify-center shadow-sm shrink-0"
           >
             Explore Components ↗

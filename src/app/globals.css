@@ -73,10 +73,15 @@
 /* ─────────────────────────────────────────────────────────────
    Global Resets
    ───────────────────────────────────────────────────────────── */
+html {
+  text-size-adjust: 100%;
+}
+
 body {
   background-color: var(--peel-base);
   color: var(--peel-text-primary);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Smooth scrolling with a11y respect */

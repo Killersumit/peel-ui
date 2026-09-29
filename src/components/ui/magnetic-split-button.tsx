@@ -123,10 +123,10 @@ export function MagneticSplitButton({
         whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
         animate={{
           x: isSeparated ? -4 : 0,
-          borderTopRightRadius: isSeparated ? 9999 : 0,
-          borderBottomRightRadius: isSeparated ? 9999 : 0,
-          borderTopLeftRadius: 9999,
-          borderBottomLeftRadius: 9999,
+          borderTopRightRadius: isSeparated ? "9999px" : "0px",
+          borderBottomRightRadius: isSeparated ? "9999px" : "0px",
+          borderTopLeftRadius: "9999px",
+          borderBottomLeftRadius: "9999px",
         }}
         transition={springPhysics}
         className={cn(
@@ -198,10 +198,10 @@ export function MagneticSplitButton({
         whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
         animate={{
           x: isSeparated ? 4 : 0,
-          borderTopLeftRadius: isSeparated ? 9999 : 0,
-          borderBottomLeftRadius: isSeparated ? 9999 : 0,
-          borderTopRightRadius: 9999,
-          borderBottomRightRadius: 9999,
+          borderTopLeftRadius: isSeparated ? "9999px" : "0px",
+          borderBottomLeftRadius: isSeparated ? "9999px" : "0px",
+          borderTopRightRadius: "9999px",
+          borderBottomRightRadius: "9999px",
           scale: isChevronHovered && !shouldReduceMotion ? 1.05 : 1,
         }}
         transition={springPhysics}

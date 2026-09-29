@@ -6,11 +6,15 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 const siteConfig = {
@@ -115,14 +119,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full dark antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full dark`}
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
       <head>
         <JsonLd type="website" />
       </head>
-      <body className="min-h-screen bg-[#08090a] text-[#f5f5f7] antialiased selection:bg-[#84ff00] selection:text-black">
+      <body className="min-h-screen bg-[#08090a] text-[#f5f5f7] selection:bg-[#84ff00] selection:text-black">
         {/* Skip to Content Link (Vercel Accessibility Guideline) */}
         <a
           href="#main-content"

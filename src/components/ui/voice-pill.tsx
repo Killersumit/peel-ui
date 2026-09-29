@@ -567,10 +567,9 @@ export const VoicePill = forwardRef<HTMLButtonElement, VoicePillProps>(function 
       {/* 3. Slide to Cancel Indicator */}
       {slideToCancel && (
         <span
-          className="pointer-events-none absolute z-10 flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider opacity-0 transition-opacity"
+          className="pointer-events-none absolute z-10 flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider transition-opacity opacity-[var(--vp-cancel,0)]"
           style={{
             right: `${size + 8}px`,
-            opacity: "var(--vp-cancel, 0)",
             color: stopColor,
           }}
         >

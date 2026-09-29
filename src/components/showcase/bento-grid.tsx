@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SlideToConfirm } from "@/components/ui/slide-to-confirm";
 import { MagneticSplitButton } from "@/components/ui/magnetic-split-button";
@@ -42,7 +43,7 @@ export function BentoGrid() {
       <div className="text-center mb-14">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-3 py-1 font-mono text-[11px] text-zinc-400 tracking-[0.1em] uppercase mb-3">
           <span className="h-1.5 w-1.5 rounded-full bg-[#84ff00]" />
-          <span>COMPONENT REGISTRY // 2026</span>
+          <span>Component Registry · 2026</span>
         </div>
         <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
           Crafted for Interaction.
@@ -108,7 +109,10 @@ export function BentoGrid() {
         </div>
 
         {/* ━━━ CARD 5 — Catalog CTA (1-col, Acid Lime) ━━━ */}
-        <div className="col-span-1 min-w-0 rounded-3xl bg-[#84ff00] p-6 flex flex-col justify-between min-h-[210px] group cursor-pointer relative overflow-hidden">
+        <Link
+          href="/components"
+          className="col-span-1 min-w-0 rounded-3xl bg-[#84ff00] p-6 flex flex-col justify-between min-h-[210px] group cursor-pointer relative overflow-hidden block"
+        >
           {/* Subtle decorative overlay */}
           <div
             aria-hidden="true"
@@ -136,7 +140,7 @@ export function BentoGrid() {
               Free and open source. Drop directly into your project.
             </p>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );

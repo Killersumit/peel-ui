@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SlideToConfirm } from "@/components/ui/slide-to-confirm";
 import { MagneticSplitButton } from "@/components/ui/magnetic-split-button";
@@ -42,7 +43,7 @@ export function BentoSection() {
       <div className="text-center mb-14">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-3 py-1 font-mono text-[11px] text-zinc-400 tracking-[0.1em] uppercase mb-3">
           <span className="h-1.5 w-1.5 rounded-full bg-[#84ff00]" />
-          <span>COMPONENT REGISTRY // 2026</span>
+          <span>Component Registry · 2026</span>
         </div>
         <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
           Crafted for Interaction.
@@ -56,7 +57,7 @@ export function BentoSection() {
       {/* ── Asymmetric 3-Column Bento Grid ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* ━━━ CARD 1 — Hero Anchor (2×2, Light Well) ━━━ */}
-        <div className="md:col-span-2 md:row-span-2 min-h-[420px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-zinc-600/50 transition-colors duration-200">
+        <div className="md:col-span-2 md:row-span-2 min-h-[420px] rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-zinc-600/50 transition-colors duration-200">
           <div className="flex-1 rounded-2xl bg-[#e8e8e8] flex items-center justify-center p-6 min-h-[360px] overflow-hidden">
             <SlideToConfirm />
           </div>
@@ -69,7 +70,7 @@ export function BentoSection() {
         </div>
 
         {/* ━━━ CARD 2 — Upper Right (1×1, Dark Well) ━━━ */}
-        <div className="col-span-1 min-h-[200px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-neutral-600/50 transition-colors duration-200 relative z-20">
+        <div className="col-span-1 min-h-[200px] rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-neutral-600/50 transition-colors duration-200 relative z-20">
           <div className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-4 min-h-[150px] relative overflow-visible">
             <MagneticSplitButton />
           </div>
@@ -108,7 +109,10 @@ export function BentoSection() {
         </div>
 
         {/* ━━━ CARD 5 — Catalog CTA (1-col, Acid Lime) ━━━ */}
-        <div className="col-span-1 min-w-0 rounded-3xl bg-[#84ff00] p-6 flex flex-col justify-between min-h-[210px] group cursor-pointer relative overflow-hidden">
+        <Link
+          href="/components"
+          className="col-span-1 min-w-0 rounded-3xl bg-[#84ff00] p-6 flex flex-col justify-between min-h-[210px] group cursor-pointer relative overflow-hidden block"
+        >
           {/* Subtle decorative overlay */}
           <div
             aria-hidden="true"
@@ -136,7 +140,7 @@ export function BentoSection() {
               Free and open source. Drop directly into your project.
             </p>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );
