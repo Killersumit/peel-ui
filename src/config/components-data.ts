@@ -5,6 +5,8 @@ import { MagneticSplitButton } from "@/components/ui/magnetic-split-button";
 import { TactileOtpInput } from "@/components/ui/tactile-otp-input";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { PrivacyShutter } from "@/components/ui/privacy-shutter";
+import { SaveStatePillDemo } from "@/components/ui/save-state-pill";
+import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -464,6 +466,74 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     usageCode: "import { PrivacyShutter } from \"@/components/ui/privacy-shutter\";\n\nexport default function PrivacyShutterDemo() {\n  return (\n    <PrivacyShutter\n      label=\"Secret API Key\"\n      apiKey=\"sk_live_994827104928peel\"\n      maskedKey=\"sk_live_••••••••7104\"\n      onCopy={(key) => console.log(\"Copied key:\", key)}\n      onToggleLock={(open) => console.log(\"Shutter open state:\", open)}\n      className=\"w-full max-w-[440px]\"\n    />\n  );\n}",
     sourceCode: "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useTransform,\n  animate,\n  useReducedMotion,\n  AnimatePresence,\n} from \"motion/react\";\nimport { Lock, Unlock, Copy, Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PrivacyShutterProps {\n  /** The sensitive key to conceal/reveal (default: \"sk_live_51M0x9F4kL2026peel\") */\n  apiKey?: string;\n  /** Masked representation shown when covered (default: \"sk_live_••••••••38f2\") */\n  maskedKey?: string;\n  /** Section label (default: \"Production Key\") */\n  label?: string;\n  /** Callback fired when key is copied */\n  onCopy?: (key: string) => void;\n  /** Callback fired when lock state toggles */\n  onToggleLock?: (isLockedOpen: boolean) => void;\n  /** Additional container styling */\n  className?: string;\n}\n\nconst DEFAULT_KEY = \"sk_live_51M0x9F4kL2026peel\";\nconst DEFAULT_MASKED = \"sk_live_••••••••38f2\";\n\nexport function PrivacyShutter({\n  apiKey = DEFAULT_KEY,\n  maskedKey = DEFAULT_MASKED,\n  label = \"Production Key\",\n  onCopy,\n  onToggleLock,\n  className,\n}: PrivacyShutterProps) {\n  const [isLockedOpen, setIsLockedOpen] = React.useState(false);\n  const [copied, setCopied] = React.useState(false);\n  const [isDragging, setIsDragging] = React.useState(false);\n  const trackRef = React.useRef<HTMLDivElement>(null);\n  const shouldReduceMotion = useReducedMotion();\n\n  // Hardware-accelerated drag coordinate (zero React state updates in the drag loop)\n  const x = useMotionValue(0);\n\n  // Dynamic travel distance: trackWidth - copyButtonArea - gripHandleWidth\n  const [maxDrag, setMaxDrag] = React.useState<number>(170);\n\n  React.useEffect(() => {\n    const el = trackRef.current;\n    if (!el) return;\n\n    const calculateBounds = () => {\n      const width = el.clientWidth;\n      // Copy button takes ~44px on right, leave ~54px grip tab visible at max drag\n      // so the user can easily pull it back shut\n      const calculatedMax = Math.max(80, width - 44 - 54);\n      setMaxDrag(calculatedMax);\n      if (isLockedOpen) {\n        x.set(calculatedMax);\n      }\n    };\n\n    calculateBounds();\n\n    const resizeObserver = new ResizeObserver(() => {\n      calculateBounds();\n    });\n\n    resizeObserver.observe(el);\n    return () => resizeObserver.disconnect();\n  }, [isLockedOpen, x]);\n\n  // Shutter label smoothly fades out as the plate moves right\n  const labelOpacity = useTransform(x, [0, 45], [1, 0]);\n\n  // Spring physics specification (strict tactile mechanical transition)\n  const springConfig = React.useMemo(\n    () => ({\n      type: \"spring\" as const,\n      stiffness: shouldReduceMotion ? 1000 : 500,\n      damping: shouldReduceMotion ? 100 : 32,\n      mass: 0.8,\n    }),\n    [shouldReduceMotion]\n  );\n\n  const snapOpen = React.useCallback(() => {\n    setIsLockedOpen(true);\n    animate(x, maxDrag, springConfig);\n    onToggleLock?.(true);\n  }, [x, maxDrag, springConfig, onToggleLock]);\n\n  const snapShut = React.useCallback(() => {\n    setIsLockedOpen(false);\n    animate(x, 0, springConfig);\n    onToggleLock?.(false);\n  }, [x, springConfig, onToggleLock]);\n\n  const toggleLock = React.useCallback(() => {\n    if (isLockedOpen) {\n      snapShut();\n    } else {\n      snapOpen();\n    }\n  }, [isLockedOpen, snapOpen, snapShut]);\n\n  const handleDragEnd = () => {\n    setIsDragging(false);\n    const currentX = x.get();\n    const threshold = maxDrag * 0.8; // 80% Latch Detent\n\n    if (currentX >= threshold) {\n      snapOpen();\n    } else {\n      snapShut();\n    }\n  };\n\n  const handleCopy = async (e: React.MouseEvent) => {\n    e.stopPropagation();\n    try {\n      if (typeof navigator !== \"undefined\" && navigator.clipboard?.writeText) {\n        await navigator.clipboard.writeText(apiKey);\n      }\n      setCopied(true);\n      onCopy?.(apiKey);\n      setTimeout(() => setCopied(false), 1500);\n    } catch {\n      setCopied(true);\n      setTimeout(() => setCopied(false), 1500);\n    }\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent) => {\n    if (e.key === \"Enter\" || e.key === \" \") {\n      e.preventDefault();\n      toggleLock();\n    } else if (e.key === \"ArrowRight\") {\n      e.preventDefault();\n      snapOpen();\n    } else if (e.key === \"ArrowLeft\" || e.key === \"Escape\") {\n      e.preventDefault();\n      snapShut();\n    }\n  };\n\n  return (\n    <div\n      className={cn(\n        \"w-full max-w-[440px] mx-auto select-none\",\n        className\n      )}\n    >\n      {/* ── Chassis Container ── */}\n      <div className=\"relative flex flex-col gap-2 p-3.5 rounded-2xl bg-[#121212]/95 border border-[#262626] shadow-inner\">\n        {/* ── Top Label Row ── */}\n        <div className=\"flex items-center justify-between px-0.5\">\n          <div className=\"flex items-center gap-1.5\">\n            <span className=\"w-1.5 h-1.5 rounded-full bg-neutral-400\" />\n            <span className=\"text-[11px] font-medium text-neutral-400 tracking-tight\">\n              {label}\n            </span>\n          </div>\n\n          {/* Quick Lock/Unlock Toggle Button */}\n          <button\n            type=\"button\"\n            onClick={toggleLock}\n            title={isLockedOpen ? \"Lock key (shut shutter)\" : \"Unlock key (open shutter)\"}\n            aria-label={isLockedOpen ? \"Lock key\" : \"Unlock key\"}\n            className=\"size-6 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#444444] flex items-center justify-center text-neutral-400 hover:text-white transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-neutral-400\"\n          >\n            {isLockedOpen ? (\n              <Unlock className=\"size-3 text-neutral-200\" />\n            ) : (\n              <Lock className=\"size-3 text-neutral-400\" />\n            )}\n          </button>\n        </div>\n\n        {/* ── Key Track & Sliding Shutter Stage ── */}\n        <div\n          ref={trackRef}\n          role=\"region\"\n          aria-label=\"API key secret track\"\n          className={cn(\n            \"relative h-11 w-full rounded-xl bg-[#09090b] border flex items-center px-1.5 overflow-hidden transition-colors duration-200\",\n            isLockedOpen ? \"border-[#3a3a3a]\" : \"border-[#222222]\"\n          )}\n        >\n          {/* ── Underlying Revealed Key Text (Base Layer) ── */}\n          <div className=\"absolute left-3.5 right-12 inset-y-0 flex items-center overflow-hidden pointer-events-none select-none\">\n            <span className=\"font-mono text-xs text-neutral-200 tracking-wider truncate select-all\">\n              {isLockedOpen || isDragging ? apiKey : maskedKey}\n            </span>\n          </div>\n\n          {/* ── The Sliding Shutter Plate (Physical Chamfered Cover) ── */}\n          <motion.div\n            role=\"slider\"\n            aria-valuemin={0}\n            aria-valuemax={100}\n            aria-valuenow={maxDrag > 0 ? Math.round((x.get() / maxDrag) * 100) : 0}\n            aria-label=\"Drag shutter to reveal key\"\n            tabIndex={0}\n            onKeyDown={handleKeyDown}\n            drag=\"x\"\n            dragConstraints={{ left: 0, right: maxDrag }}\n            dragElastic={0.05}\n            dragMomentum={false}\n            onDragStart={() => setIsDragging(true)}\n            onDragEnd={handleDragEnd}\n            onClick={() => {\n              if (isLockedOpen && !isDragging) {\n                snapShut();\n              }\n            }}\n            style={{ x }}\n            className={cn(\n              \"absolute inset-y-1 left-1 right-12 rounded-lg bg-[#1e1e1e] border border-[#3a3a3a] shadow-md flex items-center justify-between px-3 z-20 touch-none select-none outline-none focus-visible:ring-1 focus-visible:ring-neutral-400\",\n              isDragging ? \"cursor-grabbing\" : \"cursor-grab\",\n              \"before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/10\"\n            )}\n          >\n            {/* Shutter Label (Fades out when sliding) */}\n            <motion.div\n              style={{ opacity: labelOpacity }}\n              className=\"flex items-center gap-1.5 pointer-events-none select-none\"\n            >\n              <Lock className=\"size-3 text-neutral-400 shrink-0\" />\n              <span className=\"text-[10px] text-neutral-400 font-sans font-medium uppercase tracking-wider\">\n                Slide to reveal\n              </span>\n            </motion.div>\n\n            {/* Shutter Finger Grip Ribs (3 vertical etched lines) */}\n            <div\n              className=\"flex items-center gap-1 py-1 px-0.5 ml-auto pointer-events-none\"\n              title=\"Grip ribs\"\n            >\n              <div className=\"w-[1.5px] h-3.5 rounded-full bg-[#4a4a4a]\" />\n              <div className=\"w-[1.5px] h-3.5 rounded-full bg-[#4a4a4a]\" />\n              <div className=\"w-[1.5px] h-3.5 rounded-full bg-[#4a4a4a]\" />\n            </div>\n          </motion.div>\n\n          {/* ── Integrated Right Copy Action Button (Always Accessible, z-30) ── */}\n          <button\n            type=\"button\"\n            onClick={handleCopy}\n            title={copied ? \"Copied to clipboard\" : \"Copy API key\"}\n            aria-label={copied ? \"Copied\" : \"Copy API key\"}\n            className={cn(\n              \"w-8 h-8 rounded-lg bg-[#1a1a1a] border border-[#333333] hover:border-[#555555] flex items-center justify-center text-neutral-400 hover:text-white transition-all active:scale-95 ml-auto z-30 shrink-0 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-neutral-400\",\n              copied && \"border-[#84ff00]/60 text-[#84ff00] bg-[#84ff00]/10\"\n            )}\n          >\n            <AnimatePresence mode=\"wait\" initial={false}>\n              {copied ? (\n                <motion.div\n                  key=\"check\"\n                  initial={shouldReduceMotion ? { opacity: 0 } : { scale: 0.5, opacity: 0 }}\n                  animate={{ scale: 1, opacity: 1 }}\n                  exit={{ scale: 0.5, opacity: 0 }}\n                  transition={{ duration: 0.15 }}\n                >\n                  <Check className=\"size-3.5 stroke-[2.5]\" />\n                </motion.div>\n              ) : (\n                <motion.div\n                  key=\"copy\"\n                  initial={{ opacity: 0 }}\n                  animate={{ opacity: 1 }}\n                  exit={{ opacity: 0 }}\n                  transition={{ duration: 0.15 }}\n                >\n                  <Copy className=\"size-3.5\" />\n                </motion.div>\n              )}\n            </AnimatePresence>\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
     component: () => React.createElement("div", { className: "w-full flex items-center justify-center p-4" }, React.createElement(PrivacyShutter, { className: "w-full max-w-[360px]" })),
+  },
+  {
+    slug: "save-state-pill",
+    name: "Save State Pill",
+    category: "ACTIONS",
+    tagline: "A quiet toolbar status pill for document saves and sync health.",
+    description: "Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps.",
+    mechanicalDescription: "The status surface expands between six sync states with a layout spring. Saved feedback transitions to a relative timestamp after 2.5 seconds, while browser connectivity can override the supplied state.",
+    interactionType: "Spring-driven layout morphing with status transitions and relative time calculation.",
+    dependencies: ["motion/react", "lucide-react"],
+    install: {
+      npm: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      yarn: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      bun: "bunx --bun shadcn@latest add https://peelui.dev/r/save-state-pill.json"
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      yarn: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+      bun: "bunx --bun shadcn@latest add https://peelui.dev/r/save-state-pill.json"
+    },
+    props: [
+      {
+        name: "state",
+        type: "SaveState",
+        default: "\"idle\"",
+        description: "Document and synchronization state to display."
+      },
+      {
+        name: "lastSavedAt",
+        type: "Date | string | null",
+        default: "Current time",
+        description: "Timestamp used to calculate the relative saved label."
+      },
+      {
+        name: "onRetry",
+        type: "() => void",
+        default: "undefined",
+        description: "Called when the Retry action is activated."
+      },
+      {
+        name: "onReviewConflict",
+        type: "() => void",
+        default: "undefined",
+        description: "Called when the Review action is activated."
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description: "Additional classes applied to the status pill."
+      },
+      {
+        name: "interactiveDemo",
+        type: "boolean",
+        default: "false",
+        description: "Shows six state controls and lets the preview change its own state."
+      }
+    ],
+    usageSnippet: "import { SaveStatePill } from \"@/components/ui/save-state-pill\";\n\nexport function DocumentStatus() {\n  return (\n    <SaveStatePill\n      state=\"saved\"\n      lastSavedAt={new Date()}\n      onRetry={() => syncDocument()}\n      onReviewConflict={() => openConflictReview()}\n    />\n  );\n}",
+    usageCode: "import { SaveStatePill } from \"@/components/ui/save-state-pill\";\n\nexport function DocumentStatus() {\n  return (\n    <SaveStatePill\n      state=\"saved\"\n      lastSavedAt={new Date()}\n      onRetry={() => syncDocument()}\n      onReviewConflict={() => openConflictReview()}\n    />\n  );\n}",
+    sourceCode: SAVE_STATE_PILL_SOURCE,
+    component: () => React.createElement(
+      "div",
+      { className: "w-full flex items-center justify-center p-4" },
+      React.createElement(SaveStatePillDemo)
+    )
   },
 ];
 

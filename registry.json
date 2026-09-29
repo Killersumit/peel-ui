@@ -117,6 +117,26 @@
           "target": "components/ui/privacy-shutter.tsx"
         }
       ]
+    },
+    {
+      "name": "save-state-pill",
+      "type": "registry:ui",
+      "title": "Save State Pill",
+      "description": "Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/save-state-pill.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/save-state-pill.tsx"
+        }
+      ]
     }
   ]
 }

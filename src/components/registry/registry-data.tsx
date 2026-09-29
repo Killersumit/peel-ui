@@ -4,6 +4,7 @@ import { MagneticSplitButton } from "@/components/ui/magnetic-split-button";
 import { TactileOtpInput } from "@/components/ui/tactile-otp-input";
 import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { VoicePill } from "@/components/ui/voice-pill";
+import { SaveStatePill } from "@/components/ui/save-state-pill";
 
 export interface ComponentMetadata {
   name: string;
@@ -91,6 +92,21 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
         <PrivacyShutter className="w-full max-w-[320px]" />
+      </div>
+    ),
+  },
+  {
+    name: "Save State Pill",
+    slug: "save-state-pill",
+    category: "Actions",
+    description:
+      "Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps.",
+    cliCommand:
+      "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
+    theme: "dark",
+    component: () => (
+      <div className="w-full flex items-center justify-center p-2">
+        <SaveStatePill state="saved" />
       </div>
     ),
   },
