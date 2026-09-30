@@ -26,19 +26,19 @@ export async function generateMetadata({
 
   if (!comp) {
     return {
-      title: "Component Not Found | Peel UI",
+      title: "Component Not Found",
       description: "Requested Peel UI component could not be found.",
     };
   }
 
   return {
-    title: `${comp.name} | Peel UI`,
+    title: comp.name,
     description: comp.description,
     openGraph: {
       title: `${comp.name} | Peel UI Tactile Primitives`,
       description: comp.description,
       type: "website",
-      url: `https://peelui.dev/components/${comp.slug}`,
+      url: `https://peel-ui.vercel.app/components/${comp.slug}`,
     },
     twitter: {
       card: "summary_large_image",

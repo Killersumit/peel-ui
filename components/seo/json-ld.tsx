@@ -12,7 +12,7 @@ export function JsonLd({
   componentDescription,
   componentSlug,
 }: JsonLdProps) {
-  const baseUrl = "https://peelui.com";
+  const baseUrl = "https://peel-ui.vercel.app";
 
   // Base SoftwareApplication schema for the design system
   const softwareApplicationSchema = {

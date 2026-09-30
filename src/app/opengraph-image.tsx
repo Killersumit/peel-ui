@@ -111,7 +111,7 @@ export default async function OpengraphImage() {
             }}
           >
             <span style={{ color: "#84ff00" }}>$</span>
-            <span>npx shadcn add https://peelui.com/r/voice-pill.json</span>
+            <span>npx shadcn add https://peel-ui.vercel.app/r/voice-pill.json</span>
           </div>
 
           <div
@@ -121,7 +121,7 @@ export default async function OpengraphImage() {
               letterSpacing: "0.08em",
             }}
           >
-            PEELUI.COM
+            PEEL-UI.VERCEL.APP
           </div>
         </div>
       </div>

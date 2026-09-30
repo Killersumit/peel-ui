@@ -8,7 +8,10 @@
       "type": "registry:ui",
       "title": "Save State Pill",
       "description": "Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps.",
-      "dependencies": ["motion", "lucide-react"],
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -23,7 +26,10 @@
       "type": "registry:ui",
       "title": "Slide to Confirm",
       "description": "Mechanical verification trigger with friction drag and magnetic pocket.",
-      "dependencies": ["motion", "lucide-react"],
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -38,7 +44,10 @@
       "type": "registry:ui",
       "title": "Magnetic Split Button",
       "description": "Dual-half action capsule with proximity separation and latching.",
-      "dependencies": ["motion", "lucide-react"],
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -53,7 +62,9 @@
       "type": "registry:ui",
       "title": "Tactile PIN Field",
       "description": "Auth input chassis with floating lens focus frame and tumbler micro-springs.",
-      "dependencies": ["motion"],
+      "dependencies": [
+        "motion"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -68,7 +79,10 @@
       "type": "registry:ui",
       "title": "Privacy Shutter",
       "description": "Security key shroud with spring-loaded physical peek slider.",
-      "dependencies": ["motion", "lucide-react"],
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -83,7 +97,9 @@
       "type": "registry:ui",
       "title": "Voice Pill",
       "description": "Audio capsule with live Web Audio API AnalyserNode frequency canvas and slide-to-cancel physics.",
-      "dependencies": ["lucide-react"],
+      "dependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [],
       "files": [
         {

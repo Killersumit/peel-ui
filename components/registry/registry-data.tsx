@@ -23,7 +23,7 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     description:
       "Tactile slide-to-confirm track with spring recoil, dynamic constraints, and matte progress feedback.",
     cliCommand:
-      "npx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
     theme: "light",
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
@@ -41,7 +41,7 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     description:
       "Tactile split action button with magnetic separation physics, spring recoil, and integrated dropdown menu.",
     cliCommand:
-      "npx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
     theme: "dark",
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
@@ -56,7 +56,7 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     description:
       "Tactile verification input with a spring-loaded floating lens focus frame, digit tumblers, and full mobile support.",
     cliCommand:
-      "npx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
     theme: "light",
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
@@ -71,7 +71,7 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     description:
       "Tactile expanding voice memo pill with live audio FFT waveform, slide-to-cancel physics, and hardware mic capture.",
     cliCommand:
-      "npx shadcn@latest add https://peelui.dev/r/voice-pill.json",
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
     theme: "dark",
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
@@ -86,7 +86,7 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     description:
       "Tactile mechanical privacy shutter primitive for sensitive credential concealment, spring peek, and latch detent.",
     cliCommand:
-      "npx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
     theme: "dark",
     component: () => (
       <div className="w-full flex items-center justify-center p-2">

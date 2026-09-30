@@ -4,7 +4,7 @@ import * as React from "react";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { Copy, Check, Radio, Sliders } from "lucide-react";
 
-const CLI_ADD_COMMAND = "npx shadcn@latest add https://peelui.dev/r/voice-pill.json";
+const CLI_ADD_COMMAND = "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json";
 
 export function VoicePillDemo() {
   const [copied, setCopied] = React.useState(false);

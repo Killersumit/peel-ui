@@ -1,150 +1,112 @@
 <div align="center">
-  <br />
-  <img src="https://raw.githubusercontent.com/Killersumit/peel-ui/main/public/peel-logo.png" alt="Peel UI Logo" width="160" />
-  <br />
-  <br />
+  <a href="https://peel-ui.vercel.app/">
+    <img src="https://raw.githubusercontent.com/Killersumit/peel-ui/main/public/peel-logo.png" alt="Peel UI" width="144" />
+  </a>
 
   <h1>Peel UI</h1>
-  <p><strong>Tactile, hardware-grade motion primitives for React & Tailwind CSS.</strong></p>
+  <p><strong>Tactile React components, built around deliberate motion.</strong></p>
 
   <p>
-    <a href="https://peel-ui.vercel.app/">Live Showcase</a> ·
-    <a href="https://github.com/Killersumit/peel-ui/stargazers">Star on GitHub</a> ·
-    <a href="https://x.com/Sumit1476136">Follow on X</a> ·
-    <a href="#sponsors--partnerships">Sponsor</a>
+    <a href="https://peel-ui.vercel.app/">Showcase</a> ·
+    <a href="https://github.com/Killersumit/peel-ui">Source</a> ·
+    <a href="https://github.com/Killersumit/peel-ui/stargazers">Star the project</a> ·
+    <a href="https://github.com/sponsors/Killersumit">Sponsor</a>
   </p>
 
   <p>
     <a href="https://github.com/Killersumit/peel-ui/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/License-MIT-08090a?style=flat-square&color=18181b" alt="License" />
+      <img src="https://img.shields.io/badge/license-MIT-18181b?style=flat-square" alt="MIT License" />
     </a>
-    <img src="https://img.shields.io/badge/Next.js-15-08090a?style=flat-square&color=18181b" alt="Next.js" />
-    <img src="https://img.shields.io/badge/TailwindCSS-v3%2Fv4-08090a?style=flat-square&color=18181b" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/Motion-React-08090a?style=flat-square&color=84ff00&labelColor=18181b" alt="Motion" />
-    <a href="https://x.com/Sumit1476136">
-      <img src="https://img.shields.io/badge/X-@Sumit1476136-08090a?style=flat-square&color=18181b&logo=x&logoColor=ffffff" alt="Twitter/X Follow" />
-    </a>
+    <img src="https://img.shields.io/badge/Next.js-16-18181b?style=flat-square&logo=next.js&logoColor=white" alt="Next.js 16" />
+    <img src="https://img.shields.io/badge/React-19-18181b?style=flat-square&logo=react&logoColor=61dafb" alt="React 19" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4-18181b?style=flat-square&logo=tailwindcss&logoColor=38bdf8" alt="Tailwind CSS 4" />
+    <img src="https://img.shields.io/badge/Motion-13-18181b?style=flat-square" alt="Motion 13" />
   </p>
-
-  <br />
-
-  <!-- Showcase Media -->
-  <a href="https://peel-ui.vercel.app/">
-    <img src="https://raw.githubusercontent.com/Killersumit/peel-ui/main/public/og.png" alt="Peel UI Showcase" width="100%" style="border-radius: 12px; border: 1px solid #27272a;" />
-  </a>
 </div>
 
-<br />
-
-## Why Peel UI?
-
-Most modern UI registries copy the same linear CSS curves, pastel glows, and floaty cubic-bezier transitions. 
-
-**Peel UI** treats digital interfaces like machined physical hardware:
-- **Kinematic spring physics:** Damped mass, magnetic snap pockets, and mechanical detents instead of rigid ease curves.
-- **Zero render throttling:** Driven by GPU-accelerated motion values so pointer gestures never bottleneck React state.
-- **Quiet luxury aesthetic:** Matte obsidian finishes, micro-chamfered edges, and high-contrast typography. Zero AI-generated visual noise.
-- **Full ownership:** Copy, paste, and adapt the components directly inside your project like Shadcn UI.
-
 ---
 
-## Registry Primitives
+Peel UI is an open-source collection of copy-ready React components. The library focuses on tactile controls, spring-driven transitions, and clear interaction feedback. Components are installed into your project with the shadcn CLI, so you own the code and can adapt it.
 
-| Primitive | Category | Physics & Mechanics |
-| :--- | :--- | :--- |
-| **Slide to Confirm** | Action / Verification | Friction drag, magnetic pull pocket at 78%, mechanical end-stop recoil |
-| **Magnetic Split Button** | Action Pill | Dual-half separation on proximity, spring detachment, and latch |
-| **Tactile PIN Field** | Form & Auth | Floating lens focus frame with physical layout glide and tumbler micro-springs |
-| **Privacy Shutter** | Security & Secret Keys | Spring-loaded physical peek slider with detent latching and instant copy |
+## Components
 
----
+| Component | Install name | Interaction |
+| --- | --- | --- |
+| Save State Pill | `save-state-pill` | Save and sync status with offline, retry, and conflict states |
+| Slide to Confirm | `slide-to-confirm` | Friction drag with a magnetic confirmation threshold |
+| Magnetic Split Button | `magnetic-split-button` | Separated primary and secondary actions with a spring latch |
+| Tactile PIN Field | `tactile-pin-field` | Numeric authentication input with a moving focus frame |
+| Privacy Shutter | `privacy-shutter` | Drag-to-reveal control for sensitive values |
+| Voice Pill | `voice-pill` | Audio capture control with a live waveform |
 
-## Quick Start
+## Install
 
-### 1. Install Dependencies
+Every registry item supports both GitHub shorthand and the hosted JSON registry.
 
-Peel UI primitives require `motion` (or `framer-motion`), `lucide-react`, and standard Tailwind helpers:
+**GitHub shorthand**
+
+```bash
+npx shadcn@latest add Killersumit/peel-ui/save-state-pill
+```
+
+**Direct registry URL**
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json
+```
+
+Replace `save-state-pill` with any install name in the component table. For example:
+
+```bash
+npx shadcn@latest add Killersumit/peel-ui/slide-to-confirm
+npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
+```
+
+The components use Motion and, where needed, Lucide icons. Install the shared dependencies in your app:
 
 ```bash
 npm install motion lucide-react clsx tailwind-merge
-# or
-pnpm add motion lucide-react clsx tailwind-merge
-# or
-bun add motion lucide-react clsx tailwind-merge
 ```
 
-### 2. Configure Tailwind CSS
+The components that use `cn` expect the standard shadcn utility at `@/lib/utils`. If your project uses a different alias, update that import after installation.
 
-Ensure your `tailwind.config.ts` includes standard zinc palettes and the Peel brand accent:
-
-```ts
-// tailwind.config.ts
-export default {
-  theme: {
-    extend: {
-      colors: {
-        accent: '#84ff00', // Acid Lime highlight
-      },
-    },
-  },
-};
-```
-
-### 3. Add a Component
-
-Drop any primitive into your `components/ui/` folder:
+## Usage
 
 ```tsx
-import { SlideToConfirm } from "@/components/ui/slide-to-confirm";
+import { SaveStatePill } from "@/components/ui/save-state-pill";
 
-export default function Page() {
+export function DocumentStatus() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#08090a]">
-      <SlideToConfirm
-        label="Slide to deploy"
-        confirmedLabel="Executed"
-        onConfirm={() => console.log("Action confirmed")}
-      />
-    </div>
+    <SaveStatePill
+      state="saved"
+      lastSavedAt={new Date()}
+      onRetry={() => syncDocument()}
+      onReviewConflict={() => openConflictReview()}
+    />
   );
 }
 ```
 
----
+Set `state` to `idle`, `saving`, `saved`, `failed`, `offline`, or `conflict`. When the browser reports that it is offline, the pill shows the queued-changes state until connectivity returns.
 
-## Engineering Directives
+## Registry development
 
-```
-  PHYSICAL KINEMATICS       QUIET SURFACES           HARDWARE TOUCHPOINTS
-  ───────────────────       ──────────────           ────────────────────
-  Springs have mass.        No neon glows.           Detents click.
-  Rebounds have damping.    No blurry bokeh.         Buttons settle.
-  Gestures have friction.   Matte anodized tones.    Latches lock.
+The root `registry.json` is the manifest for GitHub shorthand installs. Build the hosted item files and index with:
+
+```bash
+npm run registry:build
 ```
 
----
+The script embeds each component's source into `public/r/{name}.json` and writes `public/r/index.json`. The production build runs this step before Next.js:
 
-## Sponsors & Partnerships
+```bash
+npm run build
+```
 
-Support the ongoing development of open-source hardware primitives. 
+## Sponsorships
 
-<a href="https://github.com/sponsors/Killersumit">
-  <img src="https://img.shields.io/badge/Sponsor-Peel%20UI-84ff00?style=for-the-badge&logo=githubsponsors&logoColor=08090a&labelColor=18181b" alt="Sponsor Peel UI" />
-</a>
-
-*Building a developer tool, auth service, database, or cloud platform? Dedicated showcase slots on peel-ui.vercel.app and the GitHub repository header are available for brand placement.*
-
-- **Inquire:** [killer1191x@gmail.com](mailto:killer1191x@gmail.com)
-- **Direct message:** [@Sumit1476136 on X](https://x.com/Sumit1476136)
-
----
-
-## Author & Community
-
-- Built by **Sumit** ([@Killersumit](https://github.com/Killersumit))
-- Updates & interaction clips on **[X / Twitter (@Sumit1476136)](https://x.com/Sumit1476136)**
-- Inquiries: [killer1191x@gmail.com](mailto:killer1191x@gmail.com)
+Peel UI accepts project support through [GitHub Sponsors](https://github.com/sponsors/Killersumit). For sponsorship or partnership enquiries, contact [Sumit on X](https://x.com/Sumit1476136).
 
 ## License
 
-Distributed under the [MIT License](LICENSE). Free for personal and commercial applications.
+Peel UI is distributed under the [MIT License](LICENSE).

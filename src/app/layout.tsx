@@ -22,8 +22,8 @@ const siteConfig = {
   title: "Peel UI — Tactile Motion Primitives for React",
   description:
     "Tactile, hardware-grade motion primitives for React and Tailwind CSS. Damped kinematic spring physics, magnetic detents, and real-time audio FFT telemetry.",
-  url: "https://peelui.com",
-  ogImage: "https://peelui.com/og.png",
+  url: "https://peel-ui.vercel.app",
+  ogImage: "https://peel-ui.vercel.app/og.png",
   twitterHandle: "@Sumit1476136",
   creator: "Sumit (@Killersumit)",
 };
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     "Web Audio visualizer",
     "Voice Pill React",
     "Peel Card React",
-    "Next.js 15 UI library",
+    "Next.js 16 UI library",
   ],
   alternates: {
     canonical: siteConfig.url,

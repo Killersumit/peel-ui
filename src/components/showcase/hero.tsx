@@ -7,7 +7,8 @@ import { Copy, Check } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
 const FAST_EASE = [0.16, 1, 0.3, 1] as const;
-const CLI_COMMAND = "npx shadcn@latest add peel-ui/sheet";
+const CLI_COMMAND =
+  "npx shadcn@latest add Killersumit/peel-ui/slide-to-confirm";
 
 export function Hero() {
   const [copied, setCopied] = React.useState(false);
@@ -62,7 +63,8 @@ export function Hero() {
           width={480}
           height={480}
           className="w-full h-full object-contain filter grayscale"
-          priority
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
 

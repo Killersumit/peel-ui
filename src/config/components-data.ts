@@ -55,16 +55,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Constrained linear drag track with 75% magnetic latch detent. If released below the 75% gravity threshold, high-stiffness spring recoil returns puck to origin. Reaching 75% snaps puck to lock position and triggers irreversible execution.",
     dependencies: ["motion","lucide-react","clsx","tailwind-merge"],
     install: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/slide-to-confirm.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json"
 },
     installCmd: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/slide-to-confirm.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/slide-to-confirm.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json"
 },
     props: [
       {
@@ -125,16 +125,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Conjoined rest state with central hairline divider. Hovering or opening menu induces magnetic repulsion: primary button translates -4px with pill radius morphing while chevron translates +4px with reverse morphing. Central divider dissolves.",
     dependencies: ["motion","lucide-react","clsx","tailwind-merge"],
     install: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/magnetic-split-button.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json"
 },
     installCmd: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/magnetic-split-button.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/magnetic-split-button.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json"
 },
     props: [
       {
@@ -177,16 +177,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Single hidden native input drives multi-slot visualization. A high-contrast floating lens frame glides across digit slots with layout spring physics. Digits flip into view with vertical spring tumbler transitions.",
     dependencies: ["motion","clsx","tailwind-merge"],
     install: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/tactile-otp-input.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json"
 },
     installCmd: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/tactile-otp-input.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/tactile-otp-input.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json"
 },
     props: [
       {
@@ -229,16 +229,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Compact resting pill expands horizontally over 220ms via cubic-bezier kinematics. Unfolds real-time 80-frame canvas equalizer and monospace elapsed timer. Dragging left beyond 64px triggers physical slide-to-cancel.",
     dependencies: ["lucide-react"],
     install: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/voice-pill.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json"
 },
     installCmd: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/voice-pill.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/voice-pill.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json"
 },
     props: [
       {
@@ -413,16 +413,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Sliding chamfered aluminum faceplate with tactile grip ribs. Dragging allows elastic spring-peek below 80% travel. Passing the 80% detent locks shutter open into full view with keyboard toggle support.",
     dependencies: ["motion","lucide-react","clsx","tailwind-merge"],
     install: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/privacy-shutter.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json"
 },
     installCmd: {
-      "npm": "npx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "pnpm": "pnpm dlx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "yarn": "npx shadcn@latest add https://peelui.dev/r/privacy-shutter.json",
-      "bun": "bunx --bun shadcn@latest add https://peelui.dev/r/privacy-shutter.json"
+      "npm": "npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "pnpm": "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "yarn": "npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json",
+      "bun": "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json"
 },
     props: [
       {
@@ -477,16 +477,16 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
     interactionType: "Spring-driven layout morphing with status transitions and relative time calculation.",
     dependencies: ["motion/react", "lucide-react"],
     install: {
-      npm: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      pnpm: "pnpm dlx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      yarn: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      bun: "bunx --bun shadcn@latest add https://peelui.dev/r/save-state-pill.json"
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json"
     },
     installCmd: {
-      npm: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      pnpm: "pnpm dlx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      yarn: "npx shadcn@latest add https://peelui.dev/r/save-state-pill.json",
-      bun: "bunx --bun shadcn@latest add https://peelui.dev/r/save-state-pill.json"
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json"
     },
     props: [
       {

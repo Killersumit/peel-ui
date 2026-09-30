@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://peelui.com";
+  const baseUrl = "https://peel-ui.vercel.app";
 
   return {
     rules: [
