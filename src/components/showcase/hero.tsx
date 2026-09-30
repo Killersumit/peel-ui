@@ -25,7 +25,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[85vh] flex flex-col items-center justify-center text-center border-x border-zinc-900/80 max-w-5xl mx-auto px-4 sm:px-8 pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden">
+    <section className="relative w-full min-w-0 min-h-[min(70svh,36rem)] sm:min-h-[85vh] flex flex-col items-center justify-center text-center border-x border-zinc-900/80 max-w-5xl mx-auto px-4 sm:px-8 pt-24 pb-12 sm:pt-36 sm:pb-28 overflow-hidden">
       {/* Corner Crosshair Registration Marks */}
       <span
         className="absolute top-2 left-2 text-zinc-700 font-mono text-xs select-none pointer-events-none"
@@ -85,7 +85,7 @@ export function Hero() {
         </motion.div>
 
         {/* Headline: Responsive Text with Overflow-Hidden Line Mask Reveal */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-4xl mx-auto">
+        <h1 className="text-[clamp(1.875rem,9vw,2.25rem)] sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-4xl mx-auto">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
