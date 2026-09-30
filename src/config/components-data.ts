@@ -6,7 +6,9 @@ import { TactileOtpInput } from "@/components/ui/tactile-otp-input";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { SaveStatePillDemo } from "@/components/ui/save-state-pill";
+import { FilterChipsDemo } from "@/components/demos/filter-chips-demo";
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
+import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -534,6 +536,91 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
       { className: "w-full flex items-center justify-center p-4" },
       React.createElement(SaveStatePillDemo)
     )
+  },
+  {
+    slug: "filter-chips",
+    name: "Tactile Filter Chips",
+    category: "INPUTS",
+    tagline:
+      "Hardware-inspired filters with radio selection, multi-select, and spring-bound feedback.",
+    description:
+      "A tactile filter group for issue queues and data views, with accessible single or multiple selection, live counters, and a mechanical shared-layout indicator.",
+    mechanicalDescription:
+      "Single selection moves one shared indicator between options. Multiple selection gives each chip an isolated damped spring response. Radio arrows, Home, and End move focus and selection.",
+    interactionType:
+      "Damped spring selection, shared layout morphing, and keyboard-operable radio or pressed-button states.",
+    dependencies: ["motion", "lucide-react"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+    },
+    props: [
+      {
+        name: "options",
+        type: "FilterChipOption[]",
+        required: true,
+        description:
+          "Filter options with IDs, labels, optional counts, icons, and disabled states.",
+      },
+      {
+        name: "mode",
+        type: '"single" | "multiple"',
+        default: '"single"',
+        description: "Select one filter or toggle several filters.",
+      },
+      {
+        name: "value",
+        type: "string | string[]",
+        default: "undefined",
+        description:
+          "Controlled selection; a string in single mode or a string array in multiple mode.",
+      },
+      {
+        name: "defaultValue",
+        type: "string | string[]",
+        default: "undefined",
+        description: "Initial selection for uncontrolled usage.",
+      },
+      {
+        name: "onChange",
+        type: "(value: string | string[]) => void",
+        default: "undefined",
+        description: "Called with the updated selected option ID or IDs.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Chip density.",
+      },
+      {
+        name: "showClear",
+        type: "boolean",
+        default: "false",
+        description: "Shows a Reset control when one or more filters are active.",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description: "Additional classes applied to the outer group.",
+      },
+    ],
+    usageSnippet:
+      'import { FilterChips } from "@/components/ui/filter-chips";\n\nconst filters = [\n  { id: "all", label: "All Issues" },\n  { id: "open", label: "Open", count: 14 },\n  { id: "pull-requests", label: "Pull Requests", count: 6 },\n];\n\nexport function IssueFilters() {\n  const [filter, setFilter] = React.useState("all");\n  return (\n    <FilterChips\n      options={filters}\n      value={filter}\n      onChange={(next) => {\n        if (typeof next === "string") setFilter(next);\n      }}\n      showClear\n    />\n  );\n}',
+    usageCode:
+      'import { FilterChips } from "@/components/ui/filter-chips";\n\nconst filters = [\n  { id: "all", label: "All Issues" },\n  { id: "open", label: "Open", count: 14 },\n  { id: "pull-requests", label: "Pull Requests", count: 6 },\n];\n\nexport function IssueFilters() {\n  const [filter, setFilter] = React.useState("all");\n  return (\n    <FilterChips\n      options={filters}\n      value={filter}\n      onChange={(next) => {\n        if (typeof next === "string") setFilter(next);\n      }}\n      showClear\n    />\n  );\n}',
+    sourceCode: FILTER_CHIPS_SOURCE,
+    component: () => React.createElement(FilterChipsDemo),
+    defaultSurfaceTheme: "dark",
   },
 ];
 

@@ -5,6 +5,7 @@ import { TactileOtpInput } from "@/components/ui/tactile-otp-input";
 import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { SaveStatePill } from "@/components/ui/save-state-pill";
+import { FilterChips } from "@/components/ui/filter-chips";
 
 export interface ComponentMetadata {
   name: string;
@@ -107,6 +108,29 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
     component: () => (
       <div className="w-full flex items-center justify-center p-2">
         <SaveStatePill state="saved" />
+      </div>
+    ),
+  },
+  {
+    name: "Tactile Filter Chips",
+    slug: "filter-chips",
+    category: "Inputs",
+    description:
+      "Hardware-inspired multi-select and radio filter chips with spring-bound layout morphing and tabular counters.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json",
+    theme: "dark",
+    component: () => (
+      <div className="w-full flex items-center justify-center p-2">
+        <FilterChips
+          options={[
+            { id: "all", label: "All Issues" },
+            { id: "open", label: "Open", count: 14 },
+            { id: "pull-requests", label: "Pull Requests", count: 6 },
+          ]}
+          defaultValue="all"
+          size="sm"
+        />
       </div>
     ),
   },

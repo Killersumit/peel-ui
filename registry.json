@@ -92,6 +92,20 @@
           "target": "components/ui/voice-pill.tsx"
         }
       ]
+    },
+    {
+      "name": "filter-chips",
+      "type": "registry:ui",
+      "title": "Tactile Filter Chips",
+      "description": "Hardware-inspired multi-select and radio filter chips with spring-bound layout morphing and tabular counters.",
+      "dependencies": ["motion", "lucide-react"],
+      "files": [
+        {
+          "path": "components/ui/filter-chips.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/filter-chips.tsx"
+        }
+      ]
     }
   ]
 }
