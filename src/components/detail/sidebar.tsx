@@ -2,16 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import {
   ALL_COMPONENTS,
   CATEGORIES,
   ComponentCategory,
   ComponentRecord,
 } from "@/config/components-data";
-import { springMechanical } from "@/lib/motion";
+import { microTransition, springMechanical } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+
+const MotionLink = motion.create(Link);
 
 export interface SidebarProps {
   currentSlug: string;
@@ -49,59 +52,99 @@ export function Sidebar({
   }, [isMobileOpen, onClose]);
 
   const navigation = (
-    <>
-      <div className="flex items-center justify-between px-6 pb-3 pt-20 md:pt-20">
-        <h2 className="text-sm font-medium text-zinc-200">Components</h2>
+    <div className="flex h-full min-h-0 flex-col">
+      <header className="border-b border-peel-border-subtle px-6 pb-5 pt-5">
+        <Link
+          href="/"
+          onClick={onClose}
+          className="mb-5 inline-flex items-center gap-2.5 rounded-sm text-peel-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-peel-border-focus"
+        >
+          <span className="relative size-7 overflow-hidden rounded-sm border border-peel-border bg-peel-surface">
+            <Image src="/peeluiicon.svg" alt="" fill sizes="28px" />
+          </span>
+          <span className="text-[14px] font-semibold tracking-[-0.02em]">
+            Peel UI
+          </span>
+        </Link>
+        <Link
+          href="/components"
+          onClick={onClose}
+          className="flex min-h-10 items-center gap-2 font-mono text-[11px] tracking-[0.04em] text-peel-text-secondary transition-colors hover:text-peel-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-peel-border-focus"
+        >
+          <ArrowLeft size={13} aria-hidden="true" />
+          All components
+        </Link>
+        <div className="flex items-center justify-between pt-2">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.12em] text-peel-text-mono">
+            Index
+          </h2>
         <button
           type="button"
           onClick={onClose}
           aria-label="Close component index"
-          className="inline-flex size-8 items-center justify-center border border-white/[0.08] text-zinc-400 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400 md:hidden"
+          className="inline-flex size-8 items-center justify-center text-peel-text-secondary transition-colors hover:bg-peel-surface-raised hover:text-peel-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-peel-border-focus md:hidden"
         >
           <X size={15} />
         </button>
-      </div>
+        </div>
+      </header>
       <nav
         aria-label="Component index"
-        className="flex-1 space-y-6 overflow-y-auto px-6 pb-6"
+        className="min-h-0 flex-1 overflow-y-auto px-4 pb-5 pt-4"
       >
         {CATEGORIES.map((category) => {
           const items = groupedComponents[category];
           return (
-            <section key={category} aria-labelledby={`group-${category}`}>
-              <h2
-                id={`group-${category}`}
-                className="mb-2 font-mono text-[9px] uppercase tracking-[0.14em] text-zinc-600"
+            <section
+              key={category}
+              aria-labelledby={`group-${category}`}
+              className="pb-4 pt-3 first:pt-0"
+            >
+              <div
+                className="mb-2 flex items-center justify-between border-b border-peel-border-subtle px-2 pb-2 font-mono text-[10px] uppercase tracking-[0.12em] text-peel-text-mono"
               >
-                {category}
-              </h2>
+                <h2 id={`group-${category}`}>{category}</h2>
+                <span aria-label={`${items.length} components`}>
+                  {String(items.length).padStart(2, "0")}
+                </span>
+              </div>
               <ul className="space-y-1">
                 {items.map((component) => {
                   const active = component.slug === currentSlug;
+                  const index = ALL_COMPONENTS.findIndex(
+                    (entry) => entry.slug === component.slug
+                  ) + 1;
                   return (
                     <li key={component.slug}>
-                      <Link
+                      <MotionLink
+                        transition={shouldReduceMotion ? { duration: 0 } : microTransition}
+                        whileHover={
+                          shouldReduceMotion
+                            ? undefined
+                            : { backgroundColor: "var(--peel-surface-raised)" }
+                        }
                         href={`/components/${component.slug}`}
                         onClick={onClose}
                         aria-current={active ? "page" : undefined}
                         className={cn(
-                          "group flex min-h-8 items-center gap-2 font-sans text-[13px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400",
+                          "relative flex min-h-10 items-center gap-3 px-2 font-sans text-[13px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-peel-border-focus",
                           active
-                            ? "text-white"
-                            : "text-zinc-500 hover:text-zinc-200"
+                            ? "text-peel-text-primary"
+                            : "text-peel-text-secondary hover:text-peel-text-primary"
                         )}
                       >
                         <span
                           aria-hidden="true"
-                          className={cn(
-                            "size-1 shrink-0 rounded-full",
-                            active ? "bg-lime-400" : "bg-zinc-700 group-hover:bg-zinc-500"
-                          )}
+                          className="absolute inset-y-1 left-0 w-0.5 bg-peel-lime"
+                          style={{ opacity: active ? 1 : 0 }}
                         />
+                        <span className="w-5 shrink-0 font-mono text-[10px] tabular-nums text-peel-text-mono">
+                          {String(index).padStart(2, "0")}
+                        </span>
                         <span className="min-w-0 truncate">
                           {component.name}
                         </span>
-                      </Link>
+                      </MotionLink>
                     </li>
                   );
                 })}
@@ -110,7 +153,18 @@ export function Sidebar({
           );
         })}
       </nav>
-    </>
+      <footer className="flex items-center justify-between border-t border-peel-border-subtle px-6 py-4 font-mono text-[10px] tracking-[0.06em] text-peel-text-mono">
+        <Link
+          href="https://github.com/killersumit/peel-ui"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-sm transition-colors hover:text-peel-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-peel-border-focus"
+        >
+          GitHub
+        </Link>
+        <span>v0.1.0</span>
+      </footer>
+    </div>
   );
 
   return (
@@ -122,7 +176,7 @@ export function Sidebar({
         aria-hidden={!isOpen}
         inert={!isOpen}
         className={cn(
-          "hidden h-full shrink-0 overflow-hidden border-r border-white/[0.08] bg-[#0c0c0e] md:flex md:flex-col",
+          "hidden h-full shrink-0 overflow-hidden border-r border-peel-border md:flex md:flex-col",
           !isOpen && "pointer-events-none border-r-0"
         )}
       >
@@ -150,7 +204,7 @@ export function Sidebar({
               animate={{ x: 0 }}
               exit={{ x: shouldReduceMotion ? 0 : "-100%" }}
               transition={shouldReduceMotion ? { duration: 0 } : springMechanical}
-              className="relative z-10 flex h-full w-[min(19rem,86vw)] flex-col border-r border-white/[0.08] bg-[#0c0c0e]"
+              className="relative z-10 flex h-full w-[min(19rem,86vw)] flex-col border-r border-peel-border bg-[#0c0c0e]"
             >
               {navigation}
             </motion.aside>
