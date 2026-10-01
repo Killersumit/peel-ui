@@ -40,8 +40,8 @@ function DeferredPreview({
     if (!preview) return;
 
     if (!("IntersectionObserver" in window)) {
-      setIsNearViewport(true);
-      return;
+      const timeoutId = window.setTimeout(() => setIsNearViewport(true), 0);
+      return () => window.clearTimeout(timeoutId);
     }
 
     const observer = new IntersectionObserver(
