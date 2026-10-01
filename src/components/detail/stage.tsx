@@ -14,15 +14,18 @@ import {
 import { motion, useReducedMotion } from "motion/react";
 import { ComponentRecord } from "@/config/components-data";
 import { cn } from "@/lib/utils";
-import { microTransition } from "@/lib/motion";
+import { microTransition, springMechanical } from "@/lib/motion";
 
 export type SurfaceTheme = "obsidian" | "dark" | "ceramic";
+export type DetailPanelView = "info" | "code" | null;
 type PackageManager = keyof ComponentRecord["install"];
 
 export interface StageProps {
   componentRecord: ComponentRecord;
   zenMode: boolean;
-  inspectorOpen: boolean;
+  activePanel: DetailPanelView;
+  infoButtonRef: React.RefObject<HTMLButtonElement | null>;
+  codeButtonRef: React.RefObject<HTMLButtonElement | null>;
   surfaceTheme: SurfaceTheme;
   onToggleZen: () => void;
   onToggleCode: () => void;
@@ -43,7 +46,9 @@ const surfaces: {
 export function Stage({
   componentRecord,
   zenMode,
-  inspectorOpen,
+  activePanel,
+  infoButtonRef,
+  codeButtonRef,
   surfaceTheme,
   onToggleZen,
   onToggleCode,
@@ -95,9 +100,14 @@ export function Stage({
 
   return (
     <motion.section
+      layout="position"
       aria-label={`${componentRecord.name} interactive preview`}
       animate={{ backgroundColor: surfaceColor }}
-      transition={shouldReduceMotion ? { duration: 0 } : microTransition}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : { backgroundColor: microTransition, layout: springMechanical }
+      }
       className="sticky top-0 z-20 flex h-[42vh] min-h-64 w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
     >
       <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden">
@@ -197,17 +207,30 @@ export function Stage({
           <button
             type="button"
             onClick={onToggleCode}
-            aria-label="Toggle source code"
-            className="inline-flex size-8 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400"
+            ref={codeButtonRef}
+            aria-label={activePanel === "code" ? "Close code panel" : "Open code panel"}
+            aria-expanded={activePanel === "code"}
+            aria-controls="component-detail-panel mobile-component-details"
+            aria-pressed={activePanel === "code"}
+            className={cn(
+              "inline-flex size-8 items-center justify-center rounded-full transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400",
+              activePanel === "code" ? "bg-white/[0.08] text-white" : "text-zinc-300"
+            )}
           >
             <Code2 size={15} />
           </button>
           <button
             type="button"
             onClick={onToggleInspector}
-            aria-label={inspectorOpen ? "Close details panel" : "Open details panel"}
-            aria-expanded={inspectorOpen}
-            className="hidden size-8 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400 md:inline-flex"
+            ref={infoButtonRef}
+            aria-label={activePanel === "info" ? "Close info panel" : "Open info panel"}
+            aria-expanded={activePanel === "info"}
+            aria-controls="component-detail-panel mobile-component-details"
+            aria-pressed={activePanel === "info"}
+            className={cn(
+              "hidden size-8 items-center justify-center rounded-full transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400 md:inline-flex",
+              activePanel === "info" ? "bg-white/[0.08] text-white" : "text-zinc-300"
+            )}
           >
             <span className="text-[11px]">i</span>
           </button>

@@ -20,6 +20,7 @@ export interface SidebarProps {
   currentSlug: string;
   isOpen: boolean;
   isMobileOpen: boolean;
+  mobileDrawerRef?: React.Ref<HTMLElement>;
   onClose: () => void;
 }
 
@@ -37,19 +38,11 @@ export function Sidebar({
   currentSlug,
   isOpen,
   isMobileOpen,
+  mobileDrawerRef,
   onClose,
 }: SidebarProps) {
   const shouldReduceMotion = useReducedMotion();
   const groupedComponents = React.useMemo(() => groupComponents(), []);
-
-  React.useEffect(() => {
-    if (!isMobileOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [isMobileOpen, onClose]);
 
   const navigation = (
     <div className="flex h-full min-h-0 flex-col">
@@ -197,6 +190,7 @@ export function Sidebar({
               className="absolute inset-0 bg-black/75"
             />
             <motion.aside
+              ref={mobileDrawerRef}
               role="dialog"
               aria-modal="true"
               aria-label="Component index"

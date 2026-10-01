@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Menu, PanelLeft, X } from "lucide-react";
 import {
   ALL_COMPONENTS,
@@ -9,7 +10,14 @@ import {
 } from "@/config/components-data";
 import { Inspector } from "@/components/detail/inspector";
 import { Sidebar } from "@/components/detail/sidebar";
-import { Stage, SurfaceTheme } from "@/components/detail/stage";
+import {
+  DetailPanelView,
+  Stage,
+  SurfaceTheme,
+} from "@/components/detail/stage";
+import { springMechanical } from "@/lib/motion";
+
+const CodeView = React.lazy(() => import("@/components/detail/code-view"));
 
 export interface ComponentWorkstationProps {
   slug?: string;
@@ -26,41 +34,78 @@ export function ComponentWorkstation({
     ALL_COMPONENTS[0];
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
-  const [inspectorOpen, setInspectorOpen] = React.useState(true);
+  const [activePanel, setActivePanel] = React.useState<DetailPanelView>("info");
   const [zenMode, setZenMode] = React.useState(false);
-  const [sourceOpen, setSourceOpen] = React.useState(false);
   const [surfaceTheme, setSurfaceTheme] =
     React.useState<SurfaceTheme>("obsidian");
+  const infoButtonRef = React.useRef<HTMLButtonElement>(null);
+  const codeButtonRef = React.useRef<HTMLButtonElement>(null);
+  const mobileMenuButtonRef = React.useRef<HTMLButtonElement>(null);
+  const detailPanelRef = React.useRef<HTMLElement>(null);
+  const mobileSidebarRef = React.useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
-  const toggleSource = React.useCallback(() => {
-    const next = !sourceOpen;
-    setSourceOpen(next);
-    if (next) setInspectorOpen(true);
-    if (next && window.matchMedia("(max-width: 767px)").matches) {
+  const togglePanel = (view: Exclude<DetailPanelView, null>) => {
+    setActivePanel((current) => (current === view ? null : view));
+    if (view === "code" && window.matchMedia("(max-width: 767px)").matches) {
       window.setTimeout(() => {
-        document.getElementById("mobile-inspector")?.scrollIntoView({
-          behavior: "smooth",
+        document.getElementById("mobile-component-details")?.scrollIntoView({
+          behavior: shouldReduceMotion ? "auto" : "smooth",
           block: "start",
         });
       }, 50);
     }
-  }, [sourceOpen]);
+  };
 
   React.useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key !== "Escape") return;
+      const focusedElement = document.activeElement;
+      const focusIsInDetailPanel =
+        detailPanelRef.current?.contains(focusedElement) ||
+        infoButtonRef.current === focusedElement ||
+        codeButtonRef.current === focusedElement;
+
+      if (activePanel && focusIsInDetailPanel) {
+        setActivePanel(null);
+        const trigger =
+          activePanel === "code" ? codeButtonRef.current : infoButtonRef.current;
+        window.requestAnimationFrame(() => trigger?.focus());
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      const focusIsInMobileSidebar =
+        mobileSidebarRef.current?.contains(focusedElement) ||
+        mobileMenuButtonRef.current === focusedElement;
+      if (mobileSidebarOpen && focusIsInMobileSidebar) {
         setMobileSidebarOpen(false);
-        setZenMode(false);
+        window.requestAnimationFrame(() => mobileMenuButtonRef.current?.focus());
+        event.preventDefault();
+        event.stopPropagation();
       }
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
+  }, [activePanel, mobileSidebarOpen]);
+
+  const closePanel = () => {
+    setActivePanel(null);
+    const trigger =
+      activePanel === "code" ? codeButtonRef.current : infoButtonRef.current;
+    window.requestAnimationFrame(() => trigger?.focus());
+  };
+
+  const panelTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { x: springMechanical, opacity: { duration: 0.12 } };
 
   return (
     <main className="relative flex min-h-svh flex-col overflow-x-hidden bg-black text-zinc-100 selection:bg-lime-400/20 selection:text-white md:h-svh md:min-h-0 md:overflow-hidden">
       <button
         type="button"
+        ref={mobileMenuButtonRef}
         onClick={() => setMobileSidebarOpen((open) => !open)}
         aria-label={mobileSidebarOpen ? "Close component index" : "Open component index"}
         aria-expanded={mobileSidebarOpen}
@@ -95,6 +140,7 @@ export function ComponentWorkstation({
             currentSlug={componentRecord.slug}
             isOpen={sidebarOpen}
             isMobileOpen={mobileSidebarOpen}
+            mobileDrawerRef={mobileSidebarRef}
             onClose={() => {
               setMobileSidebarOpen(false);
             }}
@@ -104,37 +150,109 @@ export function ComponentWorkstation({
         <Stage
           componentRecord={componentRecord}
           zenMode={zenMode}
-          inspectorOpen={inspectorOpen && !zenMode}
+          activePanel={activePanel}
+          infoButtonRef={infoButtonRef}
+          codeButtonRef={codeButtonRef}
           surfaceTheme={surfaceTheme}
           onToggleZen={() => setZenMode((active) => !active)}
-          onToggleCode={toggleSource}
-          onToggleInspector={() => setInspectorOpen((open) => !open)}
+          onToggleCode={() => togglePanel("code")}
+          onToggleInspector={() => togglePanel("info")}
           onChangeSurfaceTheme={setSurfaceTheme}
         />
 
-        {!zenMode && inspectorOpen && (
-          <aside
-            aria-label={`${componentRecord.name} details`}
-            className="hidden h-full w-[min(36vw,28rem)] min-w-[22rem] shrink-0 flex-col overflow-hidden border-l border-white/[0.06] bg-black md:flex"
-          >
-            <Inspector
-              key={componentRecord.slug}
-              componentRecord={componentRecord}
-              sourceOpen={sourceOpen}
-              onToggleSource={() => setSourceOpen((open) => !open)}
-              onClose={() => setInspectorOpen(false)}
-            />
-          </aside>
-        )}
+        <AnimatePresence initial={false}>
+          {!zenMode && activePanel && (
+            <motion.aside
+              key="component-detail-panel"
+              id="component-detail-panel"
+              ref={detailPanelRef}
+              aria-label={`${componentRecord.name} ${activePanel} panel`}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={panelTransition}
+              className="hidden h-full w-[min(36vw,28rem)] min-w-[22rem] shrink-0 flex-col overflow-hidden border-l border-white/[0.06] bg-black md:flex"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {activePanel === "info" ? (
+                  <motion.div
+                    key="info"
+                    initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
+                    transition={panelTransition}
+                    className="h-full min-h-0"
+                  >
+                    <Inspector
+                      componentRecord={componentRecord}
+                      onClose={closePanel}
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="code"
+                    initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
+                    transition={panelTransition}
+                    className="h-full min-h-0"
+                  >
+                    <React.Suspense
+                      fallback={
+                        <div className="p-8 font-mono text-[10px] text-peel-text-mono">
+                          Loading code view
+                        </div>
+                      }
+                    >
+                      <CodeView
+                        componentRecord={componentRecord}
+                        onClose={closePanel}
+                      />
+                    </React.Suspense>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.aside>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div id="mobile-inspector" className="md:hidden">
-        <Inspector
-          key={componentRecord.slug}
-          componentRecord={componentRecord}
-          sourceOpen={sourceOpen}
-          onToggleSource={() => setSourceOpen((open) => !open)}
-        />
+      <div id="mobile-component-details" className="md:hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          {activePanel === "code" ? (
+            <motion.div
+              key="code"
+              initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
+              transition={panelTransition}
+              className="min-h-[50vh]"
+            >
+              <React.Suspense
+                fallback={
+                  <div className="p-8 font-mono text-[10px] text-peel-text-mono">
+                    Loading code view
+                  </div>
+                }
+              >
+                <CodeView
+                  componentRecord={componentRecord}
+                  onClose={closePanel}
+                />
+              </React.Suspense>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="info"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.12 }}
+            >
+              <Inspector componentRecord={componentRecord} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </main>
   );
