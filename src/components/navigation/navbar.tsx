@@ -124,6 +124,7 @@ export function Navbar() {
             href="https://github.com/killersumit/peel-ui"
             target="_blank"
             rel="noreferrer"
+            aria-label="Star Peel UI on GitHub"
             className="shrink-0 bg-zinc-900 border border-zinc-800 rounded-full px-2.5 py-1 sm:px-3 text-xs text-zinc-300 hover:border-zinc-700 hover:text-white transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
           >
             <svg
