@@ -87,6 +87,23 @@ export function Footer() {
           </div>
         </div>
 
+        <nav
+          aria-label="Legal"
+          className="flex items-center gap-4 border-t border-zinc-900 pt-4 font-mono text-[10px] text-zinc-400"
+        >
+          <Link href="/privacy" className="transition-colors hover:text-white">
+            Privacy
+          </Link>
+          <a
+            href="https://github.com/Killersumit/peel-ui/blob/main/LICENSE"
+            target="_blank"
+            rel="noreferrer"
+            className="transition-colors hover:text-white"
+          >
+            License
+          </a>
+        </nav>
+
         {/* ── Row 2: Sub-Floor Metadata ── */}
         <div className="flex items-center justify-between pt-4 border-t border-zinc-900 font-mono text-[10px] text-zinc-400">
           <span>Peel UI · Tactile Primitives</span>

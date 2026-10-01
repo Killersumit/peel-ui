@@ -18,6 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "daily",
       priority: 0.9,
     },
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
   ];
 
   const componentRoutes: MetadataRoute.Sitemap = ALL_COMPONENTS.map(

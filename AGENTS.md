@@ -7,6 +7,7 @@
 - Demos: `src/components/demos/`.
 - Showcase: `src/components/showcase/`.
 - Documentation: root-level Markdown files.
+- If you add any third-party script, analytics, cookie or browser storage, update src/app/privacy/page.tsx in the same change.
 - Never create a second copy of a component.
 - A new component requires one source file or compound folder, one `registry.json` entry, one metadata entry, and one demo.
 
