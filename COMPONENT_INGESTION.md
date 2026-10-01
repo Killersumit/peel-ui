@@ -10,7 +10,7 @@ External component registries (shadcn/ui, Aceternity UI, Magic UI, 21st.dev, Rar
 
 ### The Golden Rule of Ingestion
 **External components are raw mechanical schematics, not finished visual artifacts.**
-Never paste third-party component code directly into `components/ui/`. Every component must pass through the mandatory 5-Stage Ingestion Pipeline detailed below before integration.
+Never paste third-party component code directly into `src/components/ui/`. Every component must pass through the mandatory 5-Stage Ingestion Pipeline detailed below before integration.
 
 ---
 
@@ -51,21 +51,26 @@ Map all arbitrary geometry directly into the discrete token system defined in `D
     <div className="flex gap-6 p-6">...</div>
 
     // MANDATORY: Interlocking hairline borders
-    <div className="grid grid-cols-1 md:grid-cols-12 -space-x-px border border-[var(--border-structural)] bg-[var(--bg-canvas)]">...</div>
+    <div className="grid grid-cols-1 md:grid-cols-12 -space-x-px border border-[var(--peel-border)] bg-[var(--peel-base)]">...</div>
     ```
 * **Color Re-anchoring:**
-  * Replace all hardcoded colors (`bg-neutral-900`, `text-zinc-400`, `border-gray-800`) with the active project CSS variables (`var(--bg-surface)`, `var(--text-secondary)`, `var(--border-structural)`).
+  * Replace all hardcoded colors (`bg-neutral-900`, `text-zinc-400`, `border-gray-800`) with the active project CSS variables (`var(--peel-surface)`, `var(--peel-text-secondary)`, `var(--peel-border)`).
 
 ### Stage 3: Kinetic Recalibration (Spring Physics Enforcement)
 Never allow default cubic-bezier floats, infinite pulsing loops, or sluggish scroll animations.
-* Replace any raw `transition={{ duration: 0.5, ease: "easeInOut" }}` with standard tactile springs imported from `@/lib/motion`:
+* Replace any raw `transition={{ duration: 0.5, ease: "easeInOut" }}` with a local spring constant matching the required motion.
   ```typescript
-  import { springTactile, springMechanical } from "@/lib/motion";
+  const springTactile = {
+    type: "spring",
+    stiffness: 600,
+    damping: 38,
+    mass: 0.6,
+  } as const;
   ```
 * Enforce accessibility guards using `useReducedMotion()` on all animated components.
 
 ### Stage 4: Typographic & Spatial Measure Alignment
-* **Header Reset:** Eliminate all gradient text (`bg-clip-text text-transparent bg-gradient-to-r`). Headlines must be solid high-contrast ink (`text-[var(--text-primary)]`).
+* **Header Reset:** Eliminate all gradient text (`bg-clip-text text-transparent bg-gradient-to-r`). Headlines must be solid high-contrast ink (`text-[var(--peel-text-primary)]`).
 * **Telemetry Readouts:** For cards and modules, add technical metadata headers (e.g., coordinate tags, micro status dots, component IDs).
 * **Measure Constraints:** Clamp descriptive paragraphs to a strict line-length: `max-w-[55ch]` or `max-w-[65ch]`.
 
@@ -110,9 +115,15 @@ export function SlopCard({ title, desc }: { title: string; desc: string }) {
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { springTactile } from "@/lib/motion";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
+
+const springTactile = {
+  type: "spring",
+  stiffness: 600,
+  damping: 38,
+  mass: 0.6,
+} as const;
 
 interface SpecCardProps extends React.HTMLAttributes<HTMLDivElement> {
   specId: string;
@@ -131,50 +142,50 @@ export const SpecCard = React.forwardRef<HTMLDivElement, SpecCardProps>(
       <div
         ref={ref}
         className={cn(
-          "group relative flex flex-col justify-between border border-[var(--border-structural)] bg-[var(--bg-surface)] p-6 transition-colors duration-150 hover:bg-[var(--bg-surface-elevated)]",
+          "group relative flex flex-col justify-between border border-[var(--peel-border)] bg-[var(--peel-surface)] p-6 transition-colors duration-150 hover:bg-[var(--peel-surface-raised)]",
           className
         )}
         {...props}
       >
         {/* Top Telemetry Header */}
-        <div className="flex items-center justify-between border-b border-[var(--border-structural)] pb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+        <div className="flex items-center justify-between border-b border-[var(--peel-border)] pb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--peel-text-tertiary)]">
           <span className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 bg-[var(--accent)]" />
+            <span className="inline-block h-1.5 w-1.5 bg-[var(--peel-lime)]" />
             REF // {specId}
           </span>
-          <span className="text-[var(--text-mono-label)]">STATUS: {status}</span>
+          <span className="text-[var(--peel-text-mono)]">STATUS: {status}</span>
         </div>
 
         {/* Primary Content Stage */}
         <div className="my-6">
-          <p className="font-mono text-xs uppercase tracking-wider text-[var(--text-secondary)]">
+          <p className="font-mono text-xs uppercase tracking-wider text-[var(--peel-text-secondary)]">
             {label}
           </p>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="font-mono text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
+            <span className="font-mono text-3xl font-semibold tracking-tight text-[var(--peel-text-primary)]">
               {metricValue}
             </span>
-            <span className="font-mono text-xs text-[var(--text-tertiary)]">
+            <span className="font-mono text-xs text-[var(--peel-text-tertiary)]">
               {metricUnit}
             </span>
           </div>
-          <p className="mt-3 max-w-[45ch] text-xs leading-relaxed text-[var(--text-secondary)]">
+          <p className="mt-3 max-w-[45ch] text-xs leading-relaxed text-[var(--peel-text-secondary)]">
             {description}
           </p>
         </div>
 
         {/* Bottom Tactile Trigger Action */}
-        <div className="flex items-center justify-between border-t border-[var(--border-structural)] pt-4">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-tertiary)]">
+        <div className="flex items-center justify-between border-t border-[var(--peel-border)] pt-4">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--peel-text-tertiary)]">
             SYS_SPEC.V4
           </span>
           <motion.button
             whileTap={shouldReduceMotion ? undefined : { y: 1 }}
             transition={springTactile}
-            className="flex items-center gap-2 border border-[var(--border-structural)] bg-[var(--bg-canvas)] px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-[var(--text-primary)] transition-colors hover:border-[var(--text-primary)] hover:bg-[var(--bg-surface-active)]"
+            className="flex items-center gap-2 border border-[var(--peel-border)] bg-[var(--peel-base)] px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-[var(--peel-text-primary)] transition-colors hover:border-[var(--peel-text-primary)] hover:bg-[var(--peel-surface-active)]"
           >
             EXECUTE
-            <span className="inline-block text-[var(--accent)]">→</span>
+            <span className="inline-block text-[var(--peel-lime)]">→</span>
           </motion.button>
         </div>
       </div>
@@ -191,14 +202,12 @@ SpecCard.displayName = "SpecCard";
 
 To maintain a clean, CLI-installable registry (mirroring `shadcn` and `rare-ui`), every ingested component must conform to these packaging rules:
 
-### 4.1 Zero-Dependency Isolation
-* Every component residing in `components/ui/[name].tsx` must be completely autonomous.
-* Allowed local imports:
-  * `@/lib/utils` (for `cn` utility)
-  * `@/lib/motion` (for standardized spring physics tokens)
-* Banned local imports:
-  * Relative asset paths (`../../assets/logo.png`)
-  * Other sibling components from `components/ui/` unless formally registered as a compound dependency in `registry.json`.
+### 4.1 Registry Component Isolation
+* Every component residing in `src/components/ui/` must be self-contained and inline its own spring constants.
+* Allowed package imports: `react`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`.
+* Never import `@/lib/motion`, `@/config`, or any other site file.
+* Relative imports are permitted only between files shipped together in the same registry item's `files` array.
+* Do not import relative asset paths such as `../../assets/logo.png`.
 
 ### 4.2 The Registry Entry Schema
 Every completed component must register an entry in `registry.json` matching the official CLI distribution schema:
@@ -207,11 +216,11 @@ Every completed component must register an entry in `registry.json` matching the
 {
   "name": "spec-card",
   "type": "registry:ui",
-  "dependencies": ["framer-motion", "clsx", "tailwind-merge"],
+  "dependencies": ["motion"],
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/spec-card.tsx",
+      "path": "src/components/ui/spec-card.tsx",
       "type": "registry:ui",
       "target": "components/ui/spec-card.tsx"
     }
@@ -220,7 +229,7 @@ Every completed component must register an entry in `registry.json` matching the
 ```
 
 ### 4.3 The Live Showcase Harness Pattern
-For every component published to the library showcase, pair it with a companion demo in `components/demos/[name]-demo.tsx`.
+For every component published to the library showcase, pair it with a companion demo in `src/components/demos/[name]-demo.tsx`.
 
 The documentation frame must feature:
 1. **Interactive Stage:** The live rendered component running in an isolated viewport with responsive breakpoints (`mobile`, `tablet`, `desktop`).

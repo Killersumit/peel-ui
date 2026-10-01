@@ -79,91 +79,29 @@ Body paragraphs and descriptive text must never be left unconstrained. Limit lin
 
 ## 3. COLOR PALETTES & TONAL CONTRAST MATRICES
 
-Never mix palettes within the same project. Choose ONE and instantiate these exact CSS variables in `app/globals.css`.
+Never mix palettes within the same project. Choose ONE and instantiate these exact CSS variables in `src/app/globals.css`.
 
-### Palette A: Precision Monolith (High-Tech Industrial Dark)
-Designed for technical tools, CLI registries, code showcases, and hardware telemetry.
+### Active Palette: Folded Ribbon
 
-```css
-:root {
-  --bg-canvas: #080808;
-  --bg-surface: #0f0f0f;
-  --bg-surface-elevated: #161616;
-  --bg-surface-active: #1e1e1e;
-  
-  --border-structural: #1a1a1a;
-  --border-subtle: #262626;
-  --border-focus: #eeeeee;
+The active tokens are defined in `src/app/globals.css`. No alternate palettes are configured there.
 
-  --text-primary: #f0f0f0;
-  --text-secondary: #888888;
-  --text-tertiary: #525252;
-  --text-mono-label: #a3a3a3;
-
-  --accent: #e2fe52;           /* Acid Electrum */
-  --accent-foreground: #080808;
-  --accent-muted: rgba(226, 254, 82, 0.12);
-
-  --danger: #ff4336;
-  --success: #00e599;          /* Telemetry Green */
-}
-```
-
-### Palette B: International Typographic (Swiss Architectural Light)
-Designed for editorial projects, typographic design portfolios, and rigorous documentation.
-
-```css
-:root {
-  --bg-canvas: #f6f6f2;        /* Warm Paper / Bone */
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #eaeae5;
-  --bg-surface-active: #dfdfd9;
-
-  --border-structural: #111111; /* Unapologetic structural ink lines */
-  --border-subtle: #dcdcd6;
-  --border-focus: #111111;
-
-  --text-primary: #111111;
-  --text-secondary: #5a5a56;
-  --text-tertiary: #8c8c87;
-  --text-mono-label: #383835;
-
-  --accent: #ff3e00;           /* International Klein Safety Vermilion */
-  --accent-foreground: #ffffff;
-  --accent-muted: rgba(255, 62, 0, 0.1);
-
-  --danger: #d90429;
-  --success: #007f5f;
-}
-```
-
-### Palette C: Obsidian & Milled Aluminum (Tactile Hardware)
-Designed for physical-computing aesthetics, synth/audio tools, and dense mechanical interfaces.
-
-```css
-:root {
-  --bg-canvas: #0c0d0e;
-  --bg-surface: #131518;
-  --bg-surface-elevated: #1a1d22;
-  --bg-surface-active: #22262d;
-
-  --border-structural: #252a32;
-  --border-subtle: #1c2027;
-  --border-focus: #ff9500;
-
-  --text-primary: #ebeef2;
-  --text-secondary: #7f8a96;
-  --text-tertiary: #4c5561;
-  --text-mono-label: #9aa7b5;
-
-  --accent: #ff9500;           /* Industrial Amber */
-  --accent-foreground: #0c0d0e;
-  --accent-muted: rgba(255, 149, 0, 0.15);
-
-  --danger: #ff453a;
-  --success: #32d74b;
-}
-```
+| Token | Value |
+| :--- | :--- |
+| `--peel-base` | `#08090a` |
+| `--peel-surface` | `#12141a` |
+| `--peel-surface-raised` | `#181b22` |
+| `--peel-surface-active` | `#1e2129` |
+| `--peel-border` | `#232730` |
+| `--peel-border-subtle` | `#1a1d24` |
+| `--peel-border-focus` | `#f5f5f7` |
+| `--peel-text-primary` | `#f5f5f7` |
+| `--peel-text-secondary` | `#8a8f98` |
+| `--peel-text-tertiary` | `#51555e` |
+| `--peel-text-mono` | `#9ea3ad` |
+| `--peel-lime` | `#84ff00` |
+| `--peel-coral` | `#ff553e` |
+| `--peel-success` | `#34d399` |
+| `--peel-danger` | `#ff453a` |
 
 ---
 
@@ -179,13 +117,13 @@ Designed for physical-computing aesthetics, synth/audio tools, and dense mechani
 Crisp, unblurred physical drop shadow simulating paper layered over metal:
 ```css
 /* Class: shadow-ink-sm */
-box-shadow: 2px 2px 0px 0px var(--border-structural);
+box-shadow: 2px 2px 0px 0px var(--peel-border);
 
 /* Class: shadow-ink-md */
-box-shadow: 4px 4px 0px 0px var(--border-structural);
+box-shadow: 4px 4px 0px 0px var(--peel-border);
 
 /* Class: shadow-ink-lg */
-box-shadow: 8px 8px 0px 0px var(--border-structural);
+box-shadow: 8px 8px 0px 0px var(--peel-border);
 ```
 
 #### Technique 2: Directional Machined Bevel (Tactile Hardware)
@@ -204,8 +142,8 @@ Simulates carved physical chassis slots for toggles, indicators, and input field
 /* Class: well-recessed */
 box-shadow: 
   inset 0px 2px 4px 0px rgba(0, 0, 0, 0.6),
-  inset 0px 0px 0px 1px var(--border-structural);
-background-color: #050505;
+  inset 0px 0px 0px 1px var(--peel-border);
+background-color: var(--peel-base);
 ```
 
 ---
@@ -215,11 +153,11 @@ background-color: #050505;
 Motion must always reflect mass, velocity, and mechanical contact. Never use linear or generic cubic-bezier floats.
 
 ### 5.1 Physics Spring Configurations
-Import and apply these exact configurations across all `motion` components:
+These are the site-level transition values from `src/lib/motion.ts`. Registry components inline their own spring constants.
 
 ```typescript
 // @/lib/motion.ts
-import { Transition } from "framer-motion";
+import type { Transition } from "motion/react";
 
 /**
  * High-stiffness tactile spring for buttons, tabs, switches, segmented controls.
@@ -249,12 +187,19 @@ export const microTransition = {
   duration: 0.12,
   ease: [0.16, 1, 0.3, 1], // easeOutExpo
 };
+
+export const springGentle: Transition = {
+  type: "spring",
+  stiffness: 260,
+  damping: 28,
+  mass: 0.8,
+};
 ```
 
 ### 5.2 Accessibility Rule (Prefers Reduced Motion)
 Every motion component must cleanly degrade:
 ```tsx
-import { useReducedMotion, motion } from "framer-motion";
+import { useReducedMotion, motion } from "motion/react";
 
 export function TactilePanel({ children }: { children: React.ReactNode }) {
   const shouldReduceMotion = useReducedMotion();
@@ -281,24 +226,24 @@ Buttons are physical triggers, not pill-shaped text links.
 *   **Primary Action Trigger:**
     *   Padding: `px-4 py-2` (Micro-Fibonacci `8px` vertical, `16px` horizontal)
     *   Radius: `rounded-none` or `rounded-sm` (2px max)
-    *   Surface: `bg-[var(--accent)] text-[var(--accent-foreground)]`
+    *   Surface: `bg-[var(--peel-lime)] text-[var(--peel-lime-foreground)]`
     *   Border: `border border-transparent`
     *   Typography: `font-mono text-xs uppercase tracking-wider font-semibold`
     *   Active State: `active:translate-y-[1px]` or `active:scale-[0.98]`
 *   **Secondary Chassis Trigger:**
-    *   Surface: `bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)]`
-    *   Border: `border border-[var(--border-structural)] hover:border-[var(--border-subtle)]`
-    *   Typography: `font-mono text-xs uppercase tracking-wider text-[var(--text-primary)]`
+    *   Surface: `bg-[var(--peel-surface)] hover:bg-[var(--peel-surface-raised)]`
+    *   Border: `border border-[var(--peel-border)] hover:border-[var(--peel-border-subtle)]`
+    *   Typography: `font-mono text-xs uppercase tracking-wider text-[var(--peel-text-primary)]`
 
 ### 6.2 Bento Cells & Component Enclosures
 *   Never pad cards unevenly.
 *   Enforce shared perimeter hairlines:
     ```tsx
-    <div className="group relative border border-[var(--border-structural)] bg-[var(--bg-surface)] p-6 lg:p-8 flex flex-col justify-between">
+    <div className="group relative border border-[var(--peel-border)] bg-[var(--peel-surface)] p-6 lg:p-8 flex flex-col justify-between">
       {/* Top Telemetry Row */}
-      <div className="flex items-center justify-between font-mono text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest border-b border-[var(--border-structural)] pb-3 mb-6">
+      <div className="flex items-center justify-between font-mono text-[10px] text-[var(--peel-text-tertiary)] uppercase tracking-widest border-b border-[var(--peel-border)] pb-3 mb-6">
         <span>LOC // 0x48A</span>
-        <span className="inline-block w-1.5 h-1.5 bg-[var(--accent)]" />
+        <span className="inline-block w-1.5 h-1.5 bg-[var(--peel-lime)]" />
       </div>
 
       {/* Main Interactive Stage */}
@@ -307,7 +252,7 @@ Buttons are physical triggers, not pill-shaped text links.
       </div>
 
       {/* Meta Readout Footer */}
-      <div className="pt-4 border-t border-[var(--border-structural)] font-mono text-xs text-[var(--text-secondary)]">
+      <div className="pt-4 border-t border-[var(--peel-border)] font-mono text-xs text-[var(--peel-text-secondary)]">
         COMPONENT_SPEC.v1
       </div>
     </div>
@@ -316,8 +261,8 @@ Buttons are physical triggers, not pill-shaped text links.
 ### 6.3 Monospace Telemetry Badges
 Never use pastel pills with shiny icons. Use structured technical readouts:
 ```tsx
-<span className="inline-flex items-center gap-2 px-2 py-0.5 border border-[var(--border-structural)] bg-[var(--bg-canvas)] font-mono text-[11px] text-[var(--text-mono-label)] tracking-wider uppercase">
-  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+<span className="inline-flex items-center gap-2 px-2 py-0.5 border border-[var(--peel-border)] bg-[var(--peel-base)] font-mono text-[11px] text-[var(--peel-text-mono)] tracking-wider uppercase">
+  <span className="w-1.5 h-1.5 rounded-full bg-[var(--peel-lime)] animate-pulse" />
   SYS_READY [200_OK]
 </span>
 ```

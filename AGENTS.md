@@ -47,7 +47,7 @@ Before writing layout code or UI components, you MUST select and state ONE of th
 
 ### Archetype A: Swiss International / Pure Grid
 - **Ethos:** Absolute functional clarity, mathematical objectivity, visible structural logic.
-- **Visual Markers:** Visible hairline structural grid lines (`border-neutral-200` or `border-neutral-800`), asymmetrical 12-column layouts, generous negative space, high-contrast monochrome with a single industrial accent (Safety Orange `#FF4800` or Klein Blue `#002FA7`).
+- **Visual Markers:** Visible hairline structural grid lines (`border-neutral-200` or `border-neutral-800`), asymmetrical 12-column layouts, generous negative space, high-contrast monochrome with Peel Lime (`#84FF00`) as the industrial accent.
 - **Typography:** Grotesk sans (Geist, PP Neue Montreal, Cabinet Grotesk) paired with strict monospace data labels.
 
 ### Archetype B: Industrial / High-Density Telemetry (Teenage Engineering / Braun)
@@ -57,7 +57,7 @@ Before writing layout code or UI components, you MUST select and state ONE of th
 
 ### Archetype C: Raw Neobrutalism (Contemporary High-Craft)
 - **Ethos:** Graphic punch, physical printed matter feel, unapologetic borders.
-- **Visual Markers:** Hard drop shadows (`box-shadow: 4px 4px 0px 0px #000`), heavy borders (`border-2 border-black`), sharp corners (`rounded-none` or `rounded-sm`), flat un-tinted surfaces (raw cream `#FAF8F5`, acid lime `#D8FF00`, stark black `#0A0A0A`).
+- **Visual Markers:** Hard drop shadows (`box-shadow: 4px 4px 0px 0px var(--peel-border)`), heavy structural borders, sharp corners (`rounded-none` or `rounded-sm`), flat surfaces from Folded Ribbon (`#08090A`, `#12141A`, and Peel Lime `#84FF00`).
 - **Typography:** Heavy geometric display (`Syne`, `Archivo Black`, `Clash Display`).
 
 ### Archetype D: Hyper-Refined Tactile / Modern Skeuomorphism
@@ -102,31 +102,14 @@ Never guess margins or paddings. All spacing must strictly follow the Fibonacci 
 ---
 
 ## 6. COLOR SYSTEMS & TONAL WEIGHT
-Never create "generic dark mode" using `bg-neutral-900` cards over `bg-black`. Choose one of these locked tonal systems:
+Never create "generic dark mode" using `bg-neutral-900` cards over `bg-black`. Use the active palette below:
 
-### Palette 1: Precision Monolith (High-Tech Dark)
-- Background: `#080808`
-- Structural Lines: `#1A1A1A`
-- Surface / Cards: `#0F0F0F`
-- Primary Typography: `#EEEEEE`
-- Secondary / Muted: `#7A7A7A`
-- Single Accent: `#E2FE52` (Acid Electrum) OR `#00E599` (Telemetry Green)
-
-### Palette 2: International Paper (Swiss Architectural Light)
-- Background: `#F5F5F0` (Bone Gray / Warm Paper)
-- Structural Lines: `#E0E0D8` or solid `#111111`
-- Surface / Cards: `#FFFFFF`
-- Primary Typography: `#111111`
-- Secondary / Muted: `#555552`
-- Single Accent: `#FF3E00` (International Safety Vermilion)
-
-### Palette 3: Obsidian & Milled Steel (Industrial Tactile)
-- Background: `#0C0D0E`
-- Surface: `#141618`
-- Surface Elevated: `#1A1D20`
-- Borders: `#22262A`
-- Primary Typography: `#EAECEE`
-- Accent: `#FF9500` (Industrial Amber)
+### Active Palette: Folded Ribbon
+The active Folded Ribbon palette is defined in `src/app/globals.css`:
+- Canvas: `#08090A`; surfaces: `#12141A`, `#181B22`, `#1E2129`
+- Borders: `#232730`, `#1A1D24`, focus `#F5F5F7`
+- Text: `#F5F5F7`, `#8A8F98`, `#51555E`, mono `#9EA3AD`
+- Accents: lime `#84FF00`, coral `#FF553E`; success `#34D399`; danger `#FF453A`
 
 ---
 
@@ -135,7 +118,7 @@ When you reference, import, or generate components inspired by shadcn, Aceternit
 
 ### Step 1: Strip Foreign DNA
 - Remove all `border-white/10`, `bg-white/5`, and `backdrop-blur-*`.
-- Strip out any hardcoded `framer-motion` cursor-following effects or canvas particle renderers.
+- Strip out any hardcoded Motion cursor-following effects or canvas particle renderers.
 - Remove all nested decorative Lucide icons used as bullet points.
 
 ### Step 2: Recalibrate Radii and Borders
@@ -143,9 +126,11 @@ When you reference, import, or generate components inspired by shadcn, Aceternit
 - Replace arbitrary borders with 1px structural dividing lines using the active palette tokens.
 
 ### Step 3: Enforce Component Independence
-- Every component in `components/ui/[name].tsx` must be copy-paste self-contained.
+- Every component in `src/components/ui/[name].tsx` must be copy-paste self-contained.
 - Do not add extraneous npm package dependencies. Use native SVG, CSS animations, or standard Motion primitives.
 - Expose clear TypeScript interfaces and always allow `className` overrides merged via `cn()`.
+- Registry components in `src/components/ui/` must be self-contained. They inline their own spring constants and may import only from `react`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`. They must NEVER import from `@/lib/motion`, `@/config`, or any other site file.
+- Compound registry items may use relative imports between files shipped together in that item's `files` array.
 
 ---
 
@@ -157,28 +142,34 @@ Motion is for spatial comprehension and tactile feedback, not background enterta
 - No page-wide scroll hijacking or forced parallax scrolling.
 
 ### Mandatory Physics Specs
-When using Motion (`framer-motion` or `motion/react`), enforce these exact transition parameters:
+For site UI using Motion (`motion/react`), use the project transition values below. Registry components inline their own spring constants.
 
 ```typescript
-// Tactile spring for buttons, tabs, toggles:
-export const tactileSpring = {
+// src/lib/motion.ts
+export const springTactile = {
   type: "spring",
-  stiffness: 500,
-  damping: 35,
-  mass: 0.8,
+  stiffness: 600,
+  damping: 38,
+  mass: 0.6,
 };
 
-// Precise mechanical reveal for dropdowns, drawers:
-export const mechanicalTransition = {
+export const springMechanical = {
   type: "spring",
-  stiffness: 350,
-  damping: 30,
+  stiffness: 380,
+  damping: 32,
+  mass: 1.0,
 };
 
-// Fast micro-interaction duration (hover states):
 export const microTransition = {
-  duration: 0.15,
+  duration: 0.12,
   ease: [0.16, 1, 0.3, 1], // easeOutExpo
+};
+
+export const springGentle = {
+  type: "spring",
+  stiffness: 260,
+  damping: 28,
+  mass: 0.8,
 };
 ```
 
