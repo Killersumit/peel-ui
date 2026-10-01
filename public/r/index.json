@@ -127,6 +127,44 @@
       ]
     },
     {
+      "name": "note-button",
+      "type": "registry:ui",
+      "title": "Note Button",
+      "description": "A notebook trigger that expands into a persistent, line-numbered note panel with a keyboard-aware mobile sheet.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "components/ui/note-button/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/note-button/index.ts"
+        },
+        {
+          "path": "components/ui/note-button/note-root.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/note-button/note-root.tsx"
+        },
+        {
+          "path": "components/ui/note-button/note-trigger.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/note-button/note-trigger.tsx"
+        },
+        {
+          "path": "components/ui/note-button/note-panel.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/note-button/note-panel.tsx"
+        },
+        {
+          "path": "components/ui/note-button/line-gutter.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/note-button/line-gutter.tsx"
+        }
+      ]
+    },
+    {
       "name": "amount-input",
       "type": "registry:ui",
       "title": "Amount Input",

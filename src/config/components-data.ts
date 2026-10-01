@@ -7,8 +7,10 @@ import { VoicePill } from "@/components/ui/voice-pill";
 import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { SaveStatePillDemo } from "@/components/ui/save-state-pill";
 import { FilterChipsDemo } from "@/components/demos/filter-chips-demo";
+import { NoteButtonDemo } from "@/components/demos/note-button-demo";
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
+import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -620,6 +622,107 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
       'import { FilterChips } from "@/components/ui/filter-chips";\n\nconst filters = [\n  { id: "all", label: "All Issues" },\n  { id: "open", label: "Open", count: 14 },\n  { id: "pull-requests", label: "Pull Requests", count: 6 },\n];\n\nexport function IssueFilters() {\n  const [filter, setFilter] = React.useState("all");\n  return (\n    <FilterChips\n      options={filters}\n      value={filter}\n      onChange={(next) => {\n        if (typeof next === "string") setFilter(next);\n      }}\n      showClear\n    />\n  );\n}',
     sourceCode: FILTER_CHIPS_SOURCE,
     component: () => React.createElement(FilterChipsDemo),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "note-button",
+    name: "Note Button",
+    category: "ACTIONS",
+    tagline:
+      "A notebook trigger that opens a quiet, persistent writing surface.",
+    description:
+      "A portable note primitive with a geometric desktop expansion, adaptive mobile sheet, line-wrap gutter, and private local persistence.",
+    mechanicalDescription:
+      "The panel expands from the trigger’s live position without scaling its border or typography. On mobile it becomes a bottom sheet that follows the visual viewport when the software keyboard opens.",
+    interactionType:
+      "GSAP-driven geometric expansion, fullscreen morphing, and visual-viewport-aware mobile sheet.",
+    dependencies: ["gsap", "@gsap/react", "lucide-react"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+    },
+    props: [
+      {
+        name: "storageKey",
+        type: "string",
+        default: '"peel-note:v1"',
+        description: "Local storage key used to persist note text.",
+      },
+      {
+        name: "open",
+        type: "boolean",
+        default: "undefined",
+        description: "Controls whether the note panel is open.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        default: "undefined",
+        description: "Called when the panel open state changes.",
+      },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        default: "false",
+        description: "Initial open state for uncontrolled usage.",
+      },
+      {
+        name: "value",
+        type: "string",
+        default: "undefined",
+        description: "Controlled note text.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        default: "undefined",
+        description: "Called when note text changes.",
+      },
+      {
+        name: "placement",
+        type: '"auto" | "top-left" | "top-right" | "bottom-left" | "bottom-right"',
+        default: '"auto"',
+        description: "Expansion quadrant on desktop.",
+      },
+      {
+        name: "width",
+        type: "number",
+        default: "380",
+        description: "Target desktop panel width in pixels.",
+      },
+      {
+        name: "height",
+        type: "number",
+        default: "340",
+        description: "Target desktop panel height in pixels.",
+      },
+      {
+        name: "breakpoint",
+        type: "number",
+        default: "640",
+        description: "Viewport width below which the panel becomes a sheet.",
+      },
+      {
+        name: "showLineNumbers",
+        type: "boolean",
+        default: "true",
+        description: "Displays measured line numbers next to the editor.",
+      },
+    ],
+    usageSnippet:
+      'import { Note } from "@/components/ui/note-button";\n\nexport function NotesControl() {\n  return (\n    <Note.Root storageKey="peel-note:v1">\n      <Note.Trigger className="fixed bottom-6 right-6" />\n      <Note.Panel />\n    </Note.Root>\n  );\n}',
+    usageCode:
+      'import { Note } from "@/components/ui/note-button";\n\nexport function NotesControl() {\n  return (\n    <Note.Root storageKey="peel-note:v1">\n      <Note.Trigger className="fixed bottom-6 right-6" />\n      <Note.Panel />\n    </Note.Root>\n  );\n}',
+    sourceCode: NOTE_BUTTON_SOURCE,
+    component: () => React.createElement(NoteButtonDemo),
     defaultSurfaceTheme: "dark",
   },
 ];

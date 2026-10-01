@@ -6,6 +6,7 @@ import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { SaveStatePill } from "@/components/ui/save-state-pill";
 import { FilterChips } from "@/components/ui/filter-chips";
+import { NoteButtonDemo } from "@/components/demos/note-button-demo";
 
 export interface ComponentMetadata {
   name: string;
@@ -133,6 +134,17 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
         />
       </div>
     ),
+  },
+  {
+    name: "Note Button",
+    slug: "note-button",
+    category: "Actions",
+    description:
+      "A notebook trigger that expands into a persistent, line-numbered note panel with a keyboard-aware mobile sheet.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
+    theme: "dark",
+    component: NoteButtonDemo,
   },
 ];
 
