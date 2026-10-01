@@ -168,6 +168,7 @@ export function Hero() {
           {/* Action Button: Full width on mobile, inline on desktop */}
           <Link
             href="/components"
+            prefetch={false}
             className="whitespace-nowrap rounded-full bg-[#84ff00] px-5 py-2 text-xs font-semibold text-black hover:bg-[#96ff26] active:scale-95 transition-all w-full sm:w-auto text-center flex items-center justify-center shadow-sm shrink-0"
           >
             Explore Components ↗

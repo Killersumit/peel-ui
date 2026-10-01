@@ -177,6 +177,7 @@ export function BentoGrid() {
         {/* ━━━ CARD 5 — Catalog CTA (1-col, Acid Lime) ━━━ */}
         <Link
           href="/components"
+          prefetch={false}
           className="col-span-1 min-w-0 rounded-3xl bg-[#84ff00] p-6 flex flex-col justify-between min-h-[210px] group cursor-pointer relative overflow-hidden block"
         >
           {/* Subtle decorative overlay */}

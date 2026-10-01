@@ -102,6 +102,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/components"
+            prefetch={false}
             className={`transition-colors ${
               isComponents
                 ? "text-white font-medium"
@@ -196,6 +197,7 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={item.href !== "/components"}
                     onClick={() => setIsMenuOpen(false)}
                     className={`group flex items-center justify-between px-4 py-3 text-xs transition-colors duration-150 ${
                       isActive
