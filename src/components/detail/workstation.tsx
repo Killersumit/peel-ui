@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import type { Transition } from "motion/react";
 import { Menu, PanelLeft, X } from "lucide-react";
 import {
   ALL_COMPONENTS,
@@ -16,6 +17,7 @@ import {
   SurfaceTheme,
 } from "@/components/detail/stage";
 import { microTransition, springMechanical } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 const CodeView = React.lazy(() => import("@/components/detail/code-view"));
 
@@ -44,6 +46,7 @@ export function ComponentWorkstation({
   const detailPanelRef = React.useRef<HTMLElement>(null);
   const mobileSidebarRef = React.useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const isPanelVisible = !zenMode && activePanel !== null;
 
   const togglePanel = (view: Exclude<DetailPanelView, null>) => {
     setActivePanel((current) => (current === view ? null : view));
@@ -97,7 +100,7 @@ export function ComponentWorkstation({
     window.requestAnimationFrame(() => trigger?.focus());
   };
 
-  const panelTransition = shouldReduceMotion
+  const panelTransition: Transition = shouldReduceMotion
     ? { duration: 0 }
     : {
         x: springMechanical,
@@ -153,7 +156,7 @@ export function ComponentWorkstation({
         <Stage
           componentRecord={componentRecord}
           zenMode={zenMode}
-          activePanel={activePanel}
+          activePanel={zenMode ? null : activePanel}
           infoButtonRef={infoButtonRef}
           codeButtonRef={codeButtonRef}
           surfaceTheme={surfaceTheme}
@@ -163,61 +166,65 @@ export function ComponentWorkstation({
           onChangeSurfaceTheme={setSurfaceTheme}
         />
 
-        <AnimatePresence initial={false}>
-          {!zenMode && activePanel && (
-            <motion.aside
-              key="component-detail-panel"
-              id="component-detail-panel"
-              ref={detailPanelRef}
-              aria-label={`${componentRecord.name} ${activePanel} panel`}
-              initial={{ x: "100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={panelTransition}
-              className="hidden h-full w-[min(36vw,28rem)] min-w-[22rem] shrink-0 flex-col overflow-hidden border-l border-white/[0.06] bg-black md:flex"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {activePanel === "info" ? (
-                  <motion.div
-                    key="info"
-                    initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
-                    transition={panelTransition}
-                    className="h-full min-h-0"
-                  >
-                    <Inspector
-                      componentRecord={componentRecord}
-                      onClose={closePanel}
-                    />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="code"
-                    initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
-                    transition={panelTransition}
-                    className="h-full min-h-0"
-                  >
-                    <React.Suspense
-                      fallback={
-                        <div className="p-8 font-mono text-[10px] text-peel-text-mono">
-                          Loading code view
-                        </div>
-                      }
-                    >
-                      <CodeView
-                        componentRecord={componentRecord}
-                        onClose={closePanel}
-                      />
-                    </React.Suspense>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.aside>
+        <motion.aside
+          id="component-detail-panel"
+          ref={detailPanelRef}
+          aria-label={`${componentRecord.name} ${activePanel ?? "info"} panel`}
+          aria-hidden={!isPanelVisible}
+          inert={!isPanelVisible}
+          initial={false}
+          animate={{
+            x: isPanelVisible ? 0 : 24,
+            opacity: isPanelVisible ? 1 : 0,
+          }}
+          transition={panelTransition}
+          className={cn(
+            "hidden h-full shrink-0 flex-col overflow-hidden border-l border-white/[0.06] bg-black transition-[width,min-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none md:flex",
+            isPanelVisible
+              ? "w-[min(36vw,28rem)] min-w-[22rem]"
+              : "pointer-events-none w-0 min-w-0 border-l-0"
           )}
-        </AnimatePresence>
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {isPanelVisible && activePanel === "info" ? (
+              <motion.div
+                key="info"
+                initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
+                transition={panelTransition}
+                className="h-full min-h-0"
+              >
+                <Inspector
+                  componentRecord={componentRecord}
+                  onClose={closePanel}
+                />
+              </motion.div>
+            ) : isPanelVisible && activePanel === "code" ? (
+              <motion.div
+                key="code"
+                initial={{ x: shouldReduceMotion ? 0 : 12, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: shouldReduceMotion ? 0 : -12, opacity: 0 }}
+                transition={panelTransition}
+                className="h-full min-h-0"
+              >
+                <React.Suspense
+                  fallback={
+                    <div className="p-8 font-mono text-[10px] text-peel-text-mono">
+                      Loading code view
+                    </div>
+                  }
+                >
+                  <CodeView
+                    componentRecord={componentRecord}
+                    onClose={closePanel}
+                  />
+                </React.Suspense>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </motion.aside>
       </div>
 
       <div id="mobile-component-details" className="md:hidden">
