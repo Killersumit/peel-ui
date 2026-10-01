@@ -240,7 +240,15 @@ export function Stage({
           key={`${componentRecord.slug}-${demoKey}`}
           className="relative z-10 flex min-h-0 w-full flex-1 items-center justify-center"
         >
-          <Demo />
+          <motion.div
+            layout="position"
+            transition={
+              shouldReduceMotion ? { duration: 0 } : { layout: springMechanical }
+            }
+            className="inline-flex w-fit max-w-full items-center justify-center"
+          >
+            <Demo />
+          </motion.div>
         </div>
 
         <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2">

@@ -15,7 +15,7 @@ import {
   Stage,
   SurfaceTheme,
 } from "@/components/detail/stage";
-import { springMechanical } from "@/lib/motion";
+import { microTransition, springMechanical } from "@/lib/motion";
 
 const CodeView = React.lazy(() => import("@/components/detail/code-view"));
 
@@ -99,7 +99,10 @@ export function ComponentWorkstation({
 
   const panelTransition = shouldReduceMotion
     ? { duration: 0 }
-    : { x: springMechanical, opacity: { duration: 0.12 } };
+    : {
+        x: springMechanical,
+        opacity: { duration: 0.2, ease: microTransition.ease },
+      };
 
   return (
     <main className="relative flex min-h-svh flex-col overflow-x-hidden bg-black text-zinc-100 selection:bg-lime-400/20 selection:text-white md:h-svh md:min-h-0 md:overflow-hidden">
