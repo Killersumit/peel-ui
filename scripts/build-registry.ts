@@ -65,15 +65,9 @@ for (const item of registry.items) {
         throw new Error(`Registry file path escapes the project: ${file.path}`);
       }
 
-      const candidates = [
-        sourcePath,
-        path.resolve(rootDir, "src", file.path),
-      ];
-      const resolvedSource = candidates.find((candidate) =>
-        existsSync(candidate)
-      );
+      const resolvedSource = sourcePath;
 
-      if (!resolvedSource) {
+      if (!existsSync(resolvedSource)) {
         throw new Error(
           `Source file not found for ${item.name}: ${file.path}`
         );

@@ -15,7 +15,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/save-state-pill.tsx",
+          "path": "src/components/ui/save-state-pill.tsx",
           "type": "registry:ui",
           "target": "components/ui/save-state-pill.tsx"
         }
@@ -33,7 +33,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/slide-to-confirm.tsx",
+          "path": "src/components/ui/slide-to-confirm.tsx",
           "type": "registry:ui",
           "target": "components/ui/slide-to-confirm.tsx"
         }
@@ -51,7 +51,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/magnetic-split-button.tsx",
+          "path": "src/components/ui/magnetic-split-button.tsx",
           "type": "registry:ui",
           "target": "components/ui/magnetic-split-button.tsx"
         }
@@ -68,7 +68,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/tactile-pin-field.tsx",
+          "path": "src/components/ui/tactile-pin-field.tsx",
           "type": "registry:ui",
           "target": "components/ui/tactile-pin-field.tsx"
         }
@@ -86,7 +86,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/privacy-shutter.tsx",
+          "path": "src/components/ui/privacy-shutter.tsx",
           "type": "registry:ui",
           "target": "components/ui/privacy-shutter.tsx"
         }
@@ -103,7 +103,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/ui/voice-pill.tsx",
+          "path": "src/components/ui/voice-pill.tsx",
           "type": "registry:ui",
           "target": "components/ui/voice-pill.tsx"
         }
@@ -120,7 +120,7 @@
       ],
       "files": [
         {
-          "path": "components/ui/filter-chips.tsx",
+          "path": "src/components/ui/filter-chips.tsx",
           "type": "registry:ui",
           "target": "components/ui/filter-chips.tsx"
         }
@@ -138,27 +138,27 @@
       ],
       "files": [
         {
-          "path": "components/ui/note-button/index.ts",
+          "path": "src/components/ui/note-button/index.ts",
           "type": "registry:ui",
           "target": "components/ui/note-button/index.ts"
         },
         {
-          "path": "components/ui/note-button/note-root.tsx",
+          "path": "src/components/ui/note-button/note-root.tsx",
           "type": "registry:ui",
           "target": "components/ui/note-button/note-root.tsx"
         },
         {
-          "path": "components/ui/note-button/note-trigger.tsx",
+          "path": "src/components/ui/note-button/note-trigger.tsx",
           "type": "registry:ui",
           "target": "components/ui/note-button/note-trigger.tsx"
         },
         {
-          "path": "components/ui/note-button/note-panel.tsx",
+          "path": "src/components/ui/note-button/note-panel.tsx",
           "type": "registry:ui",
           "target": "components/ui/note-button/note-panel.tsx"
         },
         {
-          "path": "components/ui/note-button/line-gutter.tsx",
+          "path": "src/components/ui/note-button/line-gutter.tsx",
           "type": "registry:ui",
           "target": "components/ui/note-button/line-gutter.tsx"
         }
