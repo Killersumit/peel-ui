@@ -1,114 +1,65 @@
 <div align="center">
-  <a href="https://peel-ui.vercel.app/">
-    <img src="https://raw.githubusercontent.com/Killersumit/peel-ui/main/public/peel-logo.png" alt="Peel UI" width="144" />
-  </a>
 
-  <h1>Peel UI</h1>
-  <p><strong>Tactile React components, built around deliberate motion.</strong></p>
+<a href="https://peel-ui.vercel.app">
+  <img src="public/peel-logo.png" alt="Peel UI" width="96" />
+</a>
 
-  <p>
-    <a href="https://peel-ui.vercel.app/">Showcase</a> ·
-    <a href="https://github.com/Killersumit/peel-ui">Source</a> ·
-    <a href="https://github.com/Killersumit/peel-ui/stargazers">Star the project</a> ·
-    <a href="https://github.com/sponsors/Killersumit">Sponsor</a>
-  </p>
+# Peel UI
 
-  <p>
-    <a href="https://github.com/Killersumit/peel-ui/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/license-MIT-18181b?style=flat-square" alt="MIT License" />
-    </a>
-    <img src="https://img.shields.io/badge/Next.js-16-18181b?style=flat-square&logo=next.js&logoColor=white" alt="Next.js 16" />
-    <img src="https://img.shields.io/badge/React-19-18181b?style=flat-square&logo=react&logoColor=61dafb" alt="React 19" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-4-18181b?style=flat-square&logo=tailwindcss&logoColor=38bdf8" alt="Tailwind CSS 4" />
-    <img src="https://img.shields.io/badge/Motion-13-18181b?style=flat-square" alt="Motion 13" />
-  </p>
+**Tactile React components, built around deliberate motion.**
+
+[Live demos](https://peel-ui.vercel.app) · [Components](https://peel-ui.vercel.app/components) · [Follow on X](https://x.com/Sumit1476136)
+
+![License: MIT](https://img.shields.io/badge/license-MIT-84ff00?style=flat-square&labelColor=08090a)
+![shadcn registry](https://img.shields.io/badge/shadcn-registry-84ff00?style=flat-square&labelColor=08090a)
+![Built with Motion and GSAP](https://img.shields.io/badge/built_with-Motion_%2B_GSAP-84ff00?style=flat-square&labelColor=08090a)
+
 </div>
 
----
+<!-- After recording a short GIF, uncomment:
+<p align="center"><img src="public/readme/hero.gif" alt="Peel UI components in motion" width="720" /></p>
+-->
 
-Peel UI is an open-source collection of copy-ready React components. The library focuses on tactile controls, spring-driven transitions, and clear interaction feedback. Components are installed into your project with the shadcn CLI, so you own the code and can adapt it.
+Peel UI is a shadcn registry of React components that treat the screen like machined hardware: drag tracks with magnetic detents, springs instead of easing curves, controls that settle instead of fade. Install a component and you own the code. There is no package to depend on.
 
 ## Components
 
 | Component | Install name | Interaction |
 | --- | --- | --- |
-| Save State Pill | `save-state-pill` | Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps |
-| Slide to Confirm | `slide-to-confirm` | Mechanical verification trigger with friction drag and magnetic pocket |
-| Magnetic Split Button | `magnetic-split-button` | Dual-half action capsule with proximity separation and latching |
-| Tactile PIN Field | `tactile-pin-field` | Auth input chassis with floating lens focus frame and tumbler micro-springs |
-| Privacy Shutter | `privacy-shutter` | Security key shroud with spring-loaded physical peek slider |
-| Voice Pill | `voice-pill` | Audio capsule with live Web Audio API AnalyserNode frequency canvas and slide-to-cancel physics |
-| Tactile Filter Chips | `filter-chips` | Hardware-inspired multi-select and radio filter chips with spring-bound layout morphing and tabular counters |
-| Note Button | `note-button` | A notebook trigger that expands into a persistent, line-numbered note panel with a keyboard-aware mobile sheet |
+| Slide to Confirm | `slide-to-confirm` | Friction drag with a magnetic confirmation threshold |
+| Magnetic Split Button | `magnetic-split-button` | Primary and secondary actions that pull apart on a spring latch |
+| Tactile PIN Field | `tactile-pin-field` | Numeric input with a floating focus frame |
+| Privacy Shutter | `privacy-shutter` | Drag-to-peek cover for sensitive values |
+| Voice Pill | `voice-pill` | Audio capture with a live waveform and slide-to-cancel |
+| Save State Pill | `save-state-pill` | Save, offline, retry and conflict states in one morphing pill |
+| Filter Chips | `filter-chips` | Single or multi-select chips that reflow on a spring |
+| Note Button | `note-button` | A button that morphs into a persistent scratchpad |
 
 ## Install
 
-Every registry item supports both GitHub shorthand and the hosted JSON registry.
-
-**GitHub shorthand**
-
-```bash
-npx shadcn@latest add Killersumit/peel-ui/save-state-pill
-```
-
-**Direct registry URL**
-
-```bash
-npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json
-```
-
-Replace `save-state-pill` with any install name in the component table. For example:
-
 ```bash
 npx shadcn@latest add Killersumit/peel-ui/slide-to-confirm
+```
+
+Swap `slide-to-confirm` for any install name above. The hosted URL form works too:
+
+```bash
 npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 ```
 
-The components use Motion and, where needed, Lucide icons. Note Button additionally requires GSAP. Install the shared dependencies in your app:
+Your project needs to be set up with `npx shadcn@latest init`, which provides `@/lib/utils`. The CLI installs each component's own dependencies.
+
+## Run locally
 
 ```bash
-npm install motion lucide-react clsx tailwind-merge gsap @gsap/react
+git clone https://github.com/Killersumit/peel-ui.git
+cd peel-ui
+npm install
+npm run dev
 ```
 
-`gsap` and `@gsap/react` are needed only for Note Button. Components assume the standard shadcn setup; run `npx shadcn@latest init`, which provides `@/lib/utils`.
-
-## Usage
-
-```tsx
-import { SaveStatePill } from "@/components/ui/save-state-pill";
-
-export function DocumentStatus() {
-  return (
-    <SaveStatePill
-      state="saved"
-      lastSavedAt={new Date()}
-      onRetry={() => syncDocument()}
-      onReviewConflict={() => openConflictReview()}
-    />
-  );
-}
-```
-
-Set `state` to `idle`, `saving`, `saved`, `failed`, `offline`, or `conflict`. When the browser reports that it is offline, the pill shows the queued-changes state until connectivity returns.
-
-## Registry development
-
-The root `registry.json` is the manifest for GitHub shorthand installs. Build the hosted item files and index with:
-
-```bash
-npm run registry:build
-```
-
-The script embeds each component's source into `public/r/{name}.json` and writes `public/r/index.json`. The production build runs this step before Next.js:
-
-```bash
-npm run build
-```
-
-## Sponsorships
-
-Peel UI accepts project support through [GitHub Sponsors](https://github.com/sponsors/Killersumit). For sponsorship or partnership enquiries, contact [Sumit on X](https://x.com/Sumit1476136).
+Components live in `src/components/ui`. After changing a component or `registry.json`, run `npm run registry:build`.
 
 ## License
 
-Peel UI is distributed under the [MIT License](LICENSE).
+[MIT](LICENSE)
