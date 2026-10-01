@@ -32,12 +32,14 @@ Peel UI is an open-source collection of copy-ready React components. The library
 
 | Component | Install name | Interaction |
 | --- | --- | --- |
-| Save State Pill | `save-state-pill` | Save and sync status with offline, retry, and conflict states |
-| Slide to Confirm | `slide-to-confirm` | Friction drag with a magnetic confirmation threshold |
-| Magnetic Split Button | `magnetic-split-button` | Separated primary and secondary actions with a spring latch |
-| Tactile PIN Field | `tactile-pin-field` | Numeric authentication input with a moving focus frame |
-| Privacy Shutter | `privacy-shutter` | Drag-to-reveal control for sensitive values |
-| Voice Pill | `voice-pill` | Audio capture control with a live waveform |
+| Save State Pill | `save-state-pill` | Spring-morphing toolbar status indicator with offline queuing, error recovery, and relative timestamps |
+| Slide to Confirm | `slide-to-confirm` | Mechanical verification trigger with friction drag and magnetic pocket |
+| Magnetic Split Button | `magnetic-split-button` | Dual-half action capsule with proximity separation and latching |
+| Tactile PIN Field | `tactile-pin-field` | Auth input chassis with floating lens focus frame and tumbler micro-springs |
+| Privacy Shutter | `privacy-shutter` | Security key shroud with spring-loaded physical peek slider |
+| Voice Pill | `voice-pill` | Audio capsule with live Web Audio API AnalyserNode frequency canvas and slide-to-cancel physics |
+| Tactile Filter Chips | `filter-chips` | Hardware-inspired multi-select and radio filter chips with spring-bound layout morphing and tabular counters |
+| Note Button | `note-button` | A notebook trigger that expands into a persistent, line-numbered note panel with a keyboard-aware mobile sheet |
 
 ## Install
 
@@ -62,13 +64,13 @@ npx shadcn@latest add Killersumit/peel-ui/slide-to-confirm
 npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 ```
 
-The components use Motion and, where needed, Lucide icons. Install the shared dependencies in your app:
+The components use Motion and, where needed, Lucide icons. Note Button additionally requires GSAP. Install the shared dependencies in your app:
 
 ```bash
-npm install motion lucide-react clsx tailwind-merge
+npm install motion lucide-react clsx tailwind-merge gsap @gsap/react
 ```
 
-The components that use `cn` expect the standard shadcn utility at `@/lib/utils`. If your project uses a different alias, update that import after installation.
+`gsap` and `@gsap/react` are needed only for Note Button. Components assume the standard shadcn setup; run `npx shadcn@latest init`, which provides `@/lib/utils`.
 
 ## Usage
 
