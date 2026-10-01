@@ -34,7 +34,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
               No accounts, ads, analytics, or form submissions are present in
-              the site code. The audited pages set no cookies. Demos run in
+              the site code. The site&apos;s code sets no cookies. Demos run in
               your browser.
             </p>
           </section>
@@ -96,18 +96,17 @@ export default function PrivacyPage() {
             <h2 className="text-sm font-semibold text-white">Third parties</h2>
             <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
               Page loads do not request third-party scripts or embedded
-              content. The navbar&apos;s star icon and “Star” label are static;
-              there is no live star count or browser request to GitHub for a
-              count. If you open a repository or Issues link, GitHub receives
-              the request, including your IP address and standard connection
-              details.
+              content. The site does not request a star count or any other
+              data from GitHub when a page loads. If you open a repository or
+              Issues link, GitHub receives the request, including your IP
+              address and standard connection details.
             </p>
           </section>
 
           <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
             <h2 className="text-sm font-semibold text-white">Cookies</h2>
             <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
-              The audited pages set no cookies and do not read browser cookies.
+              The site&apos;s code sets no cookies and does not read browser cookies.
             </p>
           </section>
 
