@@ -141,7 +141,7 @@ When you reference, import, or generate components inspired by shadcn, Aceternit
 - Every component in `src/components/ui/[name].tsx` must be copy-paste self-contained.
 - Do not add extraneous npm package dependencies. Use native SVG, CSS animations, or standard Motion primitives.
 - Expose clear TypeScript interfaces and always allow `className` overrides merged via `cn()`.
-- Registry components in `src/components/ui/` must be self-contained. They inline their own spring constants and may import only from `react`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`. They must NEVER import from `@/lib/motion`, `@/config`, or any other site file.
+- Registry components in `src/components/ui/` must be self-contained. They inline their own spring constants and may import only from `react`, `react-dom`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`. They must NEVER import from `@/lib/motion`, `@/config`, or any other site file.
 - Compound registry items may use relative imports between files shipped together in that item's `files` array.
 
 ---

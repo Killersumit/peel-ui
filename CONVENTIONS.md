@@ -53,7 +53,7 @@ Site-shell components may use shared transitions from `@/lib/motion`; registry c
 1. Every `src/components/ui/` component uses `React.forwardRef` with typed props.
 2. Every component accepts a `className` prop merged via `cn()`.
 3. Compound components may use relative imports between files shipped together in one registry item.
-4. Registry components in `src/components/ui/` must be self-contained. They inline their own spring constants and may import only from `react`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`. They must NEVER import from `@/lib/motion`, `@/config`, or any other site file.
+4. Registry components in `src/components/ui/` must be self-contained. They inline their own spring constants and may import only from `react`, `react-dom`, `motion/react`, `gsap`, `@gsap/react`, `lucide-react`, and `@/lib/utils`. They must NEVER import from `@/lib/motion`, `@/config`, or any other site file.
 5. Registry components must not import sibling UI files unless they are shipped together in the same registry item.
 6. All animated components must check `useReducedMotion()`.
 
