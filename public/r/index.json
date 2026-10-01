@@ -163,23 +163,6 @@
           "target": "components/ui/note-button/line-gutter.tsx"
         }
       ]
-    },
-    {
-      "name": "amount-input",
-      "type": "registry:ui",
-      "title": "Amount Input",
-      "description": "Tactile currency and number input with zero-cursor-jumping caret preservation and regional grouping.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "components/ui/amount-input.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/amount-input.tsx"
-        }
-      ]
     }
   ]
 }
