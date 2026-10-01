@@ -1,3 +1,15 @@
+# WHERE THINGS LIVE
+
+- Registry components: `src/components/ui/` (one `.tsx` file or one folder for a compound component).
+- Registry manifest: root `registry.json`; `files[].path` is source and `target` is the install destination.
+- Generated registry output: `public/r/`, produced by `npm run registry:build`; never hand-edit it.
+- Metadata: `src/config/components-data.ts` (detail pages) and `src/components/registry/registry-data.tsx` (catalog).
+- Demos: `src/components/demos/`.
+- Showcase: `src/components/showcase/`.
+- Documentation: root-level Markdown files.
+- Never create a second copy of a component.
+- A new component requires one source file or compound folder, one `registry.json` entry, one metadata entry, and one demo.
+
 # AGENTS.md — Master Directives for High-Craft Web Architecture
 
 ## 1. OPERATIONAL IDENTITY & PRIME DIRECTIVE
