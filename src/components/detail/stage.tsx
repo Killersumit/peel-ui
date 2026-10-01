@@ -11,8 +11,10 @@ import {
   Terminal,
   X,
 } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { ComponentRecord } from "@/config/components-data";
 import { cn } from "@/lib/utils";
+import { microTransition } from "@/lib/motion";
 
 export type SurfaceTheme = "obsidian" | "dark" | "ceramic";
 type PackageManager = keyof ComponentRecord["install"];
@@ -87,15 +89,16 @@ export function Stage({
     }
   };
 
+  const shouldReduceMotion = useReducedMotion();
+  const surfaceColor = surfaces.find((surface) => surface.id === surfaceTheme)?.color
+    ?? surfaces[0].color;
+
   return (
-    <section
+    <motion.section
       aria-label={`${componentRecord.name} interactive preview`}
-      className={cn(
-        "sticky top-0 z-20 flex h-[42vh] min-h-64 w-full shrink-0 flex-col transition-colors duration-200 md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1",
-        surfaceTheme === "obsidian" && "bg-black",
-        surfaceTheme === "dark" && "bg-zinc-900",
-        surfaceTheme === "ceramic" && "bg-zinc-100"
-      )}
+      animate={{ backgroundColor: surfaceColor }}
+      transition={shouldReduceMotion ? { duration: 0 } : microTransition}
+      className="sticky top-0 z-20 flex h-[42vh] min-h-64 w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
     >
       <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden">
         <div className="absolute right-4 top-4 z-30 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111113] p-1">
@@ -211,20 +214,10 @@ export function Stage({
         </div>
 
         <div
-          className={cn(
-            "flex h-auto max-h-[82%] w-[min(24rem,calc(100%-2rem))] items-center justify-center rounded-2xl p-4 transition-colors duration-200 md:h-[82%] md:w-auto md:aspect-[0.66] md:max-h-[44rem] md:rounded-[2rem] md:p-8",
-            surfaceTheme === "obsidian" && "bg-[#111113]",
-            surfaceTheme === "dark" && "bg-zinc-900",
-            surfaceTheme === "ceramic" && "bg-zinc-100",
-            "max-md:bg-transparent"
-          )}
+          key={`${componentRecord.slug}-${demoKey}`}
+          className="relative z-10 flex min-h-0 w-full flex-1 items-center justify-center"
         >
-          <div
-            key={`${componentRecord.slug}-${demoKey}`}
-            className="flex w-full items-center justify-center"
-          >
-            <Demo />
-          </div>
+          <Demo />
         </div>
 
         <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2">
@@ -258,6 +251,6 @@ export function Stage({
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
