@@ -1,11 +1,77 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { SlideToConfirm } from "@/components/ui/slide-to-confirm";
-import { MagneticSplitButton } from "@/components/ui/magnetic-split-button";
-import { TactileOtpInput } from "@/components/ui/tactile-otp-input";
-import { PrivacyShutter } from "@/components/ui/privacy-shutter";
+
+const SlideToConfirm = React.lazy(() =>
+  import("@/components/ui/slide-to-confirm").then((module) => ({
+    default: module.SlideToConfirm,
+  })),
+);
+const MagneticSplitButton = React.lazy(() =>
+  import("@/components/ui/magnetic-split-button").then((module) => ({
+    default: module.MagneticSplitButton,
+  })),
+);
+const TactileOtpInput = React.lazy(() =>
+  import("@/components/ui/tactile-otp-input").then((module) => ({
+    default: module.TactileOtpInput,
+  })),
+);
+const PrivacyShutter = React.lazy(() =>
+  import("@/components/ui/privacy-shutter").then((module) => ({
+    default: module.PrivacyShutter,
+  })),
+);
+
+function DeferredPreview({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className: string;
+}) {
+  const [isNearViewport, setIsNearViewport] = React.useState(false);
+  const previewRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const preview = previewRef.current;
+    if (!preview) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setIsNearViewport(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+
+    observer.observe(preview);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={previewRef} className={className}>
+      {isNearViewport ? (
+        <React.Suspense
+          fallback={<div className="size-full" aria-hidden="true" />}
+        >
+          {children}
+        </React.Suspense>
+      ) : (
+        <div className="size-full" aria-hidden="true" />
+      )}
+    </div>
+  );
+}
 
 /* ─────────────────────────────────────────────────────────────
    Bento Grid — High-Craft Skeleton
@@ -58,9 +124,9 @@ export function BentoGrid() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* ━━━ CARD 1 — Hero Anchor (2×2, Light Well) ━━━ */}
         <div className="md:col-span-2 md:row-span-2 min-h-[420px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-zinc-600/50 transition-colors duration-200">
-          <div className="flex-1 rounded-2xl bg-[#e8e8e8] flex items-center justify-center p-6 min-h-[360px] overflow-hidden">
+          <DeferredPreview className="flex-1 rounded-2xl bg-[#e8e8e8] flex items-center justify-center p-6 min-h-[360px] overflow-hidden">
             <SlideToConfirm />
-          </div>
+          </DeferredPreview>
           <div className="flex items-center justify-between pt-4 px-1">
             <span className="text-xs font-mono tracking-wider text-zinc-400 uppercase group-hover:text-white transition-colors duration-200">
               Slide to Confirm
@@ -71,9 +137,9 @@ export function BentoGrid() {
 
         {/* ━━━ CARD 2 — Upper Right (1×1, Dark Well) ━━━ */}
         <div className="col-span-1 min-h-[200px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-neutral-600/50 transition-colors duration-200 relative z-20">
-          <div className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-4 min-h-[150px] relative overflow-visible">
+          <DeferredPreview className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-4 min-h-[150px] relative overflow-visible">
             <MagneticSplitButton />
-          </div>
+          </DeferredPreview>
           <div className="flex items-center justify-between pt-4 px-1">
             <span className="text-xs font-mono tracking-wider text-neutral-400 uppercase group-hover:text-white transition-colors duration-200">
               Magnetic Split Button
@@ -84,9 +150,9 @@ export function BentoGrid() {
 
         {/* ━━━ CARD 3 — Center Right (1×1, Dark Well) ━━━ */}
         <div className="col-span-1 min-h-[200px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-neutral-600/50 transition-colors duration-200 relative">
-          <div className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-4 min-h-[150px] relative overflow-hidden">
+          <DeferredPreview className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-4 min-h-[150px] relative overflow-hidden">
             <TactileOtpInput />
-          </div>
+          </DeferredPreview>
           <div className="flex items-center justify-between pt-4 px-1">
             <span className="text-xs font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors">
               Tactile PIN
@@ -97,9 +163,9 @@ export function BentoGrid() {
 
         {/* ━━━ CARD 4 — Bottom Left (2-col, Privacy Shutter) ━━━ */}
         <div className="md:col-span-2 min-h-[220px] min-w-0 rounded-3xl bg-[#161616] border border-[#252525] p-3 pb-4 flex flex-col group hover:border-neutral-600/50 transition-colors duration-200 relative">
-          <div className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-6 min-h-[170px] relative overflow-hidden">
+          <DeferredPreview className="flex-1 rounded-2xl bg-[#080808] border border-[#1c1c1c] flex items-center justify-center p-6 min-h-[170px] relative overflow-hidden">
             <PrivacyShutter />
-          </div>
+          </DeferredPreview>
           <div className="flex items-center justify-between pt-4 px-1">
             <span className="text-xs font-mono tracking-wider text-zinc-400 uppercase group-hover:text-white transition-colors duration-200">
               Privacy Shutter
