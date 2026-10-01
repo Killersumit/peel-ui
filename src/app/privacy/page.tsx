@@ -29,21 +29,46 @@ export default function PrivacyPage() {
 
         <div className="border-t border-[#232730]">
           <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
+            <h2 className="text-sm font-semibold text-white">
+              The short version
+            </h2>
+            <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
+              No accounts, ads, analytics, or form submissions are present in
+              the site code. The audited pages set no cookies. Demos run in
+              your browser.
+            </p>
+          </section>
+
+          <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
             <h2 className="text-sm font-semibold text-white">What this site is</h2>
             <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
               Peel UI is an open-source catalog of interactive React
-              components. The demos run in your browser.
+              components.
             </p>
           </section>
 
           <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
             <h2 className="text-sm font-semibold text-white">What is collected</h2>
-            <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
-              The site code has no analytics or form submissions. The host
-              serving a page receives your IP address and request details to
-              deliver it. This repository does not specify what the host logs
-              or how long it keeps those records.
-            </p>
+            <div className="max-w-[65ch] space-y-2 text-sm leading-relaxed text-zinc-400">
+              <p>
+                Vercel hosts this site. Like any web host, Vercel receives your
+                IP address and request details to deliver pages. Read{" "}
+                <a
+                  href="https://vercel.com/legal/privacy-policy"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#84ff00] underline underline-offset-4 hover:text-white"
+                >
+                  Vercel&apos;s privacy policy
+                </a>
+                .
+              </p>
+              <p>
+                Installing a component with the shadcn CLI fetches a static
+                JSON file from this site. The host sees that request; the site
+                does not receive your code or project files.
+              </p>
+            </div>
           </section>
 
           <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
@@ -71,10 +96,11 @@ export default function PrivacyPage() {
             <h2 className="text-sm font-semibold text-white">Third parties</h2>
             <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
               Page loads do not request third-party scripts or embedded
-              content. If you open a GitHub repository or Issues link, GitHub
-              receives that request, including your IP address and standard
-              connection details. GitHub handles it under its own privacy
-              policy.
+              content. The navbar&apos;s star icon and “Star” label are static;
+              there is no live star count or browser request to GitHub for a
+              count. If you open a repository or Issues link, GitHub receives
+              the request, including your IP address and standard connection
+              details.
             </p>
           </section>
 
@@ -116,6 +142,15 @@ export default function PrivacyPage() {
                 GitHub
               </a>
               .
+            </p>
+          </section>
+
+          <section className="grid grid-cols-1 gap-2 border-b border-[#232730] py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
+            <h2 className="text-sm font-semibold text-white">If this changes</h2>
+            <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-400">
+              If the site later adds analytics, a form, accounts, or anything
+              else that collects data, this page will be updated at the same
+              time.
             </p>
           </section>
         </div>
