@@ -59,9 +59,9 @@ export function Navbar() {
       initial={
         shouldReduceMotion
           ? { opacity: 1 }
-          : { opacity: 0, y: -6, filter: "blur(4px)" }
+          : { opacity: 0, y: -6 }
       }
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: FAST_EASE }}
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-2xl px-0 pointer-events-none"
     >

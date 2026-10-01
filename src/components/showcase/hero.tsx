@@ -74,9 +74,9 @@ export function Hero() {
           initial={
             shouldReduceMotion
               ? { opacity: 1 }
-              : { scale: 0.98, opacity: 0, filter: "blur(4px)" }
+              : { scale: 0.98, opacity: 0 }
           }
-          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35, ease: FAST_EASE }}
           className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-3 py-1 font-mono text-[11px] text-zinc-400 tracking-wider uppercase mb-5 sm:mb-6 backdrop-blur-sm"
         >
@@ -117,9 +117,9 @@ export function Hero() {
           initial={
             shouldReduceMotion
               ? { opacity: 1 }
-              : { opacity: 0, filter: "blur(4px)" }
+              : { opacity: 0 }
           }
-          animate={{ opacity: 1, filter: "blur(0px)" }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.35, ease: FAST_EASE, delay: 0.18 }}
           className="mt-4 sm:mt-5 text-sm sm:text-base text-zinc-400 max-w-lg mx-auto leading-relaxed px-2"
         >
@@ -132,9 +132,9 @@ export function Hero() {
           initial={
             shouldReduceMotion
               ? { opacity: 1 }
-              : { scale: 0.98, opacity: 0, filter: "blur(4px)" }
+              : { scale: 0.98, opacity: 0 }
           }
-          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35, ease: FAST_EASE, delay: 0.22 }}
           className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 rounded-2xl sm:rounded-full border border-zinc-800 bg-zinc-900/90 p-2 sm:p-1.5 sm:pl-4 w-full max-w-md sm:max-w-xl mx-auto shadow-2xl backdrop-blur-md relative z-10"
         >
