@@ -108,9 +108,9 @@ export function Stage({
           ? { duration: 0 }
           : { backgroundColor: microTransition, layout: springMechanical }
       }
-      className="relative z-20 flex w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
+      className="relative z-20 flex min-h-[52dvh] min-h-[440px] w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
     >
-      <div className="relative flex w-full flex-col items-start justify-start overflow-x-hidden md:min-h-0 md:flex-1 md:flex-row md:items-center md:justify-center md:overflow-hidden">
+      <div className="relative flex w-full flex-1 flex-col items-start justify-start overflow-x-hidden md:min-h-0 md:flex-row md:items-center md:justify-center md:overflow-hidden">
         <div className="absolute right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-30 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111113] p-1">
           <div className="relative" ref={installRef}>
             <button
@@ -239,7 +239,7 @@ export function Stage({
 
         <div
           key={`${componentRecord.slug}-${demoKey}`}
-          className="relative z-10 flex w-full flex-none items-center justify-center pb-4 pt-10 md:min-h-0 md:flex-1 md:py-0"
+          className="relative z-10 flex w-full flex-1 items-center justify-center px-4 pb-4 pt-12 md:min-h-0 md:p-0"
         >
           <Demo />
         </div>
