@@ -48,7 +48,7 @@ export const NoteTrigger = React.forwardRef<
         if (!event.defaultPrevented && !disabled) setOpen(!open);
       }}
       className={[
-        "inline-flex size-11 items-center justify-center rounded-full border border-white/[0.12] bg-[#1f1f21] text-[#c4c4cc] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition-colors hover:bg-[#2a2a2d] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#84ff00] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex size-11 items-center justify-center rounded-full border border-white/[0.12] bg-[#1f1f21] text-[#c4c4cc] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition-colors motion-reduce:transition-none hover:bg-[#2a2a2d] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#84ff00] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50",
         className,
       ]
         .filter(Boolean)

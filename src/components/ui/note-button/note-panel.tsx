@@ -91,8 +91,14 @@ export function NotePanel() {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const scrimRef = React.useRef<HTMLDivElement>(null);
   const timelineRef = React.useRef<gsap.core.Timeline | null>(null);
+  const isReducedMotionRef = React.useRef(
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false
+  );
   const fullscreenRef = React.useRef(false);
   const hasOpenedRef = React.useRef(false);
+  const isCurrentlyOpenRef = React.useRef(false);
   const fullscreenHandlerRef = React.useRef<() => void>(() => {});
   const removeViewportListenersRef = React.useRef<(() => void) | null>(null);
   const mounted = React.useSyncExternalStore(
@@ -114,6 +120,123 @@ export function NotePanel() {
   }, [breakpoint]);
 
   useGSAP(
+    () => {
+      const mm = gsap.matchMedia(panelRef);
+
+      mm.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+          noPreference: "(prefers-reduced-motion: no-preference)",
+        },
+        (context) => {
+          const { reduceMotion } = context.conditions as {
+            reduceMotion: boolean;
+            noPreference: boolean;
+          };
+          isReducedMotionRef.current = reduceMotion;
+
+          if (isCurrentlyOpenRef.current && panelRef.current) {
+            const panel = panelRef.current;
+            const trigger = triggerRef.current;
+            timelineRef.current?.kill();
+
+            if (reduceMotion) {
+              if (isMobile) {
+                gsap.set(panel, {
+                  position: "fixed",
+                  top: "auto",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: fullscreenRef.current
+                    ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                    : "60dvh",
+                  maxHeight: "calc(100dvh - 16px)",
+                  borderRadius: fullscreenRef.current
+                    ? "22px 22px 0px 0px"
+                    : "26px 26px 0px 0px",
+                  yPercent: 0,
+                  opacity: 1,
+                });
+                if (scrimRef.current) gsap.set(scrimRef.current, { autoAlpha: 1 });
+              } else if (trigger) {
+                const target = fullscreenRef.current
+                  ? {
+                      left: 16,
+                      top: 16,
+                      width: window.innerWidth - 32,
+                      height: window.innerHeight - 32,
+                      borderRadius: "22px 22px 22px 22px",
+                    }
+                  : getTargetBounds(trigger, width, height, placement);
+
+                gsap.set(panel, {
+                  position: "fixed",
+                  ...target,
+                  yPercent: 0,
+                  opacity: 1,
+                });
+                gsap.set(trigger, { opacity: 0, scale: 1 });
+              }
+              if (contentRef.current) {
+                gsap.set(contentRef.current, { opacity: 1, y: 0 });
+              }
+            } else {
+              if (isMobile) {
+                gsap.set(panel, {
+                  position: "fixed",
+                  top: "auto",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: fullscreenRef.current
+                    ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                    : "60dvh",
+                  maxHeight: "calc(100dvh - 16px)",
+                  borderRadius: fullscreenRef.current
+                    ? "22px 22px 0px 0px"
+                    : "26px 26px 0px 0px",
+                  yPercent: 0,
+                  opacity: 1,
+                });
+                if (scrimRef.current) gsap.set(scrimRef.current, { autoAlpha: 1 });
+              } else if (trigger) {
+                const target = fullscreenRef.current
+                  ? {
+                      left: 16,
+                      top: 16,
+                      width: window.innerWidth - 32,
+                      height: window.innerHeight - 32,
+                      borderRadius: "22px 22px 22px 22px",
+                    }
+                  : getTargetBounds(trigger, width, height, placement);
+
+                gsap.set(panel, {
+                  position: "fixed",
+                  ...target,
+                  yPercent: 0,
+                  opacity: 1,
+                });
+                gsap.set(trigger, { opacity: 0, scale: 1 });
+              }
+              if (contentRef.current) {
+                gsap.set(contentRef.current, { opacity: 1, y: 0 });
+              }
+            }
+          }
+        }
+      );
+
+      return () => {
+        mm.revert();
+      };
+    },
+    { scope: panelRef }
+  );
+
+  useGSAP(
     (_, contextSafe) => {
       if (!mounted) return;
       const makeContextSafe =
@@ -127,286 +250,441 @@ export function NotePanel() {
       removeViewportListenersRef.current?.();
       removeViewportListenersRef.current = null;
 
-      const safeToggleFullscreen = makeContextSafe(() => {
-        if (!open) return;
-        timelineRef.current?.kill();
-        const nextFullscreen = !fullscreenRef.current;
-        fullscreenRef.current = nextFullscreen;
-        setIsFullscreen(nextFullscreen);
+      const reduceMotion = isReducedMotionRef.current;
 
-        if (isMobile) {
-          const viewportHeight =
-            window.visualViewport?.height ?? window.innerHeight;
-          gsap.to(panel, {
-            height: nextFullscreen
-              ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
-              : "60dvh",
-            maxHeight: `${Math.max(160, viewportHeight - 16)}px`,
-            bottom: 0,
-            borderRadius: nextFullscreen
-              ? "22px 22px 0px 0px"
-              : "26px 26px 0px 0px",
-            duration: 0.65,
-            ease: "expo.inOut",
-            overwrite: "auto",
-          });
-          return;
-        }
+          const safeToggleFullscreen = makeContextSafe(() => {
+            if (!open) return;
+            timelineRef.current?.kill();
+            const nextFullscreen = !fullscreenRef.current;
+            fullscreenRef.current = nextFullscreen;
+            setIsFullscreen(nextFullscreen);
 
-        const target = nextFullscreen
-          ? {
-              left: 16,
-              top: 16,
-              width: window.innerWidth - 32,
-              height: window.innerHeight - 32,
-              borderRadius: "22px 22px 22px 22px",
-            }
-          : getTargetBounds(trigger, width, height, placement);
-
-        gsap.to(panel, {
-          ...target,
-          duration: 0.65,
-          ease: "expo.inOut",
-          overwrite: "auto",
-        });
-      });
-      fullscreenHandlerRef.current = safeToggleFullscreen;
-
-      const safeViewportUpdate = makeContextSafe(() => {
-        if (!open || !isMobile) return;
-        const viewport = window.visualViewport;
-        const keyboardHeight = viewport
-          ? Math.max(
-              0,
-              window.innerHeight - viewport.height - viewport.offsetTop
-            )
-          : 0;
-        const availableHeight = viewport
-          ? Math.max(160, viewport.height - 16)
-          : Math.max(160, window.innerHeight - 16);
-
-        gsap.to(panel, {
-          bottom: keyboardHeight,
-          maxHeight: `${availableHeight}px`,
-          duration: 0.25,
-          ease: "power2.out",
-          overwrite: "auto",
-        });
-      });
-      if (open) {
-        const wasVisible = panel.style.visibility === "visible";
-        const timeline = gsap.timeline();
-        timelineRef.current = timeline;
-        panel.style.visibility = "visible";
-        panel.style.pointerEvents = "auto";
-
-        if (isMobile) {
-          gsap.set(panel, {
-            position: "fixed",
-            top: "auto",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: "100%",
-            height: fullscreenRef.current
-              ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
-              : "60dvh",
-            maxHeight: "calc(100dvh - 16px)",
-            borderRadius: fullscreenRef.current
-              ? "22px 22px 0px 0px"
-              : "26px 26px 0px 0px",
-            ...(wasVisible ? {} : { yPercent: 100 }),
-          });
-          gsap.set(scrimRef.current, { autoAlpha: wasVisible ? 1 : 0 });
-          if (!wasVisible) {
-            timeline.to(scrimRef.current, {
-              autoAlpha: 1,
-              duration: 0.4,
-              ease: "power2.out",
-            });
-          }
-          timeline.to(
-            panel,
-            { yPercent: 0, duration: 0.65, ease: "expo.out" },
-            0
-          );
-          if (contentRef.current) {
-            timeline.to(
-              contentRef.current,
-              { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
-              wasVisible ? 0 : 0.22
-            );
-          }
-        } else {
-          const triggerRect = trigger.getBoundingClientRect();
-          if (!wasVisible) {
-            gsap.set(panel, {
-              position: "fixed",
-              left: triggerRect.left,
-              top: triggerRect.top,
-              width: triggerRect.width,
-              height: triggerRect.height,
-              borderRadius: getFourCornerRadius(trigger),
-              yPercent: 0,
-            });
-            gsap.set(trigger, {
-              opacity: 1,
-              scale: 1,
-              transformOrigin: "center",
-            });
-            if (contentRef.current) {
-              gsap.set(contentRef.current, { opacity: 0, y: 10 });
-            }
-            timeline.to(
-              trigger,
-              {
-                opacity: 0,
-                scale: 0.7,
-                duration: 0.2,
-                ease: "power2.in",
-              },
-              0
-            );
-          } else {
-            gsap.set(trigger, { opacity: 0, scale: 0.7 });
-            const currentRect = panel.getBoundingClientRect();
-            gsap.set(panel, {
-              left: currentRect.left,
-              top: currentRect.top,
-              width: currentRect.width,
-              height: currentRect.height,
-              yPercent: 0,
-            });
-          }
-
-          const target = fullscreenRef.current
-            ? {
-                left: 16,
-                top: 16,
-                width: window.innerWidth - 32,
-                height: window.innerHeight - 32,
-                borderRadius: "22px 22px 22px 22px",
+            if (reduceMotion) {
+              if (isMobile) {
+                const viewportHeight =
+                  window.visualViewport?.height ?? window.innerHeight;
+                gsap.set(panel, {
+                  height: nextFullscreen
+                    ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                    : "60dvh",
+                  maxHeight: `${Math.max(160, viewportHeight - 16)}px`,
+                  bottom: 0,
+                  borderRadius: nextFullscreen
+                    ? "22px 22px 0px 0px"
+                    : "26px 26px 0px 0px",
+                });
+                return;
               }
-            : getTargetBounds(trigger, width, height, placement);
 
-          timeline.to(
-            panel,
-            {
+              const target = nextFullscreen
+                ? {
+                    left: 16,
+                    top: 16,
+                    width: window.innerWidth - 32,
+                    height: window.innerHeight - 32,
+                    borderRadius: "22px 22px 22px 22px",
+                  }
+                : getTargetBounds(trigger, width, height, placement);
+
+              gsap.set(panel, {
+                ...target,
+              });
+              return;
+            }
+
+            if (isMobile) {
+              const viewportHeight =
+                window.visualViewport?.height ?? window.innerHeight;
+              gsap.to(panel, {
+                height: nextFullscreen
+                  ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                  : "60dvh",
+                maxHeight: `${Math.max(160, viewportHeight - 16)}px`,
+                bottom: 0,
+                borderRadius: nextFullscreen
+                  ? "22px 22px 0px 0px"
+                  : "26px 26px 0px 0px",
+                duration: 0.65,
+                ease: "expo.inOut",
+                overwrite: "auto",
+              });
+              return;
+            }
+
+            const target = nextFullscreen
+              ? {
+                  left: 16,
+                  top: 16,
+                  width: window.innerWidth - 32,
+                  height: window.innerHeight - 32,
+                  borderRadius: "22px 22px 22px 22px",
+                }
+              : getTargetBounds(trigger, width, height, placement);
+
+            gsap.to(panel, {
               ...target,
-              duration: 0.75,
-              ease: "expo.inOut",
-              overwrite: "auto",
-            },
-            0
-          );
-          if (contentRef.current) {
-            timeline.to(
-              contentRef.current,
-              { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
-              wasVisible ? 0 : 0.34
-            );
-          }
-        }
-
-        timeline.eventCallback("onComplete", () => {
-          if (open) textareaRef.current?.focus({ preventScroll: true });
-        });
-        hasOpenedRef.current = true;
-      } else if (hasOpenedRef.current) {
-        const timeline = gsap.timeline({
-          onComplete: () => {
-            panel.style.visibility = "hidden";
-            panel.style.pointerEvents = "none";
-            fullscreenRef.current = false;
-            setIsFullscreen(false);
-            trigger.focus({ preventScroll: true });
-          },
-        });
-        timelineRef.current = timeline;
-
-        if (isMobile) {
-          if (contentRef.current) {
-            timeline.to(
-              contentRef.current,
-              { opacity: 0, y: 6, duration: 0.18, ease: "power2.in" },
-              0
-            );
-          }
-          timeline.to(
-            panel,
-            { yPercent: 100, duration: 0.65, ease: "expo.in" },
-            0.06
-          );
-          timeline.to(
-            scrimRef.current,
-            { autoAlpha: 0, duration: 0.4, ease: "power2.in" },
-            0
-          );
-        } else {
-          gsap.set(trigger, { scale: 1, transformOrigin: "center" });
-          const triggerRect = trigger.getBoundingClientRect();
-          const triggerRadius = getFourCornerRadius(trigger);
-          if (contentRef.current) {
-            timeline.to(
-              contentRef.current,
-              { opacity: 0, y: 6, duration: 0.18, ease: "power2.in" },
-              0
-            );
-          }
-          timeline.to(
-            panel,
-            {
-              left: triggerRect.left,
-              top: triggerRect.top,
-              width: triggerRect.width,
-              height: triggerRect.height,
-              borderRadius: triggerRadius,
               duration: 0.65,
               ease: "expo.inOut",
               overwrite: "auto",
-            },
-            0.06
-          );
-          timeline.fromTo(
-            trigger,
-            { opacity: 0, scale: 0.7, transformOrigin: "center" },
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.4,
-              ease: "back.out(2)",
-            },
-            0.5
-          );
+            });
+          });
+          fullscreenHandlerRef.current = safeToggleFullscreen;
+
+          const safeViewportUpdate = makeContextSafe(() => {
+            if (!open || !isMobile) return;
+            const viewport = window.visualViewport;
+            const keyboardHeight = viewport
+              ? Math.max(
+                  0,
+                  window.innerHeight - viewport.height - viewport.offsetTop
+                )
+              : 0;
+            const availableHeight = viewport
+              ? Math.max(160, viewport.height - 16)
+              : Math.max(160, window.innerHeight - 16);
+
+            if (reduceMotion) {
+              gsap.set(panel, {
+                bottom: keyboardHeight,
+                maxHeight: `${availableHeight}px`,
+              });
+              return;
+            }
+
+            gsap.to(panel, {
+              bottom: keyboardHeight,
+              maxHeight: `${availableHeight}px`,
+              duration: 0.25,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+          });
+
+          if (open) {
+            const wasVisible =
+              panel.style.visibility === "visible" ||
+              isCurrentlyOpenRef.current;
+            panel.style.visibility = "visible";
+            panel.style.pointerEvents = "auto";
+            isCurrentlyOpenRef.current = true;
+
+            if (reduceMotion) {
+              timelineRef.current?.kill();
+
+              if (isMobile) {
+                gsap.set(panel, {
+                  position: "fixed",
+                  top: "auto",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: fullscreenRef.current
+                    ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                    : "60dvh",
+                  maxHeight: "calc(100dvh - 16px)",
+                  borderRadius: fullscreenRef.current
+                    ? "22px 22px 0px 0px"
+                    : "26px 26px 0px 0px",
+                  yPercent: 0,
+                });
+                if (scrimRef.current) gsap.to(scrimRef.current, { autoAlpha: 1, duration: wasVisible ? 0 : 0.08 });
+                if (contentRef.current) gsap.set(contentRef.current, { opacity: 1, y: 0 });
+              } else {
+                const target = fullscreenRef.current
+                  ? {
+                      left: 16,
+                      top: 16,
+                      width: window.innerWidth - 32,
+                      height: window.innerHeight - 32,
+                      borderRadius: "22px 22px 22px 22px",
+                    }
+                  : getTargetBounds(trigger, width, height, placement);
+
+                gsap.set(panel, {
+                  position: "fixed",
+                  ...target,
+                  yPercent: 0,
+                });
+                gsap.set(trigger, { opacity: 0, scale: 1 });
+                if (contentRef.current) {
+                  gsap.set(contentRef.current, { opacity: 1, y: 0 });
+                }
+              }
+
+              const timeline = gsap.timeline({
+                onComplete: () => {
+                  if (open) textareaRef.current?.focus({ preventScroll: true });
+                },
+              });
+              timelineRef.current = timeline;
+              timeline.fromTo(
+                panel,
+                { opacity: wasVisible ? 1 : 0 },
+                { opacity: 1, duration: wasVisible ? 0 : 0.08 }
+              );
+
+              hasOpenedRef.current = true;
+            } else {
+              const timeline = gsap.timeline();
+              timelineRef.current = timeline;
+
+              if (isMobile) {
+                gsap.set(panel, {
+                  position: "fixed",
+                  top: "auto",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: fullscreenRef.current
+                    ? "calc(100dvh - max(12px, env(safe-area-inset-top, 0px) + 8px))"
+                    : "60dvh",
+                  maxHeight: "calc(100dvh - 16px)",
+                  borderRadius: fullscreenRef.current
+                    ? "22px 22px 0px 0px"
+                    : "26px 26px 0px 0px",
+                  ...(wasVisible ? {} : { yPercent: 100 }),
+                });
+                gsap.set(scrimRef.current, { autoAlpha: wasVisible ? 1 : 0 });
+                if (!wasVisible) {
+                  timeline.to(scrimRef.current, {
+                    autoAlpha: 1,
+                    duration: 0.4,
+                    ease: "power2.out",
+                  });
+                }
+                timeline.to(
+                  panel,
+                  { yPercent: 0, duration: 0.65, ease: "expo.out" },
+                  0
+                );
+                if (contentRef.current) {
+                  timeline.to(
+                    contentRef.current,
+                    { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
+                    wasVisible ? 0 : 0.22
+                  );
+                }
+              } else {
+                const triggerRect = trigger.getBoundingClientRect();
+                if (!wasVisible) {
+                  gsap.set(panel, {
+                    position: "fixed",
+                    left: triggerRect.left,
+                    top: triggerRect.top,
+                    width: triggerRect.width,
+                    height: triggerRect.height,
+                    borderRadius: getFourCornerRadius(trigger),
+                    yPercent: 0,
+                  });
+                  gsap.set(trigger, {
+                    opacity: 1,
+                    scale: 1,
+                    transformOrigin: "center",
+                  });
+                  if (contentRef.current) {
+                    gsap.set(contentRef.current, { opacity: 0, y: 10 });
+                  }
+                  timeline.to(
+                    trigger,
+                    {
+                      opacity: 0,
+                      scale: 0.7,
+                      duration: 0.2,
+                      ease: "power2.in",
+                    },
+                    0
+                  );
+                } else {
+                  gsap.set(trigger, { opacity: 0, scale: 0.7 });
+                  const currentRect = panel.getBoundingClientRect();
+                  gsap.set(panel, {
+                    left: currentRect.left,
+                    top: currentRect.top,
+                    width: currentRect.width,
+                    height: currentRect.height,
+                    yPercent: 0,
+                  });
+                }
+
+                const target = fullscreenRef.current
+                  ? {
+                      left: 16,
+                      top: 16,
+                      width: window.innerWidth - 32,
+                      height: window.innerHeight - 32,
+                      borderRadius: "22px 22px 22px 22px",
+                    }
+                  : getTargetBounds(trigger, width, height, placement);
+
+                timeline.to(
+                  panel,
+                  {
+                    ...target,
+                    duration: 0.75,
+                    ease: "expo.inOut",
+                    overwrite: "auto",
+                  },
+                  0
+                );
+                if (contentRef.current) {
+                  timeline.to(
+                    contentRef.current,
+                    { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+                    wasVisible ? 0 : 0.34
+                  );
+                }
+              }
+
+              timeline.eventCallback("onComplete", () => {
+                if (open) textareaRef.current?.focus({ preventScroll: true });
+              });
+              hasOpenedRef.current = true;
+            }
+          } else if (hasOpenedRef.current) {
+            isCurrentlyOpenRef.current = false;
+            if (reduceMotion) {
+              timelineRef.current?.kill();
+              const timeline = gsap.timeline({
+                onComplete: () => {
+                  panel.style.visibility = "hidden";
+                  panel.style.pointerEvents = "none";
+                  fullscreenRef.current = false;
+                  setIsFullscreen(false);
+                  trigger.focus({ preventScroll: true });
+                },
+              });
+              timelineRef.current = timeline;
+
+              if (scrimRef.current) {
+                timeline.to(scrimRef.current, { autoAlpha: 0, duration: 0.08 }, 0);
+              }
+              if (contentRef.current) {
+                timeline.to(contentRef.current, { opacity: 0, duration: 0.08 }, 0);
+              }
+              timeline.to(panel, { opacity: 0, duration: 0.08 }, 0);
+              if (!isMobile) {
+                timeline.fromTo(
+                  trigger,
+                  { opacity: 0, scale: 1 },
+                  { opacity: 1, scale: 1, duration: 0.08 },
+                  0
+                );
+              }
+            } else {
+              const timeline = gsap.timeline({
+                onComplete: () => {
+                  panel.style.visibility = "hidden";
+                  panel.style.pointerEvents = "none";
+                  fullscreenRef.current = false;
+                  setIsFullscreen(false);
+                  trigger.focus({ preventScroll: true });
+                },
+              });
+              timelineRef.current = timeline;
+
+              if (isMobile) {
+                if (contentRef.current) {
+                  timeline.to(
+                    contentRef.current,
+                    { opacity: 0, y: 6, duration: 0.18, ease: "power2.in" },
+                    0
+                  );
+                }
+                timeline.to(
+                  panel,
+                  { yPercent: 100, duration: 0.65, ease: "expo.in" },
+                  0.06
+                );
+                timeline.to(
+                  scrimRef.current,
+                  { autoAlpha: 0, duration: 0.4, ease: "power2.in" },
+                  0
+                );
+              } else {
+                gsap.set(trigger, { scale: 1, transformOrigin: "center" });
+                const triggerRect = trigger.getBoundingClientRect();
+                const triggerRadius = getFourCornerRadius(trigger);
+                if (contentRef.current) {
+                  timeline.to(
+                    contentRef.current,
+                    { opacity: 0, y: 6, duration: 0.18, ease: "power2.in" },
+                    0
+                  );
+                }
+                timeline.to(
+                  panel,
+                  {
+                    left: triggerRect.left,
+                    top: triggerRect.top,
+                    width: triggerRect.width,
+                    height: triggerRect.height,
+                    borderRadius: triggerRadius,
+                    duration: 0.65,
+                    ease: "expo.inOut",
+                    overwrite: "auto",
+                  },
+                  0.06
+                );
+                timeline.fromTo(
+                  trigger,
+                  { opacity: 0, scale: 0.7, transformOrigin: "center" },
+                  {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.4,
+                    ease: "back.out(2)",
+                  },
+                  0.5
+                );
+              }
+            }
+          }
+
+          const viewport = window.visualViewport;
+          if (open && isMobile && viewport) {
+            viewport.addEventListener("resize", safeViewportUpdate);
+            viewport.addEventListener("scroll", safeViewportUpdate);
+            removeViewportListenersRef.current = () => {
+              viewport.removeEventListener("resize", safeViewportUpdate);
+              viewport.removeEventListener("scroll", safeViewportUpdate);
+            };
+            safeViewportUpdate();
+          }
+
+          return () => {
+            timelineRef.current?.kill();
+            removeViewportListenersRef.current?.();
+            removeViewportListenersRef.current = null;
+          };
+        },
+        {
+          scope: panelRef,
+          dependencies: [mounted, open, isMobile, width, height, placement],
         }
+      );
+
+      React.useEffect(
+        () => () => {
+          timelineRef.current?.kill();
+          removeViewportListenersRef.current?.();
+          removeViewportListenersRef.current = null;
+        },
+        []
+      );
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onWindowKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        requestClose();
       }
-
-      const viewport = window.visualViewport;
-      if (open && isMobile && viewport) {
-        viewport.addEventListener("resize", safeViewportUpdate);
-        viewport.addEventListener("scroll", safeViewportUpdate);
-        removeViewportListenersRef.current = () => {
-          viewport.removeEventListener("resize", safeViewportUpdate);
-          viewport.removeEventListener("scroll", safeViewportUpdate);
-        };
-        safeViewportUpdate();
-      }
-
-      return undefined;
-    },
-    {
-      scope: panelRef,
-      dependencies: [mounted, open, isMobile, width, height, placement],
-    }
-  );
-
-  React.useEffect(
-    () => () => {
-      timelineRef.current?.kill();
-      removeViewportListenersRef.current?.();
-    },
-    []
-  );
+    };
+    window.addEventListener("keydown", onWindowKeyDown);
+    return () => window.removeEventListener("keydown", onWindowKeyDown);
+  }, [open, requestClose]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
@@ -509,7 +787,7 @@ export function NotePanel() {
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             aria-pressed={isFullscreen}
             onClick={() => fullscreenHandlerRef.current()}
-            className="inline-flex size-10 items-center justify-center rounded-lg text-[#c4c4cc] transition-colors hover:bg-white/[0.12] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#84ff00] sm:size-[30px]"
+            className="inline-flex size-10 items-center justify-center rounded-lg text-[#c4c4cc] transition-colors motion-reduce:transition-none hover:bg-white/[0.12] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#84ff00] sm:size-[30px]"
           >
             {isFullscreen ? (
               <Minimize2 aria-hidden="true" className="size-3.5" />
@@ -521,7 +799,7 @@ export function NotePanel() {
             type="button"
             aria-label="Close notes"
             onClick={requestClose}
-            className="inline-flex size-10 items-center justify-center rounded-lg text-[#c4c4cc] transition-colors hover:bg-white/[0.12] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#84ff00] sm:size-[30px]"
+            className="inline-flex size-10 items-center justify-center rounded-lg text-[#c4c4cc] transition-colors motion-reduce:transition-none hover:bg-white/[0.12] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#84ff00] sm:size-[30px]"
           >
             <X aria-hidden="true" className="size-4" />
           </button>
