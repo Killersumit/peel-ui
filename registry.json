@@ -49,17 +49,17 @@
       ]
     },
     {
-      "name": "tactile-pin-field",
+      "name": "tactile-otp-input",
       "type": "registry:ui",
-      "title": "Tactile PIN Field",
-      "description": "Auth input chassis with floating lens focus frame and tumbler micro-springs.",
+      "title": "Tactile OTP Input",
+      "description": "Numeric one-time code input with a moving focus frame and digit transitions.",
       "dependencies": ["motion"],
       "registryDependencies": [],
       "files": [
         {
-          "path": "src/components/ui/tactile-pin-field.tsx",
+          "path": "src/components/ui/tactile-otp-input.tsx",
           "type": "registry:ui",
-          "target": "components/ui/tactile-pin-field.tsx"
+          "target": "components/ui/tactile-otp-input.tsx"
         }
       ]
     },
