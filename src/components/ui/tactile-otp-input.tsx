@@ -58,8 +58,7 @@ export function TactileOtpInput({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawVal = e.target.value.replace(/\D/g, "");
-    const chars = rawVal.slice(0, length).split("");
+    const chars = e.target.value.replace(/\D/g, "").slice(0, length).split("");
     const padded = Array(length)
       .fill("")
       .map((_, i) => chars[i] || "");
@@ -69,8 +68,8 @@ export function TactileOtpInput({
     const nextIndex = Math.min(chars.length, length - 1);
     setActiveIndex(nextIndex);
 
-    if (chars.length === length && onComplete) {
-      onComplete(chars.join(""));
+    if (chars.length === length) {
+      onComplete?.(chars.join(""));
     }
   };
 
