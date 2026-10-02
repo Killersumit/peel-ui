@@ -1,48 +1,42 @@
 # Peel UI
-> Tactile, hardware-grade motion primitives for React 19 and Tailwind CSS. Built on damped kinematic spring physics, Web Audio synthesis, and zero render-throttled GPU motion values.
+> React UI components distributed through a shadcn registry.
 
-Peel UI provides copy-paste React primitives that treat digital interfaces like machined physical equipment. It uses the remote shadcn registry architecture so components can be added directly via the CLI without compiled npm package bloat.
+Peel UI is a component registry. Each registry item can be installed into a project with the shadcn CLI.
 
-- Website: https://peelui.com
+- Website: https://peel-ui.vercel.app
 - GitHub: https://github.com/Killersumit/peel-ui
-- Registry Index: https://peelui.com/r/index.json
-- Full Technical Specification: https://peelui.com/llms-full.txt
+- Registry Index: https://peel-ui.vercel.app/r/index.json
+- Full Technical Specification: https://peel-ui.vercel.app/llms-full.txt
+- License: MIT (https://github.com/Killersumit/peel-ui/blob/main/LICENSE)
 
-## Core Primitives Catalog
+## Registry Components
 
-- [Voice Pill](https://peelui.com/components/voice-pill): Dynamic audio capsule with live Web Audio API AnalyserNode frequency canvas, slide-to-cancel physics, and simulated syllable fallback.
-- [Peel Card](https://peelui.com/components/peel-card): Interactive card surface featuring an elastic folded corner that peels back on hover or drag to reveal underlying code and telemetry.
-- [Slide to Confirm](https://peelui.com/components/slide-to-confirm): Mechanical verification trigger with friction drag, magnetic pull pocket at 78%, and kinetic end-stop recoil.
-- [Magnetic Split Button](https://peelui.com/components/magnetic-split-button): Dual-half action capsule with proximity separation, physical spring detachment, and latching.
-- [Tactile PIN Field](https://peelui.com/components/tactile-pin-field): Auth input chassis with a floating lens focus frame, mechanical layout glide, and tumbler micro-springs.
-- [Privacy Shutter](https://peelui.com/components/privacy-shutter): Security key shroud with spring-loaded physical peek slider, detent latching, and clipboard copy.
-- [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff): Measured skeleton blocks travel into matching content while the page height settles.
+- [Save State Pill](https://peel-ui.vercel.app/components/save-state-pill) (`save-state-pill`): Displays idle, saving, saved, failed, offline, and conflict states, with retry and conflict-review callbacks.
+- [Slide to Confirm](https://peel-ui.vercel.app/components/slide-to-confirm) (`slide-to-confirm`): Calls its confirmation callback when the drag reaches 75% of the track and supports reset.
+- [Magnetic Split Button](https://peel-ui.vercel.app/components/magnetic-split-button) (`magnetic-split-button`): Provides a primary action and a menu of selectable actions.
+- [Tactile PIN Field](https://peel-ui.vercel.app/components/tactile-pin-field) (`tactile-pin-field`): Accepts numeric input in configurable digit slots and calls its completion callback when all slots are filled.
+- [Privacy Shutter](https://peel-ui.vercel.app/components/privacy-shutter) (`privacy-shutter`): Uses a draggable shutter to reveal or conceal an API key, with copy and lock controls.
+- [Voice Pill](https://peel-ui.vercel.app/components/voice-pill) (`voice-pill`): Uses microphone audio or a simulated signal, with an optional canvas waveform and slide-to-cancel.
+- [Tactile Filter Chips](https://peel-ui.vercel.app/components/filter-chips) (`filter-chips`): Supports single or multiple selection, optional counts, disabled options, and a clear action.
+- [Note Button](https://peel-ui.vercel.app/components/note-button) (`note-button`): Opens a note editor from a trigger and can persist note text in localStorage.
+- [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff) (`skeleton-handoff`): Matches skeleton blocks to content by ID and transitions between loading, ready, and error states.
 
-## Installation Architecture (shadcn CLI)
+## Installation
 
-All primitives are standalone TypeScript modules that install directly into your project:
+Install a registry item with the shadcn CLI and its public registry JSON:
 
 ```bash
-npx shadcn@latest add https://peelui.com/r/voice-pill.json
-npx shadcn@latest add https://peelui.com/r/peel-card.json
-npx shadcn@latest add https://peelui.com/r/slide-to-confirm.json
-npx shadcn@latest add https://peelui.com/r/magnetic-split-button.json
-npx shadcn@latest add https://peelui.com/r/tactile-otp-input.json
-npx shadcn@latest add https://peelui.com/r/privacy-shutter.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-pin-field.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 ```
 
-## Core Requirements
+## Repository Versions
 
-- React 18 or React 19
-- Tailwind CSS v3.4+ or v4.0
-- Motion (`motion` or `framer-motion`)
-- Lucide React (`lucide-react`)
-- Utilities: `clsx`, `tailwind-merge`
-
-## Design & Engineering Directives
-
-- Surface Tones: Obsidian `#101216`, Canvas `#08090a`, Structural Hairline `#232730`
-- Accents: Acid Lime `#84ff00`, Warm Coral `#ff553e`
-- Motion: Physical springs ($k=500, c=35, m=0.8$) instead of linear ease curves.
-- Zero AI Slop: No generic radial background glows, no blurry glassmorphism, no emojis in UI.
+The repository package manifest specifies React 19.2.8, Next.js 16.3.6, and Tailwind CSS ^4.

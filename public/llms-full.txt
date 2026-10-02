@@ -1,274 +1,149 @@
-# Peel UI — Complete Technical & Physics API Manual
+# Peel UI Registry Reference
 
-This document provides complete implementation specifications, interfaces, and physics constants for all Peel UI primitives.
+This reference lists the registry components, their implemented behavior, public props, and install commands.
 
-## Brand Design Tokens
-- Canvas Background: `#08090a`
-- Surface Body: `#101216`
-- Surface Elevated: `#181b22`
-- Structural Hairline Border: `#232730`
-- Primary Brand Accent (Acid Lime): `#84ff00`
-- Action / Destructive Accent (Warm Coral): `#ff553e`
-- Primary Typography: `#f5f5f7`
-- Muted Typography: `#8b92a0`
-- Monospace / Telemetry: `font-mono tabular-nums`
+## Repository Versions
 
----
+The repository package manifest specifies React 19.2.8, React DOM 19.2.8, Next.js 16.3.6, and Tailwind CSS ^4. These are the versions declared by this repository, not a compatibility statement for other versions.
 
-## 1. Voice Pill (`components/ui/voice-pill.tsx`)
+## Global Design Tokens
 
-### Architecture
-Standalone audio capsule component with real-time browser Web Audio API frequency analysis via HTML5 `<canvas>`. If microphone permissions are denied, it gracefully switches to harmonic speech simulation.
+The following CSS custom properties are defined in `src/app/globals.css`:
 
-### Props Interface
-```typescript
-export interface VoicePillProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  accentColor?: string;       // Default: "#84ff00" (Acid Lime)
-  stopColor?: string;         // Default: "#ff553e" (Warm Coral)
-  iconColor?: string;         // Default: "#a1a1aa"
-  background?: string;        // Default: "#101216"
-  borderColor?: string;       // Default: "#232730"
-  size?: number;              // Height in px. Default: 32 or 44
-  shape?: "pill" | "rounded"; // Default: "pill"
-  reach?: number;             // Expansion offset. Default: 10
-  showTime?: boolean;         // Monospace elapsed timer. Default: true
-  waveform?: boolean;         // Live FFT canvas. Default: true
-  slideToCancel?: boolean;    // Horizontal drag to abort. Default: true
-  cancelDistance?: number;    // Cancel threshold in px. Default: 64
-  attack?: number;            // Rise envelope in ms. Default: 40
-  release?: number;           // Fall envelope in ms. Default: 240
-  sensitivity?: number;       // Gain multiplier. Default: 1.2
-  floor?: number;             // Minimum bar height ratio. Default: 0.12
-  openDuration?: number;      // Capsule expansion ms. Default: 220
-  pressScale?: number;        // Active transform scale. Default: 0.96
-  mode?: "auto" | "hold" | "toggle"; // Trigger mode. Default: "auto"
-  holdAfter?: number;         // Threshold to distinguish tap vs hold in ms. Default: 300
-  reactive?: "simulated" | "mic";    // Audio intake mode. Default: "mic"
-  disabled?: boolean;
-  ariaLabel?: string;
-  onStart?: (info: { source: "simulated" | "mic" }) => void;
-  onStop?: (info: { reason: string; duration: number }) => void;
-}
-```
+| Token | Value |
+| --- | --- |
+| `--peel-base` | `#08090a` |
+| `--peel-surface` | `#12141a` |
+| `--peel-surface-raised` | `#181b22` |
+| `--peel-surface-active` | `#1e2129` |
+| `--peel-border` | `#232730` |
+| `--peel-border-subtle` | `#1a1d24` |
+| `--peel-border-focus` | `#f5f5f7` |
+| `--peel-text-primary` | `#f5f5f7` |
+| `--peel-text-secondary` | `#8a8f98` |
+| `--peel-text-tertiary` | `#51555e` |
+| `--peel-text-mono` | `#9ea3ad` |
+| `--peel-lime` | `#84ff00` |
+| `--peel-lime-foreground` | `#08090a` |
+| `--peel-lime-muted` | `rgba(132, 255, 0, 0.10)` |
+| `--peel-coral` | `#ff553e` |
+| `--peel-coral-foreground` | `#ffffff` |
+| `--peel-coral-muted` | `rgba(255, 85, 62, 0.10)` |
+| `--peel-success` | `#34d399` |
+| `--peel-danger` | `#ff453a` |
 
-### Installation
+## Registry Components
+
+### 1. Save State Pill (`save-state-pill`)
+
+Source: `src/components/ui/save-state-pill.tsx`.
+
+Displays idle, saving, saved, failed, offline, and conflict states. Its props are `state`, `lastSavedAt`, `onRetry`, `onReviewConflict`, `className`, and `interactiveDemo`. The `state` values are `"idle"`, `"saving"`, `"saved"`, `"failed"`, `"offline"`, and `"conflict"`.
+
+Dependencies: `motion`, `lucide-react`.
+
 ```bash
-npx shadcn@latest add https://peelui.com/r/voice-pill.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json
 ```
 
----
+### 2. Slide to Confirm (`slide-to-confirm`)
 
-## 2. Peel Card (`components/ui/peel-card.tsx` / `components/ui/folder.tsx`)
+Source: `src/components/ui/slide-to-confirm.tsx`.
 
-### Architecture
-An asymmetric card component with an interactive corner flap that pulls inward via pointer drag or hover. Dragging reveals an illuminated underlayer containing raw code snippets, API keys, or telemetry.
+Calls `onConfirm` when the drag reaches 75% of the track; a drag released below that threshold returns to the starting position. Props: `label`, `confirmedLabel`, `onConfirm`, `onReset`, `autoResetTimeout`, `className`, and `disabled`.
 
-### Physics Constants
-- Drag Elasticity: `0.2`
-- Spring Stiffness: `450`
-- Spring Damping: `30`
-- Max Drag Constraints: `{ left: -100, top: -100, right: 0, bottom: 0 }`
+Dependencies: `motion`, `lucide-react`.
 
-### Props Interface
-```typescript
-export interface PeelCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string;
-  subtitle?: string;
-  tag?: string;
-  codeSnippet?: string;
-  children?: React.ReactNode;
-}
-```
-
-### Installation
 ```bash
-npx shadcn@latest add https://peelui.com/r/peel-card.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 ```
 
----
+### 3. Magnetic Split Button (`magnetic-split-button`)
 
-## 3. Slide to Confirm (`components/ui/slide-to-confirm.tsx`)
+Source: `src/components/ui/magnetic-split-button.tsx`.
 
-### Architecture
-Hardware-accelerated slide-to-confirm track with spring recoil, dynamic constraints, zero React state in the drag loop, and decisive mechanical end-stop detent feedback.
+Renders a primary action and a menu of selectable actions. Props: `defaultAction`, `actions`, `onAction`, and `className`. Each action has an `id`, a `label`, and an optional `icon`; `onAction` receives the selected action label.
 
-### Physics Constants
-- Drag Elasticity: `0.06`
-- Release Spring Stiffness: `450`
-- Release Spring Damping: `35`
-- Release Spring Mass: `0.8`
-- Magnetic Gravity Pocket: Drag threshold `>= 75%`
+Dependencies: `motion`, `lucide-react`.
 
-### Props Interface
-```typescript
-export interface SlideToConfirmProps {
-  label?: string;
-  confirmedLabel?: string;
-  onConfirm?: () => void;
-  onReset?: () => void;
-  disabled?: boolean;
-  autoResetTimeout?: number;
-  className?: string;
-}
-```
-
-### Installation
 ```bash
-npx shadcn@latest add https://peelui.com/r/slide-to-confirm.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json
 ```
 
----
+### 4. Tactile PIN Field (`tactile-pin-field`)
 
-## 4. Magnetic Split Button (`components/ui/magnetic-split-button.tsx`)
+Source: `src/components/ui/tactile-pin-field.tsx`.
 
-### Architecture
-Dual-half action capsule with proximity separation, physical spring detachment, dropdown options menu, and magnetic snap-back settle.
+Accepts numeric input in configurable digit slots and calls `onComplete` when all slots are filled. Props: `length`, `initialValues`, `onComplete`, and `className`.
 
-### Physics Constants
-- Separation Offset: `8px`
-- Spring Stiffness: `500`
-- Spring Damping: `32`
-- Mass: `0.8`
+Dependencies: `motion`.
 
-### Props Interface
-```typescript
-export interface MagneticSplitButtonProps {
-  primaryLabel?: string;
-  options?: Array<{ id: string; label: string; icon?: React.ReactNode }>;
-  onAction?: (actionId: string) => void;
-  className?: string;
-}
-```
-
-### Installation
 ```bash
-npx shadcn@latest add https://peelui.com/r/magnetic-split-button.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-pin-field.json
 ```
 
----
+The registry item name is `tactile-pin-field` and its title is `Tactile PIN Field`.
 
-## 5. Tactile PIN / OTP Input (`components/ui/tactile-otp-input.tsx`)
+### 5. Privacy Shutter (`privacy-shutter`)
 
-### Architecture
-High-contrast authentication input chassis with a single physical focus frame ("The Floating Lens") that glides smoothly across slots, vertical digit tumblers, and full mobile soft-keyboard support.
+Source: `src/components/ui/privacy-shutter.tsx`.
 
-### Physics Constants
-- Lens Spring Stiffness: `500`
-- Lens Spring Damping: `32`
-- Tumbler Drop Stiffness: `600`
-- Tumbler Drop Damping: `30`
+Uses a draggable shutter to reveal or conceal an API key; crossing 80% of the drag range locks it open. Props: `apiKey`, `maskedKey`, `label`, `onCopy`, `onToggleLock`, and `className`.
 
-### Props Interface
-```typescript
-export interface TactileOtpInputProps {
-  length?: number;
-  initialValues?: string[];
-  onComplete?: (code: string) => void;
-  className?: string;
-}
-```
+Dependencies: `motion`, `lucide-react`.
 
-### Installation
 ```bash
-npx shadcn@latest add https://peelui.com/r/tactile-otp-input.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json
 ```
 
----
+### 6. Voice Pill (`voice-pill`)
 
-## 6. Privacy Shutter (`components/ui/privacy-shutter.tsx`)
+Source: `src/components/ui/voice-pill.tsx`.
 
-### Architecture
-Security key shroud featuring a physical sliding shutter plate. Dragging provides a temporary peek before the 80% detent; crossing 80% magnetically locks the shroud open, exposing the API key alongside an integrated clipboard copy button.
+Uses microphone audio or a simulated signal, and can display its waveform on a canvas or allow slide-to-cancel. In addition to native button props, `VoicePillProps` includes `accentColor`, `stopColor`, `iconColor`, `background`, `borderColor`, `size`, `shape`, `reach`, `showTime`, `waveform`, `slideToCancel`, `cancelDistance`, `attack`, `release`, `sensitivity`, `floor`, `openDuration`, `pressScale`, `mode`, `holdAfter`, `reactive`, `disabled`, `ariaLabel`, `onStart`, `onStop`, and `className`.
 
-### Physics Constants
-- Spring Stiffness: `500`
-- Spring Damping: `32`
-- Spring Mass: `0.8`
-- Latch Detent Threshold: `80%`
+Dependency: `lucide-react`.
 
-### Props Interface
-```typescript
-export interface PrivacyShutterProps {
-  apiKey?: string;
-  maskedKey?: string;
-  label?: string;
-  onCopy?: (key: string) => void;
-  onToggleLock?: (isLockedOpen: boolean) => void;
-  className?: string;
-}
-```
-
-### Installation
 ```bash
-npx shadcn@latest add https://peelui.com/r/privacy-shutter.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json
 ```
 
----
+### 7. Tactile Filter Chips (`filter-chips`)
 
-## 7. Web Audio Synthesis Utility (`lib/sound.ts`)
+Source: `src/components/ui/filter-chips.tsx`.
 
-Synthesizes a 25ms mechanical switch click without loading external `.mp3` or `.wav` media assets:
+Provides single- or multiple-selection chips with optional counts, disabled options, and a clear action. Props: `options`, `value`, `defaultValue`, `onChange`, `mode`, `size`, `showClear`, and `className`. Each option has an `id` and `label`, with optional `count`, `icon`, and `disabled`.
 
-```typescript
-export function playTactileClick(freq: number = 800) {
-  if (typeof window === "undefined") return;
-  const AudioCtx =
-    window.AudioContext ||
-    (window as unknown as { webkitAudioContext: typeof AudioContext })
-      .webkitAudioContext;
-  if (!AudioCtx) return;
-  const ctx = new AudioCtx();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
+Dependency: `motion`.
 
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(freq, ctx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.025);
-
-  gain.gain.setValueAtTime(0.06, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.025);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start();
-  osc.stop(ctx.currentTime + 0.025);
-}
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json
 ```
 
----
+### 8. Note Button (`note-button`)
 
-## 8. Skeleton Handoff (`src/components/ui/skeleton-handoff.tsx`)
+Source files: `src/components/ui/note-button/index.ts`, `note-root.tsx`, `note-trigger.tsx`, `note-panel.tsx`, and `line-gutter.tsx`.
 
-Matches skeleton blocks and real content by `data-handoff-id`. Matching blocks use GSAP Flip to travel and resize into target rectangles, while real content fades in without being scaled. Short loads skip the visible skeleton, errors retain an outlined skeleton, and reduced-motion preferences disable travel and stagger.
+Exports `NoteRoot`, `NoteTrigger`, `NotePanel`, and the compound `Note` object. `NoteRootProps` includes `children`, `storageKey`, `open`, `onOpenChange`, `defaultOpen`, `value`, `onValueChange`, `placement`, `width`, `height`, `breakpoint`, and `showLineNumbers`. `NoteTrigger` accepts native button props and an optional `onClick`; `NotePanel` takes no props. Note text is persisted using `localStorage` when the value is uncontrolled.
 
-### Exports
+Dependencies: `gsap`, `@gsap/react`, `lucide-react`.
 
-- `Handoff`: accepts `status`, `skeleton`, `children`, `duration` (0.6 seconds), `stagger` (0.04 seconds), `skipBelow` (150 milliseconds), loading/ready/error labels, handoff callbacks, and `className`.
-- `HandoffBlock`: accepts `id`, `className`, and `as` to mark a skeleton block.
-- `HandoffTarget`: accepts `id`, `className`, `as`, and children to mark matching content.
-
-### Usage
-
-```tsx
-import {
-  Handoff,
-  HandoffBlock,
-  HandoffTarget,
-} from "@/components/ui/skeleton-handoff";
-
-<Handoff
-  status={loading ? "loading" : "ready"}
-  skeleton={<HandoffBlock id="message" className="h-16 w-full" />}
->
-  <HandoffTarget id="message" as="p">
-    Commit details loaded.
-  </HandoffTarget>
-</Handoff>
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
 ```
 
-### Installation
+### 9. Skeleton Handoff (`skeleton-handoff`)
+
+Source: `src/components/ui/skeleton-handoff.tsx`.
+
+Matches skeleton blocks and content by ID and animates matching blocks into their targets. It supports loading, ready, and error states, and uses a 150 millisecond `skipBelow` default. `Handoff` props: `status`, `skeleton`, `children`, `duration`, `stagger`, `skipBelow`, `loadingLabel`, `readyLabel`, `errorLabel`, `onHandoffStart`, `onHandoffComplete`, and `className`. `HandoffBlock` props: `id`, `className`, and `as`. `HandoffTarget` has those props plus `children`.
+
+Dependencies: `gsap`, `@gsap/react`.
 
 ```bash
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 ```
+
+## License
+
+The repository is licensed under the MIT License. See `LICENSE`.
