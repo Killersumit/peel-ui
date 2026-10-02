@@ -70,19 +70,19 @@ Dependencies: `motion`, `lucide-react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json
 ```
 
-### 4. Tactile PIN Field (`tactile-pin-field`)
+### 4. Tactile OTP Input (`tactile-otp-input`)
 
-Source: `src/components/ui/tactile-pin-field.tsx`.
+Source: `src/components/ui/tactile-otp-input.tsx`.
 
 Accepts numeric input in configurable digit slots and calls `onComplete` when all slots are filled. Props: `length`, `initialValues`, `onComplete`, and `className`.
 
 Dependencies: `motion`.
 
 ```bash
-npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-pin-field.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json
 ```
 
-The registry item name is `tactile-pin-field` and its title is `Tactile PIN Field`.
+The registry item name is `tactile-otp-input` and its title is `Tactile OTP Input`.
 
 ### 5. Privacy Shutter (`privacy-shutter`)
 

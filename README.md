@@ -28,7 +28,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | --- | --- | --- |
 | Slide to Confirm | `slide-to-confirm` | Friction drag with a magnetic confirmation threshold |
 | Magnetic Split Button | `magnetic-split-button` | Primary and secondary actions that pull apart on a spring latch |
-| Tactile PIN Field | `tactile-pin-field` | Numeric input with a floating focus frame |
+| Tactile OTP Input | `tactile-otp-input` | Numeric input with a floating focus frame |
 | Privacy Shutter | `privacy-shutter` | Drag-to-peek cover for sensitive values |
 | Voice Pill | `voice-pill` | Audio capture with a live waveform and slide-to-cancel |
 | Save State Pill | `save-state-pill` | Save, offline, retry and conflict states in one morphing pill |
