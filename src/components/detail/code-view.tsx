@@ -4,6 +4,8 @@ import * as React from "react";
 import { Check, ChevronDown, Copy, X } from "lucide-react";
 import { ComponentRecord } from "@/config/components-data";
 
+const SyntaxCode = React.lazy(() => import("@/components/detail/syntax-code"));
+
 export interface CodeViewProps {
   componentRecord: ComponentRecord;
   onClose?: () => void;
@@ -31,10 +33,21 @@ function NumberedCode({ value }: { value: string }) {
   );
 }
 
+function HighlightedCode({ value }: { value: string }) {
+  return (
+    <React.Suspense fallback={<NumberedCode value={value} />}>
+      <SyntaxCode value={value} />
+    </React.Suspense>
+  );
+}
+
 export default function CodeView({
   componentRecord,
   onClose,
 }: CodeViewProps) {
+  const idPrefix = React.useId();
+  const usageHeadingId = `${idPrefix}-usage-code-heading`;
+  const sourceHeadingId = `${idPrefix}-source-code-heading`;
   const [copied, setCopied] = React.useState<"usage" | "source" | null>(null);
   const [copyError, setCopyError] = React.useState<"usage" | "source" | null>(
     null
@@ -90,10 +103,10 @@ export default function CodeView({
         )}
       </header>
       <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6 md:px-8">
-        <section aria-labelledby="usage-code-heading">
+        <section aria-labelledby={usageHeadingId}>
           <div className="mb-2 flex items-center justify-between gap-3">
             <h3
-              id="usage-code-heading"
+              id={usageHeadingId}
               className="font-mono text-[10px] uppercase tracking-[0.12em] text-peel-text-mono"
             >
               Usage
@@ -105,14 +118,14 @@ export default function CodeView({
               Clipboard unavailable. Select the code to copy.
             </p>
           )}
-          <NumberedCode value={componentRecord.usageSnippet} />
+          <HighlightedCode value={componentRecord.usageSnippet} />
         </section>
 
         <details className="group relative border-t border-peel-border-subtle pt-4">
           <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between pr-16 text-[12px] text-peel-text-secondary hover:text-peel-text-primary">
             <span className="flex items-center gap-2">
               <span
-                id="source-code-heading"
+                id={sourceHeadingId}
                 className="font-mono text-[10px] uppercase tracking-[0.12em]"
               >
                 Source
@@ -135,8 +148,8 @@ export default function CodeView({
               Clipboard unavailable. Select the code to copy.
             </p>
           )}
-          <div aria-labelledby="source-code-heading" className="mt-2">
-            <NumberedCode value={componentRecord.sourceCode} />
+          <div aria-labelledby={sourceHeadingId} className="mt-2">
+            <HighlightedCode value={componentRecord.sourceCode} />
           </div>
         </details>
       </div>
