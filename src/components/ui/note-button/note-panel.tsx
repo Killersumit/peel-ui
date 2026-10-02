@@ -44,7 +44,19 @@ function getTargetBounds(
   height: number,
   placement: ReturnType<typeof useNoteContext>["placement"]
 ) {
-  const triggerRect = trigger.getBoundingClientRect();
+  const rect = trigger.getBoundingClientRect();
+  const scaleX = (gsap.getProperty(trigger, "scaleX") as number) || 1;
+  const scaleY = (gsap.getProperty(trigger, "scaleY") as number) || 1;
+  const unscaledWidth = scaleX !== 0 ? rect.width / scaleX : rect.width;
+  const unscaledHeight = scaleY !== 0 ? rect.height / scaleY : rect.height;
+  const triggerRect = {
+    left: rect.left - (unscaledWidth - rect.width) / 2,
+    top: rect.top - (unscaledHeight - rect.height) / 2,
+    right: rect.left - (unscaledWidth - rect.width) / 2 + unscaledWidth,
+    bottom: rect.top - (unscaledHeight - rect.height) / 2 + unscaledHeight,
+    width: unscaledWidth,
+    height: unscaledHeight,
+  };
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
   const targetWidth = Math.max(1, Math.min(width, viewportWidth - 48));
@@ -96,6 +108,13 @@ export function NotePanel() {
       ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false
   );
+  const targetBoundsRef = React.useRef<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    borderRadius: string;
+  } | null>(null);
   const fullscreenRef = React.useRef(false);
   const hasOpenedRef = React.useRef(false);
   const isCurrentlyOpenRef = React.useRef(false);
@@ -169,7 +188,7 @@ export function NotePanel() {
                       height: window.innerHeight - 32,
                       borderRadius: "22px 22px 22px 22px",
                     }
-                  : getTargetBounds(trigger, width, height, placement);
+                  : (targetBoundsRef.current ?? getTargetBounds(trigger, width, height, placement));
 
                 gsap.set(panel, {
                   position: "fixed",
@@ -211,7 +230,7 @@ export function NotePanel() {
                       height: window.innerHeight - 32,
                       borderRadius: "22px 22px 22px 22px",
                     }
-                  : getTargetBounds(trigger, width, height, placement);
+                  : (targetBoundsRef.current ?? getTargetBounds(trigger, width, height, placement));
 
                 gsap.set(panel, {
                   position: "fixed",
@@ -219,7 +238,7 @@ export function NotePanel() {
                   yPercent: 0,
                   opacity: 1,
                 });
-                gsap.set(trigger, { opacity: 0, scale: 1 });
+                gsap.set(trigger, { opacity: 0, scale: 0.7 });
               }
               if (contentRef.current) {
                 gsap.set(contentRef.current, { opacity: 1, y: 0 });
@@ -400,6 +419,7 @@ export function NotePanel() {
                       borderRadius: "22px 22px 22px 22px",
                     }
                   : getTargetBounds(trigger, width, height, placement);
+                targetBoundsRef.current = target;
 
                 gsap.set(panel, {
                   position: "fixed",
@@ -517,6 +537,7 @@ export function NotePanel() {
                       borderRadius: "22px 22px 22px 22px",
                     }
                   : getTargetBounds(trigger, width, height, placement);
+                targetBoundsRef.current = target;
 
                 timeline.to(
                   panel,
@@ -544,6 +565,7 @@ export function NotePanel() {
             }
           } else if (hasOpenedRef.current) {
             isCurrentlyOpenRef.current = false;
+            targetBoundsRef.current = null;
             if (reduceMotion) {
               timelineRef.current?.kill();
               const timeline = gsap.timeline({
@@ -673,18 +695,6 @@ export function NotePanel() {
         },
         []
       );
-
-  React.useEffect(() => {
-    if (!open) return;
-    const onWindowKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        requestClose();
-      }
-    };
-    window.addEventListener("keydown", onWindowKeyDown);
-    return () => window.removeEventListener("keydown", onWindowKeyDown);
-  }, [open, requestClose]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
