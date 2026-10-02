@@ -149,8 +149,8 @@ export function SkeletonHandoffDemo() {
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-6 p-4 md:p-6">
-      <div className="flex items-center justify-between gap-2 border-b border-[#232730] pb-4">
-        <fieldset className="flex shrink-0 items-center gap-0">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#232730] pb-4">
+        <fieldset className="flex shrink-0 items-center gap-1">
           <legend className="sr-only">Latency</legend>
           <span className="mr-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--peel-text-secondary)]">
             Latency
@@ -161,24 +161,24 @@ export function SkeletonHandoffDemo() {
               type="button"
               aria-pressed={latency === option}
               onClick={() => setLatency(option)}
-              className="whitespace-nowrap border border-[#232730] px-0 py-1 font-mono text-[10px] text-[var(--peel-text-secondary)] transition-colors hover:text-[var(--peel-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00] aria-pressed:border-[#84ff00] aria-pressed:text-[var(--peel-text-primary)]"
+              className="whitespace-nowrap border border-[#232730] px-1 py-1 font-mono text-[10px] text-[var(--peel-text-secondary)] transition-colors hover:text-[var(--peel-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00] aria-pressed:border-[#84ff00] aria-pressed:text-[var(--peel-text-primary)]"
             >
               {option} ms
             </button>
           ))}
         </fieldset>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             onClick={() => startRequest(false)}
-            className="whitespace-nowrap border border-[#232730] px-0 py-1 font-mono text-[10px] text-[var(--peel-text-primary)] transition-colors hover:bg-[var(--peel-surface-raised,#181b22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00]"
+            className="whitespace-nowrap border border-[#232730] px-2 py-1 font-mono text-[10px] text-[var(--peel-text-primary)] transition-colors hover:bg-[var(--peel-surface-raised,#181b22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00]"
           >
             Reload
           </button>
           <button
             type="button"
             onClick={() => startRequest(true)}
-            className="whitespace-nowrap border border-[#232730] px-0 py-1 font-mono text-[10px] text-[var(--peel-text-primary)] transition-colors hover:bg-[var(--peel-surface-raised,#181b22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00]"
+            className="whitespace-nowrap border border-[#232730] px-2 py-1 font-mono text-[10px] text-[var(--peel-text-primary)] transition-colors hover:bg-[var(--peel-surface-raised,#181b22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#84ff00]"
           >
             Fail
           </button>
