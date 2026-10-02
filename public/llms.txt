@@ -11,15 +11,41 @@ Peel UI is a component registry. Each registry item can be installed into a proj
 
 ## Registry Components
 
-- [Save State Pill](https://peel-ui.vercel.app/components/save-state-pill) (`save-state-pill`): Displays idle, saving, saved, failed, offline, and conflict states, with retry and conflict-review callbacks.
-- [Slide to Confirm](https://peel-ui.vercel.app/components/slide-to-confirm) (`slide-to-confirm`): Calls its confirmation callback when the drag reaches 75% of the track and supports reset.
-- [Magnetic Split Button](https://peel-ui.vercel.app/components/magnetic-split-button) (`magnetic-split-button`): Provides a primary action and a menu of selectable actions.
-- [Tactile OTP Input](https://peel-ui.vercel.app/components/tactile-otp-input) (`tactile-otp-input`): Accepts numeric input in configurable digit slots and calls its completion callback when all slots are filled.
-- [Privacy Shutter](https://peel-ui.vercel.app/components/privacy-shutter) (`privacy-shutter`): Uses a draggable shutter to reveal or conceal an API key, with copy and lock controls.
-- [Voice Pill](https://peel-ui.vercel.app/components/voice-pill) (`voice-pill`): Uses microphone audio or a simulated signal, with an optional canvas waveform and slide-to-cancel.
-- [Tactile Filter Chips](https://peel-ui.vercel.app/components/filter-chips) (`filter-chips`): Supports single or multiple selection, optional counts, disabled options, and a clear action.
-- [Note Button](https://peel-ui.vercel.app/components/note-button) (`note-button`): Opens a note editor from a trigger and can persist note text in localStorage.
-- [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff) (`skeleton-handoff`): Matches skeleton blocks to content by ID and transitions between loading, ready, and error states.
+### [Save State Pill](https://peel-ui.vercel.app/components/save-state-pill) (`save-state-pill`)
+
+Displays idle, saving, saved, failed, offline, and conflict states, with retry and conflict-review callbacks.
+
+### [Slide to Confirm](https://peel-ui.vercel.app/components/slide-to-confirm) (`slide-to-confirm`)
+
+Calls its confirmation callback when the drag reaches 75% of the track and supports reset.
+
+### [Magnetic Split Button](https://peel-ui.vercel.app/components/magnetic-split-button) (`magnetic-split-button`)
+
+Provides a primary action and a menu of selectable actions.
+
+### [Tactile OTP Input](https://peel-ui.vercel.app/components/tactile-otp-input) (`tactile-otp-input`)
+
+Accepts numeric input in configurable digit slots and calls its completion callback when all slots are filled.
+
+### [Privacy Shutter](https://peel-ui.vercel.app/components/privacy-shutter) (`privacy-shutter`)
+
+Uses a draggable shutter to reveal or conceal an API key, with copy and lock controls.
+
+### [Voice Pill](https://peel-ui.vercel.app/components/voice-pill) (`voice-pill`)
+
+Uses microphone audio or a simulated signal, with an optional canvas waveform and slide-to-cancel.
+
+### [Tactile Filter Chips](https://peel-ui.vercel.app/components/filter-chips) (`filter-chips`)
+
+Supports single or multiple selection, optional counts, disabled options, and a clear action.
+
+### [Note Button](https://peel-ui.vercel.app/components/note-button) (`note-button`)
+
+Opens a note editor from a trigger and can persist note text in localStorage.
+
+### [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff) (`skeleton-handoff`)
+
+Matches skeleton blocks to content by ID and transitions between loading, ready, and error states.
 
 ## Installation
 
