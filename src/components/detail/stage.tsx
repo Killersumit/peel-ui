@@ -108,9 +108,9 @@ export function Stage({
           ? { duration: 0 }
           : { backgroundColor: microTransition, layout: springMechanical }
       }
-      className="sticky top-0 z-20 flex h-[42vh] min-h-64 w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
+      className="relative z-20 flex w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
     >
-      <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden">
+      <div className="relative flex w-full flex-col items-start justify-start overflow-x-hidden md:min-h-0 md:flex-1 md:flex-row md:items-center md:justify-center md:overflow-hidden">
         <div className="absolute right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-30 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111113] p-1">
           <div className="relative" ref={installRef}>
             <button
@@ -239,12 +239,12 @@ export function Stage({
 
         <div
           key={`${componentRecord.slug}-${demoKey}`}
-          className="relative z-10 flex min-h-0 w-full flex-1 items-center justify-center"
+          className="relative z-10 flex w-full flex-none items-center justify-center pb-4 pt-10 md:min-h-0 md:flex-1 md:py-0"
         >
           <Demo />
         </div>
 
-        <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-20 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2">
+        <div className="relative z-20 mb-4 ml-auto mr-4 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2 md:absolute md:bottom-[max(1rem,env(safe-area-inset-bottom))] md:right-[max(1rem,env(safe-area-inset-right))] md:mb-0 md:ml-0 md:mr-0">
           <button
             type="button"
             onClick={() => setDemoKey((key) => key + 1)}
