@@ -8,6 +8,11 @@ import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { SaveStatePillDemo } from "@/components/ui/save-state-pill";
 import { FilterChipsDemo } from "@/components/demos/filter-chips-demo";
 import { NoteButtonDemo } from "@/components/demos/note-button-demo";
+const SkeletonHandoffDemo = React.lazy(() =>
+  import("@/components/demos/skeleton-handoff-demo").then((module) => ({
+    default: module.SkeletonHandoffDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -723,6 +728,165 @@ export const ALL_COMPONENTS: ComponentRecord[] = [
       'import { Note } from "@/components/ui/note-button";\n\nexport function NotesControl() {\n  return (\n    <Note.Root storageKey="peel-note:v1">\n      <Note.Trigger className="fixed bottom-6 right-6" />\n      <Note.Panel />\n    </Note.Root>\n  );\n}',
     sourceCode: NOTE_BUTTON_SOURCE,
     component: () => React.createElement(NoteButtonDemo),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "skeleton-handoff",
+    name: "Skeleton Handoff",
+    category: "ACTIONS",
+    tagline:
+      "Matched loading blocks travel into measured content while the reserved layout eases to its final height.",
+    description:
+      "Skeleton Handoff measures matching loading blocks and real content, then uses GSAP Flip to move each block into place while revealing the content. Cached results render directly, short loads skip the skeleton, and refetches crossfade without reversing the handoff.",
+    mechanicalDescription:
+      "A root-level handoff pairs the first block and target for each data-handoff-id. Flip.fit animates each solid block to its target rectangle while real content fades in unscaled. The root height eases once to the measured content height, then all temporary inline animation styles are removed.",
+    interactionType:
+      "Matched blocks translate and resize into target rectangles with a top-down stagger. Unmatched blocks collapse, unmatched targets fade in, and the root height eases to its final measurement.",
+    dependencies: ["gsap", "@gsap/react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+    },
+    props: [
+      {
+        name: "status",
+        type: '"loading" | "ready" | "error"',
+        description: "Controls the skeleton, handoff, and error states.",
+        required: true,
+      },
+      {
+        name: "skeleton",
+        type: "React.ReactNode",
+        description: "Skeleton markup containing HandoffBlock elements.",
+        required: true,
+      },
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Content rendered when ready and measured during handoff.",
+      },
+      {
+        name: "duration",
+        type: "number",
+        default: "0.6",
+        description: "Travel duration in seconds.",
+      },
+      {
+        name: "stagger",
+        type: "number",
+        default: "0.04",
+        description: "Delay between blocks, in seconds.",
+      },
+      {
+        name: "skipBelow",
+        type: "number",
+        default: "150",
+        description: "Delay in milliseconds before the skeleton becomes visible.",
+      },
+      {
+        name: "loadingLabel",
+        type: "string",
+        default: '"Loading"',
+        description: "Polite live-region text while data is loading.",
+      },
+      {
+        name: "readyLabel",
+        type: "string",
+        default: '"Loaded"',
+        description: "Polite live-region text when data becomes ready.",
+      },
+      {
+        name: "errorLabel",
+        type: "string",
+        default: '"Failed to load"',
+        description: "Visible alert text when the request fails.",
+      },
+      {
+        name: "onHandoffStart",
+        type: "() => void",
+        description: "Called when a loading-to-ready handoff begins.",
+      },
+      {
+        name: "onHandoffComplete",
+        type: "() => void",
+        description: "Called after the handoff animation completes.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Additional classes for the root element.",
+      },
+      {
+        name: "HandoffBlock",
+        type: '{ id: string; className?: string; as?: React.ElementType }',
+        default: 'as: "div"',
+        description: "Creates a solid skeleton block with a matching identifier.",
+      },
+      {
+        name: "HandoffTarget",
+        type: '{ id: string; className?: string; as?: React.ElementType; children: React.ReactNode }',
+        default: 'as: "div"',
+        description: "Marks real content that matches a skeleton block.",
+      },
+    ],
+    usageSnippet: `import {
+  Handoff,
+  HandoffBlock,
+  HandoffTarget,
+} from "@/components/ui/skeleton-handoff";
+
+export function CommitStatus({ loading }: { loading: boolean }) {
+  return (
+    <Handoff
+      status={loading ? "loading" : "ready"}
+      skeleton={<HandoffBlock id="message" className="h-16 w-full" />}
+    >
+      <HandoffTarget id="message" as="p">
+        Changes requested: reuse the current commit data.
+      </HandoffTarget>
+    </Handoff>
+  );
+}`,
+    usageCode: `import {
+  Handoff,
+  HandoffBlock,
+  HandoffTarget,
+} from "@/components/ui/skeleton-handoff";
+
+export function CommitStatus({ loading }: { loading: boolean }) {
+  return (
+    <Handoff
+      status={loading ? "loading" : "ready"}
+      skeleton={<HandoffBlock id="message" className="h-16 w-full" />}
+    >
+      <HandoffTarget id="message" as="p">
+        Changes requested: reuse the current commit data.
+      </HandoffTarget>
+    </Handoff>
+  );
+}`,
+    sourceCode: `import { Handoff, HandoffBlock, HandoffTarget } from "@/components/ui/skeleton-handoff";
+
+<Handoff
+  status={loading ? "loading" : "ready"}
+  skeleton={<HandoffBlock id="message" className="h-16 w-full" />}
+>
+  <HandoffTarget id="message">Commit details loaded.</HandoffTarget>
+</Handoff>`,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(SkeletonHandoffDemo),
+      ),
     defaultSurfaceTheme: "dark",
   },
 ];

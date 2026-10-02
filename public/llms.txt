@@ -16,6 +16,7 @@ Peel UI provides copy-paste React primitives that treat digital interfaces like 
 - [Magnetic Split Button](https://peelui.com/components/magnetic-split-button): Dual-half action capsule with proximity separation, physical spring detachment, and latching.
 - [Tactile PIN Field](https://peelui.com/components/tactile-pin-field): Auth input chassis with a floating lens focus frame, mechanical layout glide, and tumbler micro-springs.
 - [Privacy Shutter](https://peelui.com/components/privacy-shutter): Security key shroud with spring-loaded physical peek slider, detent latching, and clipboard copy.
+- [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff): Measured skeleton blocks travel into matching content while the page height settles.
 
 ## Installation Architecture (shadcn CLI)
 
@@ -28,6 +29,7 @@ npx shadcn@latest add https://peelui.com/r/slide-to-confirm.json
 npx shadcn@latest add https://peelui.com/r/magnetic-split-button.json
 npx shadcn@latest add https://peelui.com/r/tactile-otp-input.json
 npx shadcn@latest add https://peelui.com/r/privacy-shutter.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 ```
 
 ## Core Requirements

@@ -201,7 +201,7 @@ export function BentoGrid() {
           {/* Copy */}
           <div className="relative">
             <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-black leading-tight">
-              Explore all 12+ primitives
+              Explore all components
             </h3>
             <p className="text-xs sm:text-sm text-black/60 mt-1 max-w-[28ch]">
               Free and open source. Drop directly into your project.

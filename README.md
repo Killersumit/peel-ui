@@ -34,6 +34,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Save State Pill | `save-state-pill` | Save, offline, retry and conflict states in one morphing pill |
 | Filter Chips | `filter-chips` | Single or multi-select chips that reflow on a spring |
 | Note Button | `note-button` | A button that morphs into a persistent scratchpad |
+| Skeleton Handoff | `skeleton-handoff` | Loading blocks travel into matching content without scaling real text |
 
 ## Install
 

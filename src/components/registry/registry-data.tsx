@@ -8,6 +8,12 @@ import { SaveStatePill } from "@/components/ui/save-state-pill";
 import { FilterChips } from "@/components/ui/filter-chips";
 import { NoteButtonDemo } from "@/components/demos/note-button-demo";
 
+const SkeletonHandoffPreview = React.lazy(() =>
+  import("@/components/demos/skeleton-handoff-demo").then((module) => ({
+    default: module.SkeletonHandoffPreview,
+  })),
+);
+
 export interface ComponentMetadata {
   name: string;
   slug: string;
@@ -145,6 +151,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       "npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json",
     theme: "dark",
     component: NoteButtonDemo,
+  },
+  {
+    name: "Skeleton Handoff",
+    slug: "skeleton-handoff",
+    category: "Actions",
+    description:
+      "Measured loading blocks travel into matching content while its final height settles.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json",
+    theme: "dark",
+    component: () => (
+      <React.Suspense
+        fallback={
+          <div className="w-full space-y-2 p-4" aria-hidden="true">
+            <div className="h-4 w-1/3 bg-[#1e2129]" />
+            <div className="h-16 w-full bg-[#1e2129]" />
+          </div>
+        }
+      >
+        <SkeletonHandoffPreview />
+      </React.Suspense>
+    ),
   },
 ];
 

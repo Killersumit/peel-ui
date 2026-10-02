@@ -140,6 +140,21 @@
           "target": "components/ui/note-button/line-gutter.tsx"
         }
       ]
+    },
+    {
+      "name": "skeleton-handoff",
+      "type": "registry:ui",
+      "title": "Skeleton Handoff",
+      "description": "Measured loading blocks travel into matching content while the root height eases to its final size.",
+      "dependencies": ["gsap", "@gsap/react"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton-handoff.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skeleton-handoff.tsx"
+        }
+      ]
     }
   ]
 }

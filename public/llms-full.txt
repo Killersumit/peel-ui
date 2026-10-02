@@ -235,3 +235,40 @@ export function playTactileClick(freq: number = 800) {
   osc.stop(ctx.currentTime + 0.025);
 }
 ```
+
+---
+
+## 8. Skeleton Handoff (`src/components/ui/skeleton-handoff.tsx`)
+
+Matches skeleton blocks and real content by `data-handoff-id`. Matching blocks use GSAP Flip to travel and resize into target rectangles, while real content fades in without being scaled. Short loads skip the visible skeleton, errors retain an outlined skeleton, and reduced-motion preferences disable travel and stagger.
+
+### Exports
+
+- `Handoff`: accepts `status`, `skeleton`, `children`, `duration` (0.6 seconds), `stagger` (0.04 seconds), `skipBelow` (150 milliseconds), loading/ready/error labels, handoff callbacks, and `className`.
+- `HandoffBlock`: accepts `id`, `className`, and `as` to mark a skeleton block.
+- `HandoffTarget`: accepts `id`, `className`, `as`, and children to mark matching content.
+
+### Usage
+
+```tsx
+import {
+  Handoff,
+  HandoffBlock,
+  HandoffTarget,
+} from "@/components/ui/skeleton-handoff";
+
+<Handoff
+  status={loading ? "loading" : "ready"}
+  skeleton={<HandoffBlock id="message" className="h-16 w-full" />}
+>
+  <HandoffTarget id="message" as="p">
+    Commit details loaded.
+  </HandoffTarget>
+</Handoff>
+```
+
+### Installation
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
+```
