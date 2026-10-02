@@ -155,7 +155,7 @@ export function BentoGrid() {
           </DeferredPreview>
           <div className="flex items-center justify-between pt-4 px-1">
             <span className="text-xs font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors">
-              Tactile PIN
+              Tactile OTP Input
             </span>
             <ArrowUpRight className="size-4 text-zinc-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
           </div>
