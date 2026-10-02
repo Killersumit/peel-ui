@@ -111,7 +111,7 @@ export function Stage({
       className="sticky top-0 z-20 flex h-[42vh] min-h-64 w-full shrink-0 flex-col md:static md:h-full md:min-h-0 md:min-w-0 md:flex-1"
     >
       <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden">
-        <div className="absolute right-4 top-4 z-30 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111113] p-1">
+        <div className="absolute right-[max(1rem,env(safe-area-inset-right))] top-[max(1rem,env(safe-area-inset-top))] z-30 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111113] p-1">
           <div className="relative" ref={installRef}>
             <button
               type="button"
@@ -122,22 +122,23 @@ export function Stage({
               aria-expanded={installOpen}
               aria-haspopup="dialog"
               aria-label={installOpen ? "Close install command" : "Open install command"}
+              title={installOpen ? "Close install command" : "Install component"}
               className={cn(
-                "inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400",
+                "inline-flex h-8 items-center gap-1.5 rounded-full px-2 sm:px-3 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime-400",
                 installOpen
                   ? "bg-zinc-700 text-white"
                   : "text-zinc-300 hover:bg-white/[0.08] hover:text-white"
               )}
             >
               {installOpen ? <X size={13} /> : <Terminal size={13} />}
-              <span>Install</span>
+              <span className="hidden sm:inline">Install</span>
             </button>
 
             {installOpen && (
               <div
                 role="dialog"
                 aria-label="Install component"
-                className="absolute right-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-xl border border-white/[0.1] bg-[#111113] p-4 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                className="fixed right-[max(1rem,env(safe-area-inset-right))] top-[calc(env(safe-area-inset-top)+3.5rem)] z-50 max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-5rem)] w-[min(22rem,calc(100vw-2rem-env(safe-area-inset-left)-env(safe-area-inset-right)))] overflow-y-auto overscroll-contain rounded-xl border border-white/[0.1] bg-[#111113] p-4 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
               >
                 <div className="mb-3 flex items-center justify-between gap-2">
                   <span className="text-xs text-zinc-400">Package manager</span>
@@ -243,7 +244,7 @@ export function Stage({
           <Demo />
         </div>
 
-        <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2">
+        <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-20 flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#111113] px-3 py-2">
           <button
             type="button"
             onClick={() => setDemoKey((key) => key + 1)}
