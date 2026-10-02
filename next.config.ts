@@ -7,6 +7,20 @@ const nextConfig: NextConfig = {
     "10.45.155.176:3000",
     "localhost:3000",
   ],
+  async redirects() {
+    return [
+      {
+        source: "/r/tactile-pin-field.json",
+        destination: "/r/tactile-otp-input.json",
+        permanent: true,
+      },
+      {
+        source: "/components/tactile-pin-field",
+        destination: "/components/tactile-otp-input",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
