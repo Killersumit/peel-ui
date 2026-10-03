@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:component": "tsx scripts/test-component.ts"
+    "test:component": "tsx scripts/test-component.ts",
+    "verify:component": "tsx scripts/verify-component.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
