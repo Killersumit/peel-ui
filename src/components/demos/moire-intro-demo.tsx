@@ -16,8 +16,10 @@ export function MoireIntroDemo() {
       const sp = new URLSearchParams(window.location.search);
       const p = sp.get("progress");
       if (p !== null) {
-        setControlledProgress(Number(p));
-        setIsOpen(true);
+        requestAnimationFrame(() => {
+          setControlledProgress(Number(p));
+          setIsOpen(true);
+        });
         return;
       }
     }

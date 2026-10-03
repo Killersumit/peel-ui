@@ -194,7 +194,6 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
           const dx = -width / 2;
           const dy = height / 2;
           const localY_bl = -dx * Math.sin(baseRad) + dy * Math.cos(baseRad);
-          const dirSign = localY_bl >= 0 ? -1 : 1;
 
           const list: {
             startLine: number;
