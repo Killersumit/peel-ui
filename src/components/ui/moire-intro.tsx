@@ -71,6 +71,7 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
     React.useEffect(() => {
       setMounted(true);
       if (rootRef.current) {
+        rootRef.current.style.animation = "none";
         const styles = window.getComputedStyle(rootRef.current);
         const text = styles.getPropertyValue("--peel-text-primary").trim();
         const lime = styles.getPropertyValue("--peel-lime").trim();
@@ -146,7 +147,7 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
         const overlay = overlayRef.current;
         if (!canvas || !root || !overlay) return;
 
-        const ctx = canvas.getContext("2d", { alpha: false });
+        const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
         let dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -168,32 +169,146 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
         });
         resizeObserver.observe(root);
 
+        interface Slat {
+          startLine: number;
+          endLine: number;
+          yStart: number;
+          yEnd: number;
+          dir: 1 | -1;
+          offset: number;
+        }
+
+        let slats: Slat[] = [];
+
+        function initSlats() {
+          const pPitch = propsRef.current.pitch;
+          const diag = Math.hypot(width, height);
+          const R = diag / 2 + pPitch * 4;
+          const targetSlatCount = 14;
+          const pitchesPerSlat = Math.max(2, Math.round((2 * R) / (targetSlatCount * pPitch)));
+
+          const minK = Math.floor(-R / pPitch) - pitchesPerSlat;
+          const maxK = Math.ceil(R / pPitch) + pitchesPerSlat;
+
+          const baseRad = (propsRef.current.angle * Math.PI) / 180;
+          const dx = -width / 2;
+          const dy = height / 2;
+          const localY_bl = -dx * Math.sin(baseRad) + dy * Math.cos(baseRad);
+          const dirSign = localY_bl >= 0 ? -1 : 1;
+
+          const list: {
+            startLine: number;
+            endLine: number;
+            yStart: number;
+            yEnd: number;
+            centerLocalY: number;
+            distToBL: number;
+          }[] = [];
+
+          for (let k = minK; k <= maxK; k += pitchesPerSlat) {
+            const startLine = k;
+            const endLine = k + pitchesPerSlat - 1;
+            const yStart = (k - 0.5) * pPitch;
+            const yEnd = (k + pitchesPerSlat - 0.5) * pPitch;
+            const centerLocalY = (yStart + yEnd) / 2;
+            const distToBL = Math.abs(centerLocalY - localY_bl);
+
+            list.push({
+              startLine,
+              endLine,
+              yStart,
+              yEnd,
+              centerLocalY,
+              distToBL,
+            });
+          }
+
+          list.sort((a, b) => a.distToBL - b.distToBL);
+
+          slats = list.map((item, idx) => ({
+            startLine: item.startLine,
+            endLine: item.endLine,
+            yStart: item.yStart,
+            yEnd: item.yEnd,
+            dir: idx % 2 === 0 ? 1 : -1,
+            offset: 0,
+          }));
+        }
+
         const animState = {
           p: 0,
           delta: 11,
           slideOffset: 0,
-          isExiting: false,
+          isSlatExit: false,
         };
 
         const frameTimes: number[] = [];
 
         function render() {
-          if (!ctx || animState.isExiting) return;
+          if (!ctx || !canvas) return;
           const t0 = performance.now();
           const { pitch: pPitch, coverage: pCoverage, angle: pAngle, colorA: pColA, colorB: pColB, bg: pBg } = propsRef.current;
+          const cx = width / 2;
+          const cy = height / 2;
+          const diag = Math.hypot(width, height);
+          const R = diag / 2 + pPitch * 4;
+          const lineWidth = Math.max(0.75, pCoverage * pPitch);
+          const baseRad = (pAngle * Math.PI) / 180;
+
+          if (animState.isSlatExit) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.scale(dpr, dpr);
+            ctx.translate(cx, cy);
+            ctx.rotate(baseRad);
+
+            const overlap = 0.5;
+            const slatLen = 2 * R + 80;
+            const slideDistance = diag * 1.1 + 80;
+
+            for (let i = 0; i < slats.length; i++) {
+              const slat = slats[i];
+              if (slat.offset >= 1.0) continue;
+
+              const xOffset = slat.dir * slideDistance * slat.offset;
+              if (Math.abs(xOffset) >= slideDistance) continue;
+
+              const slatX = -R - 40 + xOffset;
+              const slatW = slatLen;
+              const slatH = (slat.yEnd - slat.yStart) + 2 * overlap;
+              const slatY = slat.yStart - overlap;
+
+              ctx.fillStyle = pBg;
+              ctx.fillRect(slatX, slatY, slatW, slatH);
+
+              ctx.beginPath();
+              for (let k = slat.startLine; k <= slat.endLine; k++) {
+                const d = k * pPitch;
+                ctx.moveTo(slatX, d);
+                ctx.lineTo(slatX + slatW, d);
+              }
+
+              ctx.save();
+              ctx.strokeStyle = pColA;
+              ctx.globalAlpha = 0.28;
+              ctx.lineWidth = lineWidth;
+              ctx.stroke();
+              ctx.strokeStyle = pColB;
+              ctx.globalAlpha = 1.0;
+              ctx.lineWidth = lineWidth;
+              ctx.stroke();
+              ctx.restore();
+            }
+
+            ctx.restore();
+            return;
+          }
 
           ctx.save();
           ctx.scale(dpr, dpr);
           ctx.fillStyle = pBg;
           ctx.fillRect(0, 0, width, height);
 
-          const cx = width / 2;
-          const cy = height / 2;
-          const diag = Math.hypot(width, height);
-          const R = diag / 2 + pPitch * 2;
-          const lineWidth = pCoverage * pPitch;
-
-          const baseRad = (pAngle * Math.PI) / 180;
           const deltaRad = (animState.delta * Math.PI) / 180;
 
           ctx.save();
@@ -266,20 +381,17 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
         }
 
         function playExitSequence() {
-          animState.isExiting = true;
-          const diag = Math.hypot(width, height) * 1.3;
-          const perpAngle = ((propsRef.current.angle + 90) * Math.PI) / 180;
-          const moveX = Math.cos(perpAngle) * diag;
-          const moveY = Math.sin(perpAngle) * diag;
-
-          const exitTl = gsap.timeline({
-            onComplete: finishIntro,
-          });
+          initSlats();
 
           const fadeTargets = [plateRef.current, labelRef.current].filter(Boolean);
           const isFast = clampedDuration < 1;
           const fadeDur = isFast ? clampedDuration * 0.1 : 0.2;
-          const exitDur = isFast ? clampedDuration * 0.3 : 1.0;
+          const exitDur = isFast ? clampedDuration * 0.25 : 0.85;
+          const exitStagger = isFast ? clampedDuration * 0.01 : 0.04;
+
+          const exitTl = gsap.timeline({
+            onComplete: finishIntro,
+          });
 
           if (fadeTargets.length > 0) {
             exitTl.to(fadeTargets, {
@@ -289,11 +401,21 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
             });
           }
 
-          exitTl.to(overlay, {
-            x: moveX,
-            y: moveY,
+          exitTl.add(() => {
+            animState.isSlatExit = true;
+            if (rootRef.current) {
+              rootRef.current.style.pointerEvents = "none";
+              rootRef.current.style.backgroundColor = "transparent";
+            }
+            render();
+          });
+
+          exitTl.to(slats, {
+            offset: 1,
             duration: exitDur,
-            ease: "power4.inOut",
+            ease: "power3.inOut",
+            stagger: exitStagger,
+            onUpdate: render,
           });
 
           return exitTl;
@@ -471,9 +593,16 @@ export const MoireIntro = React.forwardRef<HTMLDivElement, MoireIntroProps>(
         )}
         style={{
           backgroundColor: resolvedBg,
+          animation: mounted ? "none" : "peel-intro-failsafe 8s forwards",
           ...props.style,
         }}
       >
+        <style>{`
+          @keyframes peel-intro-failsafe {
+            0%, 90% { opacity: 1; pointer-events: auto; }
+            100% { opacity: 0; pointer-events: none; }
+          }
+        `}</style>
         <div ref={overlayRef} className="absolute inset-0 size-full">
           {mounted && (
             <canvas

@@ -8,9 +8,19 @@ export function MoireIntroDemo() {
   const [thickness, setThickness] = React.useState(40);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isCompleted, setIsCompleted] = React.useState(false);
+  const [controlledProgress, setControlledProgress] = React.useState<number | undefined>(undefined);
   const cardRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sp = new URLSearchParams(window.location.search);
+      const p = sp.get("progress");
+      if (p !== null) {
+        setControlledProgress(Number(p));
+        setIsOpen(true);
+        return;
+      }
+    }
     const card = cardRef.current;
     if (!card) return;
 
@@ -79,6 +89,7 @@ export function MoireIntroDemo() {
             position="absolute"
             label="Northfield"
             open={isOpen}
+            progress={controlledProgress}
             pitch={pitch}
             thickness={thickness / 100}
             onComplete={handleComplete}

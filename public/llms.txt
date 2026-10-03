@@ -53,7 +53,7 @@ Full-bleed interference pattern background with dual gratings, configurable pitc
 
 ### [Moiré Intro](https://peel-ui.vercel.app/components/moire-intro) (`moire-intro`)
 
-Progress-driven full-screen intro with dual line gratings that calm into register before a mechanical settle and directional reveal.
+Progress-driven full-screen intro with dual line gratings that calm into register before a mechanical settle and alternating slat reveal.
 
 ## Installation
 

@@ -1041,9 +1041,9 @@ export function Hero() {
     category: "ACTIONS",
     tagline: "Progress-driven intro where dual line gratings calm into register before a mechanical exit reveal.",
     description:
-      "A full-screen intro where progress is the pattern. Two fine line gratings interfere into dense bands that rotate, widen, and calm down as a counter runs from 000 to 100. At 100, the gratings lock into register with a mechanical settle, the counter fades, and the entire overlay slides perpendicular to the lines to reveal the page.",
+      "A full-screen intro where progress is the pattern. Two fine line gratings interfere into dense bands that rotate, widen, and calm down as a counter runs from 000 to 100. At 100, the gratings lock into register with a mechanical settle, the counter fades, and the overlay splits into alternating slats that slide along the line axis to reveal the page.",
     mechanicalDescription:
-      "Canvas 2D dual line gratings animated via GSAP timeline with responsive counter scaling, reduced-motion fallback, and directional exit translation.",
+      "Canvas 2D dual line gratings animated via GSAP timeline with responsive counter scaling, reduced-motion fallback, and staggered alternating slat exit translation.",
     interactionType: "Progress / Reveal",
     dependencies: ["gsap", "@gsap/react"],
     install: {

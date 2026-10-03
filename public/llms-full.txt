@@ -160,7 +160,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
 
 Source: `src/components/ui/moire-intro.tsx`.
 
-Progress-driven full-screen intro where dual line gratings calm into register before a mechanical settle and directional reveal. Props: `open`, `progress`, `duration`, `onComplete`, `label`, `position`, `lockScroll`, `pitch`, `thickness`, `angle`, `colorA`, `colorB`, `background`, and `className`.
+Progress-driven full-screen intro where dual line gratings calm into register before a mechanical settle and alternating slat reveal. Props: `open`, `progress`, `duration`, `onComplete`, `label`, `position`, `lockScroll`, `pitch`, `thickness`, `angle`, `colorA`, `colorB`, `background`, and `className`.
 
 Dependencies: `gsap`, `@gsap/react`.
 
