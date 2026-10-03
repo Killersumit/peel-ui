@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Peel UI — Tactile Motion Primitives",
+    name: "Peel UI | Tactile Motion Primitives",
     short_name: "Peel UI",
     description:
       "Tactile, hardware-grade motion primitives for React and Tailwind CSS.",

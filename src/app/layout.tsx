@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 const siteConfig = {
   name: "Peel UI",
-  title: "Peel UI — Tactile Motion Primitives for React",
+  title: "Peel UI | Tactile Motion Primitives for React",
   description:
     "Tactile, hardware-grade motion primitives for React and Tailwind CSS. Damped kinematic spring physics, magnetic detents, and real-time audio FFT telemetry.",
   url: "https://peel-ui.vercel.app",
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Peel UI — Tactile Motion Primitives",
+        alt: "Peel UI | Tactile Motion Primitives",
       },
     ],
   },
