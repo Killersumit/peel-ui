@@ -1,0 +1,51 @@
+name: Performance Audit (Lighthouse)
+
+on:
+  workflow_dispatch:
+    inputs:
+      component_slug:
+        description: "Component slug to audit under /components/[slug]"
+        required: true
+        default: "skeleton-handoff"
+
+jobs:
+  lighthouse:
+    name: Mobile Lighthouse 5-Run Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Start Next.js production server in background
+        run: |
+          npm run start &
+          for i in {1..30}; do
+            if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200"; then
+              echo "Server is ready on port 3000"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run mobile Lighthouse 5 times and extract median
+        env:
+          COMPONENT_SLUG: ${{ github.event.inputs.component_slug }}
+        run: npx tsx scripts/run-lighthouse.ts
+
+      - name: Upload median audit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-median-results
+          path: .lighthouseci/

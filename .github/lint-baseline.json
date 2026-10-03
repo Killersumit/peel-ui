@@ -1,0 +1,14 @@
+[
+  {
+    "filePath": "src/components/navigation/navbar.tsx",
+    "ruleId": "react-hooks/set-state-in-effect",
+    "line": 29,
+    "description": "Calling setState synchronously within an effect"
+  },
+  {
+    "filePath": "src/components/showcase/bento-grid.tsx",
+    "ruleId": "@typescript-eslint/no-unused-vars",
+    "line": 91,
+    "description": "CardFooter is defined but never used"
+  }
+]

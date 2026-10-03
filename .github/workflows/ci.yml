@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    name: Build, Lint, Test & Verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check (tsc --noEmit)
+        run: npx tsc --noEmit
+
+      - name: Lint against baseline
+        run: npx tsx scripts/lint-with-baseline.ts
+
+      - name: Run unit tests (vitest)
+        run: npm run test
+
+      - name: Build site & registry
+        run: npm run build
+
+      - name: Verify all registry components
+        run: npx tsx scripts/verify-all.ts
+
+      - name: Archive production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: |
+            .next
+            public
+          retention-days: 1
+
+  smoke:
+    name: Production Smoke Tests
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Retrieve production build
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+
+      - name: Install Chromium browser only
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright smoke spec against production build
+        run: npx playwright test tests/smoke.spec.ts
+
+      - name: Upload failure report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-failure-artifacts
+          path: test-results/
