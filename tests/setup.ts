@@ -30,10 +30,10 @@ export function setReducedMotion(reduce: boolean) {
   isReducedMotion = reduce;
   for (const item of trackedQueries) {
     let matches = false;
-    if (item.media.includes("reduce")) {
-      matches = isReducedMotion;
-    } else if (item.media.includes("no-preference")) {
+    if (item.media.includes("no-preference")) {
       matches = !isReducedMotion;
+    } else if (item.media.includes("reduce")) {
+      matches = isReducedMotion;
     }
     if (item.mql.matches !== matches) {
       (item.mql as { matches: boolean }).matches = matches;
@@ -57,10 +57,10 @@ export function setReducedMotion(reduce: boolean) {
 function createMatchMediaMock() {
   return function matchMedia(query: string): MediaQueryList {
     let matches = false;
-    if (query.includes("reduce")) {
-      matches = isReducedMotion;
-    } else if (query.includes("no-preference")) {
+    if (query.includes("no-preference")) {
       matches = !isReducedMotion;
+    } else if (query.includes("reduce")) {
+      matches = isReducedMotion;
     }
 
     const listeners = new Set<ChangeListener>();

@@ -18,6 +18,11 @@ const MoireFieldDemo = React.lazy(() =>
     default: module.MoireFieldDemo,
   })),
 );
+const MoireIntroDemo = React.lazy(() =>
+  import("@/components/demos/moire-intro-demo").then((module) => ({
+    default: module.MoireIntroDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -1027,6 +1032,166 @@ export function Hero() {
         React.Suspense,
         { fallback: null },
         React.createElement(MoireFieldDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "moire-intro",
+    name: "Moiré Intro",
+    category: "ACTIONS",
+    tagline: "Progress-driven intro where dual line gratings calm into register before a mechanical exit reveal.",
+    description:
+      "A full-screen intro where progress is the pattern. Two fine line gratings interfere into dense bands that rotate, widen, and calm down as a counter runs from 000 to 100. At 100, the gratings lock into register with a mechanical settle, the counter fades, and the entire overlay slides perpendicular to the lines to reveal the page.",
+    mechanicalDescription:
+      "Canvas 2D dual line gratings animated via GSAP timeline with responsive counter scaling, reduced-motion fallback, and directional exit translation.",
+    interactionType: "Progress / Reveal",
+    dependencies: ["gsap", "@gsap/react"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+    },
+    props: [
+      {
+        name: "open",
+        type: "boolean",
+        default: "true",
+        description: "Controls visibility and playback of the intro overlay.",
+      },
+      {
+        name: "progress",
+        type: "number",
+        default: "undefined",
+        description: "Controlled progress value from 0 to 100. Disables internal timeline when provided.",
+      },
+      {
+        name: "duration",
+        type: "number",
+        default: "3.2",
+        description: "Duration of the progress animation in seconds.",
+      },
+      {
+        name: "onComplete",
+        type: "() => void",
+        default: "undefined",
+        description: "Callback invoked when progress reaches 100 and exit transition finishes.",
+      },
+      {
+        name: "label",
+        type: "string",
+        default: "undefined",
+        description: "Tracking label displayed below the central counter.",
+      },
+      {
+        name: "position",
+        type: '"fixed" | "absolute"',
+        default: '"fixed"',
+        description: "Positioning strategy for the overlay container.",
+      },
+      {
+        name: "lockScroll",
+        type: "boolean",
+        default: "true",
+        description: "Locks document body scroll while the fixed overlay is active.",
+      },
+      {
+        name: "pitch",
+        type: "number",
+        default: "9",
+        description: "Line spacing period in pixels (clamped 6 to 32).",
+      },
+      {
+        name: "thickness",
+        type: "number",
+        default: "0.4",
+        description: "Line weight duty cycle from 0 to 1 (coverage 0.20 to 0.70).",
+      },
+      {
+        name: "angle",
+        type: "number",
+        default: "-24",
+        description: "Initial grating counter-rotation offset in degrees.",
+      },
+      {
+        name: "colorA",
+        type: "string",
+        default: "undefined",
+        description: "First grating stroke color. Defaults to theme accent.",
+      },
+      {
+        name: "colorB",
+        type: "string",
+        default: "undefined",
+        description: "Second grating stroke color. Defaults to colorA.",
+      },
+      {
+        name: "background",
+        type: "string",
+        default: "undefined",
+        description: "Base overlay background color. Defaults to theme canvas.",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description: "Optional additional CSS class names for the outer container.",
+      },
+    ],
+    usageSnippet: `import { MoireIntro } from "@/components/ui/moire-intro";
+
+export function App() {
+  const [showIntro, setShowIntro] = React.useState(true);
+
+  return (
+    <>
+      <MoireIntro
+        open={showIntro}
+        onComplete={() => setShowIntro(false)}
+        label="Northfield"
+      />
+      <main>
+        {/* Page content */}
+      </main>
+    </>
+  );
+}`,
+    usageCode: `import { MoireIntro } from "@/components/ui/moire-intro";
+
+export function App() {
+  const [showIntro, setShowIntro] = React.useState(true);
+
+  return (
+    <>
+      <MoireIntro
+        open={showIntro}
+        onComplete={() => setShowIntro(false)}
+        label="Northfield"
+      />
+      <main>
+        {/* Page content */}
+      </main>
+    </>
+  );
+}`,
+    sourceCode: `import { MoireIntro } from "@/components/ui/moire-intro";
+
+<MoireIntro
+  open={open}
+  onComplete={() => setOpen(false)}
+  label="Northfield"
+/>`,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(MoireIntroDemo),
       ),
     defaultSurfaceTheme: "dark",
   },

@@ -51,6 +51,10 @@ Matches skeleton blocks to content by ID and transitions between loading, ready,
 
 Full-bleed interference pattern background with dual gratings, configurable pitch (6 to 32) and thickness (0 to 1), calm falloff masks, and pointer damping.
 
+### [Moiré Intro](https://peel-ui.vercel.app/components/moire-intro) (`moire-intro`)
+
+Progress-driven full-screen intro with dual line gratings that calm into register before a mechanical settle and directional reveal.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -66,6 +70,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json
 ```
 
 ## Repository Versions

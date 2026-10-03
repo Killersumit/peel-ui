@@ -198,6 +198,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Moiré Intro",
+    slug: "moire-intro",
+    category: "Actions",
+    description:
+      "Dual line gratings rotate, widen, and calm into register before a mechanical exit reveal.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/moire-intro.webp"
+          alt="Moiré Intro pattern preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [
