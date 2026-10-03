@@ -223,6 +223,13 @@ When prompted to build any page, section, or UI component:
 - Fixes after review are separate commits.
 - Never more than one registry:build commit per task.
 
+## 12. IMPLEMENTER RULES
+1. Build exactly what is specified. No extra props, controls, effects, themes, easter eggs, tooltips or "improvements". If you think something could be better, put it under SUGGESTIONS in the final report and do not build it.
+2. No terminal or developer look anywhere: no monospace text, no scanlines, no CRT, no glow or bloom, no noise or grain overlay, no gradients as decoration, no stats or FPS readouts in the UI, no labels like "SYS" or "LOG".
+3. Comments: none by default. No section banners, no narration, no emoji, no TODOs, no commented-out code. Allowed: a one-line comment where a reader could not know WHY (a browser quirk). At most 8 comments in the whole feature.
+4. No console.log. No new dependencies. No files other than those listed. No edits outside this feature except the registration items and the AGENTS.md rules commit.
+5. Visible copy: plain sentences, no hype words, no exclamation marks, no em-dashes.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
