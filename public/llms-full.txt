@@ -148,7 +148,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 
 Source: `src/components/ui/moire-field.tsx`.
 
-Full-bleed background with dual gratings, calm falloff masks, and pointer response. Props: `variant`, `pitch`, `angle`, `drift`, `interactive`, `calm`, `calmAmount`, `colorA`, `colorB`, `background`, `paused`, `className`, and `children`.
+Full-bleed background with dual gratings, calm falloff masks, and pointer response. Props: `variant`, `pitch` (clamp 6 to 32, default 9), `thickness` (clamp 0 to 1, default 0.5), `angle`, `drift`, `interactive`, `calm`, `calmAmount`, `colorA`, `colorB`, `background`, `paused`, `className`, and `children`.
 
 Dependencies: none.
 

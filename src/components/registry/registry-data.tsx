@@ -8,15 +8,11 @@ import { SaveStatePill } from "@/components/ui/save-state-pill";
 import { FilterChips } from "@/components/ui/filter-chips";
 import { NoteButtonDemo } from "@/components/demos/note-button-demo";
 
+import Image from "next/image";
+
 const SkeletonHandoffPreview = React.lazy(() =>
   import("@/components/demos/skeleton-handoff-demo").then((module) => ({
     default: module.SkeletonHandoffPreview,
-  })),
-);
-
-const MoireFieldPreview = React.lazy(() =>
-  import("@/components/demos/moire-field-demo").then((module) => ({
-    default: module.MoireFieldPreview,
   })),
 );
 
@@ -190,13 +186,16 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
     theme: "dark",
     component: () => (
-      <React.Suspense
-        fallback={
-          <div className="w-full h-40 bg-[#08090a]" aria-hidden="true" />
-        }
-      >
-        <MoireFieldPreview />
-      </React.Suspense>
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/moire-field.webp"
+          alt="Moiré Field pattern preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
     ),
   },
 ];

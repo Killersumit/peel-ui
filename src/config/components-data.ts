@@ -928,7 +928,13 @@ export function CommitStatus({ loading }: { loading: boolean }) {
         name: "pitch",
         type: "number",
         default: "9",
-        description: "Distance between lines or dots in CSS pixels clamped between 6 and 24.",
+        description: "Distance between lines or dots in CSS pixels clamped between 6 and 32.",
+      },
+      {
+        name: "thickness",
+        type: "number",
+        default: "0.5",
+        description: "Coverage stroke duty cycle or dot radius ratio clamped between 0 and 1.",
       },
       {
         name: "angle",

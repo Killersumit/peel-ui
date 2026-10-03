@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 export interface MoireFieldProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "lines" | "rings" | "dots";
   pitch?: number;
+  thickness?: number;
   angle?: number;
   drift?: number;
   interactive?: boolean;
@@ -35,6 +36,7 @@ varying vec2 v_uv;
 uniform vec2 u_resolution;
 uniform int u_variant;
 uniform float u_pitch;
+uniform float u_thickness;
 uniform float u_angle;
 uniform float u_relAngle;
 uniform vec2 u_offsetB;
@@ -50,11 +52,14 @@ void main() {
   float covA = 0.0;
   float covB = 0.0;
 
+  float duty = 0.20 + 0.50 * u_thickness;
+  float dotRadius = 0.12 + 0.32 * u_thickness;
+
   if (u_variant == 0) {
     vec2 nA = vec2(cos(u_angle), sin(u_angle));
     float dA = dot(p, nA);
     float distA = abs(mod(dA + 0.5 * u_pitch, u_pitch) - 0.5 * u_pitch);
-    float wA = 0.45 * u_pitch;
+    float wA = duty * u_pitch;
     covA = 1.0 - smoothstep(wA * 0.5 - 0.5, wA * 0.5 + 0.5, distA);
 
     float angB = u_angle + u_relAngle;
@@ -62,20 +67,20 @@ void main() {
     float pB = u_pitch * u_pitchScaleB;
     float dB = dot(p, nB) - u_offsetB.x;
     float distB = abs(mod(dB + 0.5 * pB, pB) - 0.5 * pB);
-    float wB = 0.45 * pB;
+    float wB = duty * pB;
     covB = 1.0 - smoothstep(wB * 0.5 - 0.5, wB * 0.5 + 0.5, distB);
   } else if (u_variant == 1) {
     vec2 cA = u_resolution * 0.5;
     float rA = length(p - cA);
     float distA = abs(mod(rA + 0.5 * u_pitch, u_pitch) - 0.5 * u_pitch);
-    float wA = 0.45 * u_pitch;
+    float wA = duty * u_pitch;
     covA = 1.0 - smoothstep(wA * 0.5 - 0.5, wA * 0.5 + 0.5, distA);
 
     vec2 cB = cA + u_offsetB;
     float rB = length(p - cB);
     float pB = u_pitch * u_pitchScaleB;
     float distB = abs(mod(rB + 0.5 * pB, pB) - 0.5 * pB);
-    float wB = 0.45 * pB;
+    float wB = duty * pB;
     covB = 1.0 - smoothstep(wB * 0.5 - 0.5, wB * 0.5 + 0.5, distB);
   } else {
     float cA = cos(-u_angle);
@@ -83,7 +88,7 @@ void main() {
     vec2 pRotA = vec2(cA * p.x - sA * p.y, sA * p.x + cA * p.y);
     vec2 dCellA = mod(pRotA + 0.5 * u_pitch, u_pitch) - 0.5 * u_pitch;
     float rA = length(dCellA);
-    float radA = 0.28 * u_pitch;
+    float radA = dotRadius * u_pitch;
     covA = 1.0 - smoothstep(radA - 0.5, radA + 0.5, rA);
 
     float angB = u_angle + u_relAngle;
@@ -94,7 +99,7 @@ void main() {
     float pB = u_pitch * u_pitchScaleB;
     vec2 dCellB = mod(pRotB + 0.5 * pB, pB) - 0.5 * pB;
     float rB = length(dCellB);
-    float radB = 0.28 * pB;
+    float radB = dotRadius * pB;
     covB = 1.0 - smoothstep(radB - 0.5, radB + 0.5, rB);
   }
 
@@ -156,6 +161,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
     {
       variant = "lines",
       pitch = 9,
+      thickness = 0.5,
       angle = -24,
       drift = 0.5,
       interactive = true,
@@ -204,7 +210,10 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
     const resolvedColorB = colorB || computedTheme.text;
     const resolvedBg = background || computedTheme.bg;
 
-    const clampedPitch = Math.min(24, Math.max(6, pitch));
+    const clampedPitch = Math.min(32, Math.max(6, pitch));
+    const clampedThickness = Math.min(1, Math.max(0, thickness));
+    const dutyCycle = 0.20 + 0.50 * clampedThickness;
+    const strokeWidth = clampedPitch * dutyCycle;
     const variantId = variant === "rings" ? 1 : variant === "dots" ? 2 : 0;
     const calmId =
       calm === "left"
@@ -216,6 +225,65 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
             : calm === "bottom"
               ? 4
               : 0;
+
+    const paramsRef = React.useRef({
+      variantId,
+      clampedPitch,
+      clampedThickness,
+      angle,
+      drift,
+      interactive,
+      calmId,
+      calmAmount,
+      resolvedColorA,
+      resolvedColorB,
+      resolvedBg,
+      paused,
+    });
+    const drawStaticRef = React.useRef<(() => void) | null>(null);
+    const resumeLoopRef = React.useRef<(() => void) | null>(null);
+    const prefersReducedMotionRef = React.useRef(false);
+
+    React.useEffect(() => {
+      paramsRef.current = {
+        variantId,
+        clampedPitch,
+        clampedThickness,
+        angle,
+        drift,
+        interactive,
+        calmId,
+        calmAmount,
+        resolvedColorA,
+        resolvedColorB,
+        resolvedBg,
+        paused,
+      };
+      if (drawStaticRef.current && (paused || prefersReducedMotionRef.current)) {
+        drawStaticRef.current();
+      }
+    }, [
+      variantId,
+      clampedPitch,
+      clampedThickness,
+      angle,
+      drift,
+      interactive,
+      calmId,
+      calmAmount,
+      resolvedColorA,
+      resolvedColorB,
+      resolvedBg,
+      paused,
+    ]);
+
+    const prevPausedRef = React.useRef(paused);
+    React.useEffect(() => {
+      if (prevPausedRef.current && !paused && resumeLoopRef.current) {
+        resumeLoopRef.current();
+      }
+      prevPausedRef.current = paused;
+    }, [paused]);
 
     React.useEffect(() => {
       const canvas = canvasRef.current;
@@ -281,6 +349,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
         resolution: gl.getUniformLocation(program, "u_resolution"),
         variant: gl.getUniformLocation(program, "u_variant"),
         pitch: gl.getUniformLocation(program, "u_pitch"),
+        thickness: gl.getUniformLocation(program, "u_thickness"),
         angle: gl.getUniformLocation(program, "u_angle"),
         relAngle: gl.getUniformLocation(program, "u_relAngle"),
         offsetB: gl.getUniformLocation(program, "u_offsetB"),
@@ -319,6 +388,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
       let prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
+      prefersReducedMotionRef.current = prefersReducedMotion;
 
       let animId = 0;
       const startTime = performance.now();
@@ -328,6 +398,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
 
       function drawFrame(now: number) {
         if (!gl || !program) return;
+        const p = paramsRef.current;
         const dt = Math.min((now - lastTime) / 1000, 0.1);
         lastTime = now;
         const elapsed = (now - startTime) / 1000;
@@ -355,21 +426,21 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
         let offsetB: [number, number] = [0, 0];
 
         if (!prefersReducedMotion) {
-          const breathingDeg = 1.8 + 0.8 * Math.sin((2 * Math.PI * elapsed) / 18.0) * drift;
+          const breathingDeg = 1.8 + 0.8 * Math.sin((2 * Math.PI * elapsed) / 18.0) * p.drift;
           relAngleRad = (breathingDeg + currentNudgeAngle) * (Math.PI / 180);
 
-          if (variantId === 0) {
-            const idleSlide = elapsed * 0.15 * clampedPitch * drift;
+          if (p.variantId === 0) {
+            const idleSlide = elapsed * 0.15 * p.clampedPitch * p.drift;
             offsetB = [idleSlide + currentNudgeOffset, 0];
-          } else if (variantId === 1) {
-            const orbitRad = 0.6 * clampedPitch * drift;
+          } else if (p.variantId === 1) {
+            const orbitRad = 0.6 * p.clampedPitch * p.drift;
             const orbitAng = (2 * Math.PI * elapsed) / 24.0;
             offsetB = [
               orbitRad * Math.cos(orbitAng) + currentNudgeOffset,
               orbitRad * Math.sin(orbitAng) + currentNudgeOffset,
             ];
           } else {
-            const idleSlide = elapsed * 0.05 * clampedPitch * drift;
+            const idleSlide = elapsed * 0.05 * p.clampedPitch * p.drift;
             offsetB = [idleSlide + currentNudgeOffset, currentNudgeOffset];
           }
         }
@@ -382,9 +453,10 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
         gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
 
         gl.uniform2f(uniformLocations.resolution, cssWidth, cssHeight);
-        gl.uniform1i(uniformLocations.variant, variantId);
-        gl.uniform1f(uniformLocations.pitch, clampedPitch);
-        gl.uniform1f(uniformLocations.angle, angle * (Math.PI / 180));
+        gl.uniform1i(uniformLocations.variant, p.variantId);
+        gl.uniform1f(uniformLocations.pitch, p.clampedPitch);
+        gl.uniform1f(uniformLocations.thickness, p.clampedThickness);
+        gl.uniform1f(uniformLocations.angle, p.angle * (Math.PI / 180));
         gl.uniform1f(uniformLocations.relAngle, relAngleRad);
         gl.uniform2f(uniformLocations.offsetB, offsetB[0], offsetB[1]);
         gl.uniform1f(
@@ -392,21 +464,30 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
           prefersReducedMotion ? 1.0 : currentPitchScale
         );
 
-        const [rA, gA, bA] = parseColorToRgb(resolvedColorA);
-        const [rB, gB, bB] = parseColorToRgb(resolvedColorB);
-        const [rBg, gBg, bBg] = parseColorToRgb(resolvedBg);
+        const [rA, gA, bA] = parseColorToRgb(p.resolvedColorA);
+        const [rB, gB, bB] = parseColorToRgb(p.resolvedColorB);
+        const [rBg, gBg, bBg] = parseColorToRgb(p.resolvedBg);
 
         gl.uniform3f(uniformLocations.colorA, rA, gA, bA);
         gl.uniform3f(uniformLocations.colorB, rB, gB, bB);
         gl.uniform3f(uniformLocations.bg, rBg, gBg, bBg);
-        gl.uniform1i(uniformLocations.calm, calmId);
-        gl.uniform1f(uniformLocations.calmAmount, calmAmount);
+        gl.uniform1i(uniformLocations.calm, p.calmId);
+        gl.uniform1f(uniformLocations.calmAmount, p.calmAmount);
 
         gl.drawArrays(gl.TRIANGLES, 0, 3);
       }
 
+      drawStaticRef.current = () => drawFrame(performance.now());
+      resumeLoopRef.current = () => {
+        if (!paramsRef.current.paused && isIntersecting && isVisible && !prefersReducedMotion) {
+          cancelAnimationFrame(animId);
+          lastTime = performance.now();
+          animId = requestAnimationFrame(loop);
+        }
+      };
+
       function loop(now: number) {
-        if (!paused && isIntersecting && isVisible && !prefersReducedMotion) {
+        if (!paramsRef.current.paused && isIntersecting && isVisible && !prefersReducedMotion) {
           drawFrame(now);
           animId = requestAnimationFrame(loop);
         }
@@ -415,13 +496,13 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
       drawFrame(performance.now());
       setCanvasVisible(true);
 
-      if (!prefersReducedMotion && !paused) {
+      if (!prefersReducedMotion && !paramsRef.current.paused) {
         animId = requestAnimationFrame(loop);
       }
 
       const observer = new IntersectionObserver(([entry]) => {
         isIntersecting = entry.isIntersecting;
-        if (isIntersecting && isVisible && !paused && !prefersReducedMotion) {
+        if (isIntersecting && isVisible && !paramsRef.current.paused && !prefersReducedMotion) {
           cancelAnimationFrame(animId);
           lastTime = performance.now();
           animId = requestAnimationFrame(loop);
@@ -437,7 +518,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
 
       function onVisibility() {
         isVisible = document.visibilityState === "visible";
-        if (isVisible && isIntersecting && !paused && !prefersReducedMotion) {
+        if (isVisible && isIntersecting && !paramsRef.current.paused && !prefersReducedMotion) {
           cancelAnimationFrame(animId);
           lastTime = performance.now();
           animId = requestAnimationFrame(loop);
@@ -448,10 +529,11 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
       const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       function onMotionChange(e: MediaQueryListEvent) {
         prefersReducedMotion = e.matches;
+        prefersReducedMotionRef.current = prefersReducedMotion;
         if (prefersReducedMotion) {
           cancelAnimationFrame(animId);
           drawFrame(performance.now());
-        } else if (isIntersecting && isVisible && !paused) {
+        } else if (isIntersecting && isVisible && !paramsRef.current.paused) {
           lastTime = performance.now();
           animId = requestAnimationFrame(loop);
         }
@@ -459,22 +541,22 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
       motionQuery.addEventListener("change", onMotionChange);
 
       function onPointerMove(e: PointerEvent) {
-        if (!interactive || prefersReducedMotion) return;
+        if (!paramsRef.current.interactive || prefersReducedMotion) return;
         const rect = root?.getBoundingClientRect();
         if (!rect) return;
         const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
         const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
         targetNudgeAngle = nx * 3.0;
-        targetNudgeOffset = ny * 2.0 * clampedPitch;
+        targetNudgeOffset = ny * 2.0 * paramsRef.current.clampedPitch;
       }
 
       function onPointerDown() {
-        if (!interactive || prefersReducedMotion) return;
+        if (!paramsRef.current.interactive || prefersReducedMotion) return;
         targetPitchScale = 0.85;
       }
 
       function onPointerUp() {
-        if (!interactive || prefersReducedMotion) return;
+        if (!paramsRef.current.interactive || prefersReducedMotion) return;
         targetPitchScale = 1.0;
       }
 
@@ -512,6 +594,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
               resolution: gl.getUniformLocation(program, "u_resolution"),
               variant: gl.getUniformLocation(program, "u_variant"),
               pitch: gl.getUniformLocation(program, "u_pitch"),
+              thickness: gl.getUniformLocation(program, "u_thickness"),
               angle: gl.getUniformLocation(program, "u_angle"),
               relAngle: gl.getUniformLocation(program, "u_relAngle"),
               offsetB: gl.getUniformLocation(program, "u_offsetB"),
@@ -524,7 +607,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
             };
             resize();
             drawFrame(performance.now());
-            if (!prefersReducedMotion && !paused) {
+            if (!prefersReducedMotion && !paramsRef.current.paused) {
               animId = requestAnimationFrame(loop);
             }
           }
@@ -535,6 +618,8 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
       canvas.addEventListener("webglcontextrestored", onContextRestored);
 
       return () => {
+        drawStaticRef.current = null;
+        resumeLoopRef.current = null;
         cancelAnimationFrame(animId);
         if (contextLostTimer) clearTimeout(contextLostTimer);
         observer.disconnect();
@@ -551,19 +636,7 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
           gl.deleteProgram(program);
         }
       };
-    }, [
-      variantId,
-      clampedPitch,
-      angle,
-      drift,
-      interactive,
-      calmId,
-      calmAmount,
-      resolvedColorA,
-      resolvedColorB,
-      resolvedBg,
-      paused,
-    ]);
+    }, []);
 
     return (
       <div
@@ -583,10 +656,10 @@ export const MoireField = React.forwardRef<HTMLDivElement, MoireFieldProps>(
             style={{
               backgroundColor: resolvedBg,
               backgroundImage: `
-                repeating-linear-gradient(${angle + 2.0}deg, rgba(245, 245, 247, 0.35) 0px, rgba(245, 245, 247, 0.35) ${clampedPitch * 0.45}px, transparent ${clampedPitch * 0.45}px, transparent ${clampedPitch}px),
-                repeating-linear-gradient(${angle}deg, rgba(132, 255, 0, 0.25) 0px, rgba(132, 255, 0, 0.25) ${clampedPitch * 0.45}px, transparent ${clampedPitch * 0.45}px, transparent ${clampedPitch}px)
+                repeating-linear-gradient(${angle + 2.0}deg, rgba(245, 245, 247, 0.40) 0px, rgba(245, 245, 247, 0.40) ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${clampedPitch}px),
+                repeating-linear-gradient(${angle}deg, rgba(132, 255, 0, 0.90) 0px, rgba(132, 255, 0, 0.90) ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${clampedPitch}px)
               `,
-              opacity: 0.85,
+              opacity: 1,
               maskImage: "radial-gradient(ellipse at center, black 65%, transparent 95%)",
               WebkitMaskImage: "radial-gradient(ellipse at center, black 65%, transparent 95%)",
             }}
