@@ -10,6 +10,7 @@
 - If you add any third-party script, analytics, cookie or browser storage, update src/app/privacy/page.tsx in the same change.
 - Never create a second copy of a component.
 - A new component requires one source file or compound folder, one `registry.json` entry, one metadata entry, and one demo.
+- Before exploring files, query the graphify graph (graphify-out/) if it exists, then re-open the real file before editing. Rebuild it with /graphify . --update after large changes.
 
 # AGENTS.md — Master Directives for High-Craft Web Architecture
 
@@ -209,6 +210,18 @@ When prompted to build any page, section, or UI component:
    - Inject realistic, domain-specific technical microcopy (no placeholder lorem ipsum or buzzword fluff).
 4. **Step 4: Audit Against the Blacklist**
    - Verify zero occurrences of items from Section 2 (no emojis, no gradient text, no em dashes, no 3-icon boxes).
+
+---
+
+## 10. TASK TIERS
+- **DAILY COMPONENT:** Local flow = `tsc --noEmit`, eslint on changed files only, `npm run test:component -- <name>`, `npm run verify:component -- <name> --quick`. Do NOT run `next build`, Lighthouse or Playwright locally unless a task says so or CI failed and you must reproduce it. When a real browser is unavoidable, reuse one warm Chrome (launched with `--remote-debugging-port` and attached via `connectOverCDP`) with video, trace and screenshots disabled unless a check fails. After the local flow: owner pushes the BRANCH, waits for CI and the Vercel preview to go green, then merges.
+- **HEAVY CHANGE** (new dependency, home page, workstation, registry-wide): additionally uses the manual perf workflow.
+- **STOP RULE:** If the same check fails twice, stop and report; do not loop.
+
+## 11. COMMITS
+- One commit per task on the task branch, plain one-line message (for example "feat: add skeleton-handoff").
+- Fixes after review are separate commits.
+- Never more than one registry:build commit per task.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
