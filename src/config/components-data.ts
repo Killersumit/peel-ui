@@ -13,6 +13,11 @@ const SkeletonHandoffDemo = React.lazy(() =>
     default: module.SkeletonHandoffDemo,
   })),
 );
+const MoireFieldDemo = React.lazy(() =>
+  import("@/components/demos/moire-field-demo").then((module) => ({
+    default: module.MoireFieldDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -886,6 +891,136 @@ export function CommitStatus({ loading }: { loading: boolean }) {
         React.Suspense,
         { fallback: null },
         React.createElement(SkeletonHandoffDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "moire-field",
+    name: "Moiré Field",
+    category: "ACTIONS",
+    tagline: "Full-bleed background with dual gratings, calm falloff masks, and pointer response.",
+    description:
+      "A full-bleed background for hero sections. Two fine, crisp gratings are laid over each other, creating slow interference bands that glide across the surface.",
+    mechanicalDescription:
+      "Raw WebGL shader rendering dual linear, ring, or dot gratings with analytical smoothstep anti-aliasing and damped pointer interaction.",
+    interactionType: "Passive / Pointer",
+    dependencies: [],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+    },
+    props: [
+      {
+        name: "variant",
+        type: '"lines" | "rings" | "dots"',
+        default: '"lines"',
+        description: "Pattern geometry: linear gratings, concentric rings, or dot grids.",
+      },
+      {
+        name: "pitch",
+        type: "number",
+        default: "9",
+        description: "Distance between lines or dots in CSS pixels clamped between 6 and 24.",
+      },
+      {
+        name: "angle",
+        type: "number",
+        default: "-24",
+        description: "Base orientation angle of grating A in degrees.",
+      },
+      {
+        name: "drift",
+        type: "number",
+        default: "0.5",
+        description: "Strength of idle breathing and orbital motion between 0 and 1.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        default: "true",
+        description: "Whether pointer movement nudges offset and angle with exponential damping.",
+      },
+      {
+        name: "calm",
+        type: '"none" | "left" | "right" | "center" | "bottom"',
+        default: '"none"',
+        description: "Soft fade falloff on a designated region to preserve content legibility.",
+      },
+      {
+        name: "calmAmount",
+        type: "number",
+        default: "0.7",
+        description: "Intensity of the calm falloff reduction from 0 to 1.",
+      },
+      {
+        name: "colorA",
+        type: "string",
+        default: "#84ff00",
+        description: "Hex or rgb color for primary grating A.",
+      },
+      {
+        name: "colorB",
+        type: "string",
+        default: "#f5f5f7",
+        description: "Hex or rgb color for secondary grating B.",
+      },
+      {
+        name: "background",
+        type: "string",
+        default: "#08090a",
+        description: "Base canvas background color.",
+      },
+      {
+        name: "paused",
+        type: "boolean",
+        default: "false",
+        description: "Halts the animation loop when true.",
+      },
+    ],
+    usageSnippet: `import { MoireField } from "@/components/ui/moire-field";
+
+export function Hero() {
+  return (
+    <div className="relative min-h-[560px] w-full">
+      <MoireField variant="lines" calm="left">
+        <div className="p-12">
+          <h1>Plan the week once.</h1>
+        </div>
+      </MoireField>
+    </div>
+  );
+}`,
+    usageCode: `import { MoireField } from "@/components/ui/moire-field";
+
+export function Hero() {
+  return (
+    <div className="relative min-h-[560px] w-full">
+      <MoireField variant="lines" calm="left">
+        <div className="p-12">
+          <h1>Plan the week once.</h1>
+        </div>
+      </MoireField>
+    </div>
+  );
+}`,
+    sourceCode: `import { MoireField } from "@/components/ui/moire-field";
+
+<MoireField variant="lines" calm="left">
+  <div>Content</div>
+</MoireField>`,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(MoireFieldDemo),
       ),
     defaultSurfaceTheme: "dark",
   },

@@ -14,6 +14,12 @@ const SkeletonHandoffPreview = React.lazy(() =>
   })),
 );
 
+const MoireFieldPreview = React.lazy(() =>
+  import("@/components/demos/moire-field-demo").then((module) => ({
+    default: module.MoireFieldPreview,
+  })),
+);
+
 export interface ComponentMetadata {
   name: string;
   slug: string;
@@ -171,6 +177,25 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
         }
       >
         <SkeletonHandoffPreview />
+      </React.Suspense>
+    ),
+  },
+  {
+    name: "Moiré Field",
+    slug: "moire-field",
+    category: "Actions",
+    description:
+      "Full-bleed background with dual gratings, calm falloff masks, and pointer response.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json",
+    theme: "dark",
+    component: () => (
+      <React.Suspense
+        fallback={
+          <div className="w-full h-40 bg-[#08090a]" aria-hidden="true" />
+        }
+      >
+        <MoireFieldPreview />
       </React.Suspense>
     ),
   },

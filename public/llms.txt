@@ -47,6 +47,10 @@ Opens a note editor from a trigger and can persist note text in localStorage.
 
 Matches skeleton blocks to content by ID and transitions between loading, ready, and error states.
 
+### [Moiré Field](https://peel-ui.vercel.app/components/moire-field) (`moire-field`)
+
+Full-bleed interference pattern background with dual gratings, calm falloff masks, and pointer damping.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -61,6 +65,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
 ```
 
 ## Repository Versions

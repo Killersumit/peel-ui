@@ -144,6 +144,18 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 ```
 
+### 10. Moiré Field (`moire-field`)
+
+Source: `src/components/ui/moire-field.tsx`.
+
+Full-bleed background with dual gratings, calm falloff masks, and pointer response. Props: `variant`, `pitch`, `angle`, `drift`, `interactive`, `calm`, `calmAmount`, `colorA`, `colorB`, `background`, `paused`, `className`, and `children`.
+
+Dependencies: none.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

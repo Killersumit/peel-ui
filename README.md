@@ -35,6 +35,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Filter Chips | `filter-chips` | Single or multi-select chips that reflow on a spring |
 | Note Button | `note-button` | A button that morphs into a persistent scratchpad |
 | Skeleton Handoff | `skeleton-handoff` | Loading blocks travel into matching content without scaling real text |
+| Moiré Field | `moire-field` | Full-bleed interference pattern background with dual gratings and pointer damping |
 
 ## Install
 
