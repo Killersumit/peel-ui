@@ -168,6 +168,18 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json
 ```
 
+### 12. Waitlist Join (`waitlist-join`)
+
+Source: `src/components/ui/waitlist-join.tsx`.
+
+An email input with live social proof that morphs into a personal confirmation card on submit. Shows waitlist position, avatars, invite link copying, and an accessible layout morph. Props: `onSubmit`, `count`, `avatars`, `inviteUrl`, `placeholder`, `buttonLabel`, and `className`.
+
+Dependencies: `motion`, `lucide-react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

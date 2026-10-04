@@ -23,6 +23,11 @@ const MoireIntroDemo = React.lazy(() =>
     default: module.MoireIntroDemo,
   })),
 );
+const WaitlistJoinDemo = React.lazy(() =>
+  import("@/components/demos/waitlist-join-demo").then((module) => ({
+    default: module.WaitlistJoinDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -1192,6 +1197,118 @@ export function App() {
         React.Suspense,
         { fallback: null },
         React.createElement(MoireIntroDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "waitlist-join",
+    name: "Waitlist Join",
+    category: "INPUTS",
+    tagline:
+      "Email sign-up with live social proof that morphs into a personal confirmation card.",
+    description:
+      "An email input with live social proof that morphs into a personal confirmation card on submit. At rest it is a single dark capsule: email input on the left, social proof in the middle (four overlapping user avatars with names, and a rolling counter: '1,284 joined'), and a primary button on the right ('Join waitlist'). On submit, the entire pill morphs into a compact confirmation card showing the user's waitlist position ('#1,285'), the avatars, an invite link to copy, and a quiet thank-you. It never feels like a form; it feels like joining something.",
+    mechanicalDescription:
+      "Shared-layout pill-to-card container morph with ease-out position odometer, staggered avatar entrance, SVG spinner feedback, and accessible keyboard focus hand-off.",
+    interactionType: "Form / Morph",
+    dependencies: ["motion", "lucide-react"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+    },
+    props: [
+      {
+        name: "onSubmit",
+        type: "(email: string) => Promise<{ position: number } | void> | { position: number } | void",
+        default: "undefined",
+        description:
+          "Submit handler called with the entered email. Can return a custom position. Your app handles the email. This component sends nothing.",
+      },
+      {
+        name: "count",
+        type: "number",
+        default: "1284",
+        description: "Number of people currently on the waitlist.",
+      },
+      {
+        name: "avatars",
+        type: "{ name: string; src?: string }[]",
+        default:
+          '[{ name: "Maya R" }, { name: "Dev K" }, { name: "Lena S" }, { name: "Omar A" }]',
+        description: "Recent members shown in the social proof stack (up to 4).",
+      },
+      {
+        name: "inviteUrl",
+        type: "string",
+        default: "undefined",
+        description: "Personal invite link shown in the success confirmation view.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        default: '"name@company.com"',
+        description: "Email input placeholder text.",
+      },
+      {
+        name: "buttonLabel",
+        type: "string",
+        default: '"Join waitlist"',
+        description: "Text label for the submit button.",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description: "Additional CSS class names for the container.",
+      },
+    ],
+    usageSnippet: `import { WaitlistJoin } from "@/components/ui/waitlist-join";
+
+export function HeroWaitlist() {
+  return (
+    <WaitlistJoin
+      onSubmit={async (email) => {
+        // Submit email to your API
+        return { position: 1285 };
+      }}
+      inviteUrl="https://example.com/join?ref=early"
+    />
+  );
+}`,
+    usageCode: `import { WaitlistJoin } from "@/components/ui/waitlist-join";
+
+export function HeroWaitlist() {
+  return (
+    <WaitlistJoin
+      onSubmit={async (email) => {
+        // Submit email to your API
+        return { position: 1285 };
+      }}
+      inviteUrl="https://example.com/join?ref=early"
+    />
+  );
+}`,
+    sourceCode: `import { WaitlistJoin } from "@/components/ui/waitlist-join";
+
+<WaitlistJoin
+  onSubmit={async (email) => {
+    // Submit email to your API
+  }}
+  inviteUrl="https://example.com/join?ref=early"
+/>`,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(WaitlistJoinDemo),
       ),
     defaultSurfaceTheme: "dark",
   },

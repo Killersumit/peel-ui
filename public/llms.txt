@@ -55,6 +55,10 @@ Full-bleed interference pattern background with dual gratings, configurable pitc
 
 Progress-driven full-screen intro with dual line gratings that calm into register before a mechanical settle and alternating slat reveal.
 
+### [Waitlist Join](https://peel-ui.vercel.app/components/waitlist-join) (`waitlist-join`)
+
+Email input with live social proof that morphs into a personal confirmation card on submit.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -71,6 +75,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json
 ```
 
 ## Repository Versions

@@ -213,6 +213,24 @@
           "target": "components/ui/moire-intro.tsx"
         }
       ]
+    },
+    {
+      "name": "waitlist-join",
+      "type": "registry:ui",
+      "title": "Waitlist Join",
+      "description": "Tactile email waitlist capture with layout-morphing confirmation, live position counters, and social proof.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/waitlist-join.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/waitlist-join.tsx"
+        }
+      ]
     }
   ]
 }

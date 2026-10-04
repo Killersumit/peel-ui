@@ -220,6 +220,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Waitlist Join",
+    slug: "waitlist-join",
+    category: "Inputs",
+    description:
+      "Tactile email waitlist capture with layout-morphing confirmation, live position counters, and social proof.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/waitlist-join.webp"
+          alt="Waitlist Join preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [
