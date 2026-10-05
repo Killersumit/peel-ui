@@ -6,6 +6,7 @@ import { PrivacyShutter } from "@/components/ui/privacy-shutter";
 import { VoicePill } from "@/components/ui/voice-pill";
 import { SaveStatePill } from "@/components/ui/save-state-pill";
 import { FilterChips } from "@/components/ui/filter-chips";
+import { WaitlistJoin } from "@/components/ui/waitlist-join";
 import { NoteButtonDemo } from "@/components/demos/note-button-demo";
 
 import Image from "next/image";
@@ -230,14 +231,10 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       "npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json",
     theme: "dark",
     component: () => (
-      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
-        <Image
-          src="/previews/waitlist-join.webp"
-          alt="Waitlist Join preview"
-          width={760}
-          height={440}
-          loading="lazy"
-          className="size-full object-cover"
+      <div className="w-full flex items-center justify-center p-2">
+        <WaitlistJoin
+          onSubmit={() => {}}
+          className="w-full max-w-[360px]"
         />
       </div>
     ),
