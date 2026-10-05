@@ -220,6 +220,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Cookie Consent",
+    slug: "cookie-consent",
+    category: "Security",
+    description:
+      "Calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/cookie-consent.webp"
+          alt="Cookie Consent preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

@@ -37,6 +37,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Skeleton Handoff | `skeleton-handoff` | Loading blocks travel into matching content without scaling real text |
 | Moiré Field | `moire-field` | Full-bleed interference pattern background with dual gratings and pointer damping |
 | Moiré Intro | `moire-intro` | Progress-driven dual line gratings calm into register before a mechanical exit reveal |
+| Cookie Consent | `cookie-consent` | Calm cookie choice card and floating trigger with zero tracking |
 
 ## Install
 
