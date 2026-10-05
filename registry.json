@@ -200,6 +200,24 @@
           "target": "components/ui/waitlist-join.tsx"
         }
       ]
+    },
+    {
+      "name": "cookie-consent",
+      "type": "registry:ui",
+      "title": "Cookie Consent",
+      "description": "Clean, calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/cookie-consent.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/cookie-consent.tsx"
+        }
+      ]
     }
   ]
 }

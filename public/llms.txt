@@ -59,6 +59,10 @@ Progress-driven full-screen intro with dual line gratings that calm into registe
 
 Email input with live social proof that morphs into a personal confirmation card on submit.
 
+### [Cookie Consent](https://peel-ui.vercel.app/components/cookie-consent) (`cookie-consent`)
+
+Calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:

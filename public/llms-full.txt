@@ -180,6 +180,18 @@ Dependencies: `motion`, `lucide-react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json
 ```
 
+### 13. Cookie Consent (`cookie-consent`)
+
+Source: `src/components/ui/cookie-consent.tsx`.
+
+Calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance. This component shows the choices and reports them. It stores nothing. Your app must store the choice and block non-essential scripts until they are allowed. A banner alone does not make a site compliant. Props: `categories`, `value`, `defaultValue`, `onSave`, `defaultView`, `title`, `description`, `policyHref`, `placement`, `fixed`, and `className`.
+
+Dependencies: `motion`, `lucide-react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

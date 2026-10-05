@@ -28,9 +28,15 @@ const WaitlistJoinDemo = React.lazy(() =>
     default: module.WaitlistJoinDemo,
   })),
 );
+const CookieConsentDemo = React.lazy(() =>
+  import("@/components/demos/cookie-consent-demo").then((module) => ({
+    default: module.CookieConsentDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
+import { COOKIE_CONSENT_SOURCE } from "@/config/cookie-consent-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1309,6 +1315,148 @@ export function HeroWaitlist() {
         React.Suspense,
         { fallback: null },
         React.createElement(WaitlistJoinDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "cookie-consent",
+    name: "Cookie Consent",
+    category: "SECURITY",
+    tagline:
+      "Calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance.",
+    description:
+      "A calm, trustworthy cookie choice card and floating trigger that stores nothing itself. Designed to look at home on any site in light or dark mode. This component shows the choices and reports them. It stores nothing. Your app must store the choice and block non-essential scripts until they are allowed. A banner alone does not make a site compliant.",
+    mechanicalDescription:
+      "AnimatePresence card-to-button morphing capsule with anchored transform origin, spring-settling switches, and direct onSave reporting.",
+    interactionType:
+      "Corner-anchored floating card collapsing into a 44px circular trigger button, with custom category switch preferences and immediate onSave reporting.",
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json",
+    },
+    props: [
+      {
+        name: "categories",
+        type: "CookieCategory[]",
+        default: "[essential, analytics, marketing]",
+        description:
+          "Array of consent categories with id, label, description, and optional required flag.",
+      },
+      {
+        name: "value",
+        type: "Record<string, boolean>",
+        default: "undefined",
+        description:
+          "Controlled consent choices mapping category id to boolean state.",
+      },
+      {
+        name: "defaultValue",
+        type: "Record<string, boolean>",
+        default: "undefined",
+        description: "Initial uncontrolled consent choices.",
+      },
+      {
+        name: "onSave",
+        type: "(choices: Record<string, boolean>) => void",
+        default: "undefined",
+        description:
+          "Fired when the user confirms their choices through Accept all, Reject all, or Save choices.",
+      },
+      {
+        name: "defaultView",
+        type: '"banner" | "button"',
+        default: '"banner"',
+        description:
+          "Initial display view. Use button for sites where consent was previously recorded.",
+      },
+      {
+        name: "title",
+        type: "string",
+        default: '"We use cookies"',
+        description: "Heading text displayed on the banner view.",
+      },
+      {
+        name: "description",
+        type: "string",
+        default: '"Some keep the site working..."',
+        description: "Body copy explaining cookie usage on the banner view.",
+      },
+      {
+        name: "policyHref",
+        type: "string",
+        default: "undefined",
+        description: "Optional URL for the cookie policy link.",
+      },
+      {
+        name: "placement",
+        type: '"bottom-left" | "bottom-right" | "bottom-center"',
+        default: '"bottom-left"',
+        description: "Viewport screen anchor corner or center edge.",
+      },
+      {
+        name: "fixed",
+        type: "boolean",
+        default: "true",
+        description:
+          "Whether the container uses fixed or absolute positioning.",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description:
+          "Optional additional CSS class names for the outer container.",
+      },
+    ],
+    usageSnippet: `import { CookieConsent } from "@/components/ui/cookie-consent";
+
+export function App() {
+  const handleSave = (choices: Record<string, boolean>) => {
+    localStorage.setItem("cookie-consent", JSON.stringify(choices));
+    if (choices.analytics) {
+      // enable analytics scripts
+    }
+  };
+
+  return (
+    <CookieConsent
+      policyHref="/privacy"
+      onSave={handleSave}
+    />
+  );
+}`,
+    usageCode: `import { CookieConsent } from "@/components/ui/cookie-consent";
+
+export function App() {
+  const handleSave = (choices: Record<string, boolean>) => {
+    localStorage.setItem("cookie-consent", JSON.stringify(choices));
+    if (choices.analytics) {
+      // enable analytics scripts
+    }
+  };
+
+  return (
+    <CookieConsent
+      policyHref="/privacy"
+      onSave={handleSave}
+    />
+  );
+}`,
+    sourceCode: COOKIE_CONSENT_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(CookieConsentDemo),
       ),
     defaultSurfaceTheme: "dark",
   },
