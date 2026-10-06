@@ -261,6 +261,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Next Up",
+    slug: "next-up",
+    category: "Actions",
+    description:
+      "A setup checklist card that shows the single next thing to do with calm FLIP reordering, progress tracking, and instant accessibility.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/next-up.webp"
+          alt="Next Up checklist card preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

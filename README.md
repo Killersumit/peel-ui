@@ -39,6 +39,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Moiré Intro | `moire-intro` | Progress-driven dual line gratings calm into register before a mechanical exit reveal |
 | Waitlist Join | `waitlist-join` | Email input with live social proof that morphs into a confirmation card |
 | Cookie Consent | `cookie-consent` | Calm cookie choice card and floating trigger with zero tracking |
+| Next Up | `next-up` | Setup checklist card that shows the single next thing to do with calm FLIP reordering |
 
 ## Install
 

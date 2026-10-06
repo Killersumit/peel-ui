@@ -33,10 +33,16 @@ const CookieConsentDemo = React.lazy(() =>
     default: module.CookieConsentDemo,
   })),
 );
+const NextUpDemo = React.lazy(() =>
+  import("@/components/demos/next-up-demo").then((module) => ({
+    default: module.NextUpDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
 import { COOKIE_CONSENT_SOURCE } from "@/config/cookie-consent-source";
+import { NEXT_UP_SOURCE } from "@/config/next-up-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1457,6 +1463,145 @@ export function App() {
         React.Suspense,
         { fallback: null },
         React.createElement(CookieConsentDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Next Up",
+    slug: "next-up",
+    category: "ACTIONS",
+    tagline:
+      "A setup checklist card that shows the single next thing to do with calm FLIP reordering, progress tracking, and instant accessibility.",
+    description:
+      "A setup checklist card. One job: show a new user the single next thing to do. The current step is open, later steps are collapsed, finished steps sit dimmed at the bottom. A progress ring shows how far along they are.",
+    mechanicalDescription:
+      "Sequenced single-timeline state transition with GSAP Flip DOM reordering, height morphing, and stroke dash progress updates.",
+    interactionType:
+      "Single next-step action trigger that collapses and reorders completed steps with Flip animations and progress ring updates.",
+    dependencies: ["gsap", "@gsap/react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/next-up.json",
+    },
+    props: [
+      {
+        name: "steps",
+        type: "NextUpStep[]",
+        required: true,
+        description:
+          "Array of setup steps with id, title, description, actionLabel, and optional duration.",
+      },
+      {
+        name: "title",
+        type: "string",
+        default: '"Get started"',
+        description: "Heading text displayed in the card header.",
+      },
+      {
+        name: "completedIds",
+        type: "string[]",
+        default: "undefined",
+        description: "Controlled array of completed step IDs.",
+      },
+      {
+        name: "defaultCompletedIds",
+        type: "string[]",
+        default: "[]",
+        description: "Initial uncontrolled completed step IDs.",
+      },
+      {
+        name: "onStepComplete",
+        type: "(id: string) => void",
+        default: "undefined",
+        description:
+          "Callback fired when a step action is clicked to complete it.",
+      },
+      {
+        name: "doneMessage",
+        type: "string",
+        default: '"All done. You are set."',
+        description: "Message displayed when all checklist steps are completed.",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description:
+          "Optional additional CSS class names for the card container.",
+      },
+    ],
+    usageSnippet: `import { NextUp } from "@/components/ui/next-up";
+
+const STEPS = [
+  {
+    id: "1",
+    title: "Create your workspace",
+    description: "Start by setting up your shared team workspace.",
+    actionLabel: "Create workspace",
+    duration: "1 min",
+  },
+  {
+    id: "2",
+    title: "Connect your domain",
+    description: "Point your custom apex or subdomain.",
+    actionLabel: "Connect domain",
+    duration: "2 min",
+  },
+  {
+    id: "3",
+    title: "Invite a teammate",
+    description: "Sites ship faster with a second pair of eyes.",
+    actionLabel: "Send an invite",
+    duration: "1 min",
+  },
+];
+
+export function Onboarding() {
+  return <NextUp steps={STEPS} defaultCompletedIds={["1"]} />;
+}`,
+    usageCode: `import { NextUp } from "@/components/ui/next-up";
+
+const STEPS = [
+  {
+    id: "1",
+    title: "Create your workspace",
+    description: "Start by setting up your shared team workspace.",
+    actionLabel: "Create workspace",
+    duration: "1 min",
+  },
+  {
+    id: "2",
+    title: "Connect your domain",
+    description: "Point your custom apex or subdomain.",
+    actionLabel: "Connect domain",
+    duration: "2 min",
+  },
+  {
+    id: "3",
+    title: "Invite a teammate",
+    description: "Sites ship faster with a second pair of eyes.",
+    actionLabel: "Send an invite",
+    duration: "1 min",
+  },
+];
+
+export function Onboarding() {
+  return <NextUp steps={STEPS} defaultCompletedIds={["1"]} />;
+}`,
+    sourceCode: NEXT_UP_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(NextUpDemo),
       ),
     defaultSurfaceTheme: "dark",
   },

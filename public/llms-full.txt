@@ -192,6 +192,18 @@ Dependencies: `motion`, `lucide-react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json
 ```
 
+### 14. Next Up (`next-up`)
+
+Source: `src/components/ui/next-up.tsx`.
+
+A setup checklist card that shows the single next thing to do with calm FLIP reordering, progress tracking, and instant accessibility. Current step is open with description and action button, later steps are collapsed, finished steps sit dimmed at the bottom with a checkmark. Progress ring tracks overall completion. Props: `steps`, `title`, `completedIds`, `defaultCompletedIds`, `onStepComplete`, `doneMessage`, and `className`.
+
+Dependencies: `gsap`, `@gsap/react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.
