@@ -36,6 +36,18 @@
   /* Semantic */
   --peel-success: #34d399;
   --peel-danger: #ff453a;
+
+  /* Theme Fallbacks */
+  --background: var(--peel-base);
+  --foreground: var(--peel-text-primary);
+  --card: var(--peel-surface);
+  --card-foreground: var(--peel-text-primary);
+  --muted: var(--peel-surface-raised);
+  --muted-foreground: var(--peel-text-secondary);
+  --border: var(--peel-border);
+  --primary: var(--peel-text-primary);
+  --primary-foreground: var(--peel-base);
+  --ring: var(--peel-text-primary);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -70,6 +82,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-primary: var(--primary);
