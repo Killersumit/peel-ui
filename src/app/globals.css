@@ -45,6 +45,7 @@
   --muted: var(--peel-surface-raised);
   --muted-foreground: var(--peel-text-secondary);
   --border: var(--peel-border);
+  --input: var(--peel-surface-active);
   --primary: var(--peel-text-primary);
   --primary-foreground: var(--peel-base);
   --ring: var(--peel-text-primary);
@@ -85,6 +86,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-input: var(--input);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-ring: var(--ring);
