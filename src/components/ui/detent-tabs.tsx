@@ -268,7 +268,10 @@ export const DetentTabs = React.forwardRef<HTMLDivElement, DetentTabsProps>(
       }
     };
 
-    const handleThumbPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const startPointerDrag = (
+      e: React.PointerEvent<HTMLElement>,
+      captureTarget: HTMLElement
+    ) => {
       if (e.button !== 0) return;
       isPointerDownRef.current = true;
       isDraggingRef.current = false;
@@ -280,10 +283,10 @@ export const DetentTabs = React.forwardRef<HTMLDivElement, DetentTabsProps>(
       const rect = trackInnerRef.current?.getBoundingClientRect();
       colWidthRef.current = rect ? rect.width / ranges.length : 100;
 
-      e.currentTarget.setPointerCapture(e.pointerId);
+      captureTarget.setPointerCapture(e.pointerId);
     };
 
-    const handleThumbPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const movePointerDrag = (e: React.PointerEvent<HTMLElement>) => {
       if (!isPointerDownRef.current) return;
       const dx = e.clientX - startXRef.current;
 
@@ -310,12 +313,15 @@ export const DetentTabs = React.forwardRef<HTMLDivElement, DetentTabsProps>(
       }
     };
 
-    const handleThumbPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const endPointerDrag = (
+      e: React.PointerEvent<HTMLElement>,
+      captureTarget: HTMLElement
+    ) => {
       if (!isPointerDownRef.current) return;
       isPointerDownRef.current = false;
 
-      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-        e.currentTarget.releasePointerCapture(e.pointerId);
+      if (captureTarget.hasPointerCapture(e.pointerId)) {
+        captureTarget.releasePointerCapture(e.pointerId);
       }
 
       if (isDraggingRef.current) {
@@ -464,18 +470,18 @@ export const DetentTabs = React.forwardRef<HTMLDivElement, DetentTabsProps>(
           <div ref={trackInnerRef} className="relative h-full w-full">
             <div
               ref={thumbRef}
-              onPointerDown={handleThumbPointerDown}
-              onPointerMove={handleThumbPointerMove}
-              onPointerUp={handleThumbPointerUp}
-              onPointerCancel={handleThumbPointerUp}
-              className="absolute top-0 bottom-0 z-20 cursor-grab active:cursor-grabbing rounded-full border border-border bg-card dark:bg-input shadow-xs touch-none origin-center"
+              onPointerDown={(e) => startPointerDrag(e, e.currentTarget)}
+              onPointerMove={movePointerDrag}
+              onPointerUp={(e) => endPointerDrag(e, e.currentTarget)}
+              onPointerCancel={(e) => endPointerDrag(e, e.currentTarget)}
+              className="absolute top-0 bottom-0 z-0 cursor-grab active:cursor-grabbing rounded-full border border-border bg-card dark:bg-input shadow-xs touch-none origin-center"
               style={{
                 width: `${100 / ranges.length}%`,
               }}
               aria-hidden="true"
             />
             <div
-              className="relative z-10 grid h-full w-full pointer-events-none"
+              className="relative z-10 grid h-full w-full"
               style={{
                 gridTemplateColumns: `repeat(${ranges.length}, minmax(0, 1fr))`,
               }}
@@ -495,8 +501,16 @@ export const DetentTabs = React.forwardRef<HTMLDivElement, DetentTabsProps>(
                     tabIndex={isSelected ? 0 : -1}
                     onClick={() => handleSelect(i)}
                     onKeyDown={(e) => handleKeyDown(e, i)}
+                    onPointerDown={(e) => {
+                      if (i === Math.round(p.get())) {
+                        startPointerDrag(e, e.currentTarget);
+                      }
+                    }}
+                    onPointerMove={movePointerDrag}
+                    onPointerUp={(e) => endPointerDrag(e, e.currentTarget)}
+                    onPointerCancel={(e) => endPointerDrag(e, e.currentTarget)}
                     className={cn(
-                      "pointer-events-auto relative flex h-full w-full items-center justify-center rounded-full text-[14px] font-medium transition-colors select-none focus-visible:!outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-muted",
+                      "relative flex h-full w-full items-center justify-center rounded-full text-[14px] font-medium transition-colors select-none focus-visible:!outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-muted",
                       isSelected ? "text-foreground" : "text-muted-foreground"
                     )}
                   >

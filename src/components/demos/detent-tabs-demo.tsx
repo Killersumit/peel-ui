@@ -47,9 +47,9 @@ const ACCENTS: Record<
     name: "Acid Lime",
     swatch: "#84ff00",
     light: {
-      primary: "#84ff00",
-      foreground: "#08090a",
-      ring: "#84ff00",
+      primary: "#3f6e00",
+      foreground: "#ffffff",
+      ring: "#3f6e00",
     },
     dark: {
       primary: "#84ff00",
