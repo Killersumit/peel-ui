@@ -38,11 +38,17 @@ const NextUpDemo = React.lazy(() =>
     default: module.NextUpDemo,
   })),
 );
+const DetentTabsDemo = React.lazy(() =>
+  import("@/components/demos/detent-tabs-demo").then((module) => ({
+    default: module.DetentTabsDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
 import { COOKIE_CONSENT_SOURCE } from "@/config/cookie-consent-source";
 import { NEXT_UP_SOURCE } from "@/config/next-up-source";
+import { DETENT_TABS_SOURCE } from "@/config/detent-tabs-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1602,6 +1608,122 @@ export function Onboarding() {
         React.Suspense,
         { fallback: null },
         React.createElement(NextUpDemo),
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "detent-tabs",
+    name: "Detent Tabs",
+    category: "ACTIONS",
+    tagline:
+      "Range switcher whose chart follows the thumb and snaps into magnetic detents.",
+    description:
+      "A range switcher with 2 to 4 options and a draggable thumb with magnetic detents. Continuous chart interpolation, value blending, and collision-free axis fading.",
+    mechanicalDescription:
+      "Direct manipulation range switcher. Dragging the thumb interpolates the chart SVG paths and metric values in real time with magnetic detent pull, settling into detents with tuned spring dynamics.",
+    interactionType: "Continuous drag track with magnetic detent snap",
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+    },
+    props: [
+      {
+        name: "ranges",
+        type: "DetentTabsRange[]",
+        required: true,
+        description:
+          "Array of 2 to 4 range definitions with id, label, value, delta, points, and axis labels.",
+      },
+      {
+        name: "title",
+        type: "string",
+        default: '"Revenue"',
+        description: "Heading text displayed in the header row.",
+      },
+      {
+        name: "formatValue",
+        type: "(n: number) => string",
+        default: "en-US thousands separator",
+        description: "Formatter function for the headline numerical value.",
+      },
+      {
+        name: "index",
+        type: "number",
+        description: "Controlled index for the active range detent.",
+      },
+      {
+        name: "defaultIndex",
+        type: "number",
+        default: "0",
+        description: "Uncontrolled initial active range index.",
+      },
+      {
+        name: "onIndexChange",
+        type: "(i: number) => void",
+        description:
+          "Callback fired when a detent commits on release, click, or keyboard navigation.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<DetentTabs ranges={RANGES} defaultIndex={1} />`,
+    usageCode: `import { DetentTabs } from "@/components/ui/detent-tabs";
+
+const RANGES = [
+  {
+    id: "7d",
+    label: "7 days",
+    value: 9420,
+    delta: "+3.1%",
+    points: [4, 5, 4, 7, 6, 8, 7, 9, 11, 10, 12, 14],
+    axis: ["Mon", "Wed", "Fri"],
+  },
+  {
+    id: "30d",
+    label: "30 days",
+    value: 48210,
+    delta: "+12.4%",
+    points: [20, 22, 21, 25, 24, 23, 28, 30, 29, 34, 33, 38],
+    axis: ["Sep 8", "Sep 18", "Sep 28"],
+  },
+  {
+    id: "90d",
+    label: "90 days",
+    value: 131860,
+    delta: "+27.8%",
+    points: [10, 12, 11, 16, 15, 22, 20, 28, 36, 34, 45, 52],
+    axis: ["Jul", "Aug", "Sep"],
+  },
+];
+
+export function RevenueOverview() {
+  return (
+    <DetentTabs
+      ranges={RANGES}
+      title="Revenue"
+      formatValue={(n) => \`$\${n.toLocaleString("en-US")}\`}
+      defaultIndex={1}
+    />
+  );
+}`,
+    sourceCode: DETENT_TABS_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(DetentTabsDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

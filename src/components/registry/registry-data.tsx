@@ -283,6 +283,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Detent Tabs",
+    slug: "detent-tabs",
+    category: "Actions",
+    description:
+      "Range switcher whose chart follows the thumb and snaps into magnetic detents.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/detent-tabs.webp"
+          alt="Detent Tabs range switcher preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

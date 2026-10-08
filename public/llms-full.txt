@@ -204,6 +204,18 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json
 ```
 
+### 15. Detent Tabs (`detent-tabs`)
+
+Source: `src/components/ui/detent-tabs.tsx`.
+
+Range switcher whose chart follows the thumb and snaps into magnetic detents. A pill track with 2 to 4 options and a draggable thumb with magnetic detents. The content above it (a big number, a chip, a line chart and 3 axis labels) follows the thumb's position continuously while dragging and settles into detents with tuned spring dynamics. Props: `ranges`, `title`, `formatValue`, `index`, `defaultIndex`, `onIndexChange`, and `className`.
+
+Dependencies: `motion`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

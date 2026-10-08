@@ -236,6 +236,23 @@
           "target": "components/ui/next-up.tsx"
         }
       ]
+    },
+    {
+      "name": "detent-tabs",
+      "type": "registry:ui",
+      "title": "Detent Tabs",
+      "description": "Range switcher whose chart follows the thumb and snaps into magnetic detents",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/detent-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/detent-tabs.tsx"
+        }
+      ]
     }
   ]
 }
