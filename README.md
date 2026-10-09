@@ -41,6 +41,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Cookie Consent | `cookie-consent` | Calm cookie choice card and floating trigger with zero tracking |
 | Next Up | `next-up` | Setup checklist card that shows the single next thing to do with calm FLIP reordering |
 | Detent Tabs | `detent-tabs` | Range switcher whose chart follows the thumb and snaps into magnetic detents |
+| Layout Scrub | `layout-scrub` | List and grid view switch whose items morph with your thumb |
 
 ## Install
 

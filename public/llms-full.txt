@@ -216,6 +216,18 @@ Dependencies: `motion`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
 ```
 
+### 16. Layout Scrub (`layout-scrub`)
+
+Source: `src/components/ui/layout-scrub.tsx`.
+
+List and grid view switch whose items morph with your thumb. A small pill switch with two options, "List" and "Grid", and a draggable thumb. Items morph continuously between a list layout and a grid layout driven by parameter t with smoothstep interpolation, constant text block width, proportional 16:10 thumbnail scaling, and springless tween settling. Props: `items`, `heading`, `caption`, `columns`, `view`, `defaultView`, `onViewChange`, and `className`.
+
+Dependencies: `motion`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

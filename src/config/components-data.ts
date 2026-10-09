@@ -43,12 +43,18 @@ const DetentTabsDemo = React.lazy(() =>
     default: module.DetentTabsDemo,
   })),
 );
+const LayoutScrubDemo = React.lazy(() =>
+  import("@/components/demos/layout-scrub-demo").then((module) => ({
+    default: module.LayoutScrubDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
 import { COOKIE_CONSENT_SOURCE } from "@/config/cookie-consent-source";
 import { NEXT_UP_SOURCE } from "@/config/next-up-source";
 import { DETENT_TABS_SOURCE } from "@/config/detent-tabs-source";
+import { LAYOUT_SCRUB_SOURCE } from "@/config/layout-scrub-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1724,6 +1730,116 @@ export function RevenueOverview() {
         React.Suspense,
         { fallback: null },
         React.createElement(DetentTabsDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    slug: "layout-scrub",
+    name: "Layout Scrub",
+    category: "ACTIONS",
+    tagline:
+      "List and grid view switch whose items morph with your thumb.",
+    description:
+      "A list/grid view switch. Dragging the thumb morphs items continuously between list rows and grid cells with constant text block width, proportional 16:10 thumbnail scaling, and smoothstep interpolation.",
+    mechanicalDescription:
+      "Continuous geometric layout switcher. Items interpolate linearly between list and grid coordinates driven by a normalized parameter t. Smoothstep drag scrubbing and springless tween settling with zero overshoot.",
+    interactionType: "Continuous drag scrub and direct manipulation switcher",
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+    },
+    props: [
+      {
+        name: "items",
+        type: "LayoutScrubItem[]",
+        required: true,
+        description:
+          "Array of 2 to 24 items with id, thumbnail, title, optional meta, and optional trailing text.",
+      },
+      {
+        name: "heading",
+        type: "string",
+        description: "Optional heading text displayed above the item list.",
+      },
+      {
+        name: "caption",
+        type: "string",
+        description: "Optional secondary caption text displayed below the heading.",
+      },
+      {
+        name: "columns",
+        type: "2 | 3 | 4",
+        default: "2",
+        description: "Number of grid columns in grid view.",
+      },
+      {
+        name: "view",
+        type: '"list" | "grid"',
+        description: "Controlled active view mode.",
+      },
+      {
+        name: "defaultView",
+        type: '"list" | "grid"',
+        default: '"list"',
+        description: "Initial view mode when uncontrolled.",
+      },
+      {
+        name: "onViewChange",
+        type: '(view: "list" | "grid") => void',
+        description: "Callback fired when the active view changes.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<LayoutScrub items={ITEMS} heading="Templates" caption="6 templates" defaultView="list" />`,
+    usageCode: `import { LayoutScrub } from "@/components/ui/layout-scrub";
+
+const ITEMS = [
+  {
+    id: "studio",
+    title: "Studio",
+    meta: "Portfolio",
+    trailing: "Free",
+    thumbnail: <div className="w-full h-full bg-muted" />,
+  },
+  {
+    id: "atlas",
+    title: "Atlas",
+    meta: "Dashboard",
+    trailing: "$29",
+    thumbnail: <div className="w-full h-full bg-foreground" />,
+  },
+];
+
+export function TemplateView() {
+  return (
+    <LayoutScrub
+      items={ITEMS}
+      heading="Templates"
+      caption="2 templates"
+      columns={2}
+      defaultView="list"
+    />
+  );
+}`,
+    sourceCode: LAYOUT_SCRUB_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(LayoutScrubDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

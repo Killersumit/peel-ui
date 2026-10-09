@@ -305,6 +305,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Layout Scrub",
+    slug: "layout-scrub",
+    category: "Actions",
+    description:
+      "List and grid view switch whose items morph with your thumb.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/layout-scrub.webp"
+          alt="Layout Scrub list and grid view switcher preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

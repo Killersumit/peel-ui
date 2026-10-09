@@ -71,6 +71,10 @@ Setup checklist card showing the single next thing to do with calm FLIP reorderi
 
 Range switcher whose chart follows the thumb and snaps into magnetic detents.
 
+### [Layout Scrub](https://peel-ui.vercel.app/components/layout-scrub) (`layout-scrub`)
+
+List and grid view switch whose items morph with your thumb.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -91,6 +95,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
 ```
 
 ## Repository Versions
