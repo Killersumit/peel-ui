@@ -249,14 +249,14 @@ export function LayoutScrubDemo() {
       };
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-4 md:p-6 flex flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-1.5 rounded-lg border border-border bg-card p-1">
+    <div className="w-full max-w-[400px] mx-auto p-2 flex flex-col gap-2.5">
+      <div className="flex items-center justify-between gap-1.5 text-xs w-full">
+        <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-0.5 sm:p-1">
           <button
             type="button"
             onClick={() => setMode("light")}
             className={cn(
-              "px-2.5 py-1 rounded-md font-medium transition-colors",
+              "px-2 py-1 rounded-md font-medium transition-colors text-[11px] sm:text-xs",
               mode === "light"
                 ? "bg-foreground text-background"
                 : "text-muted-foreground hover:text-foreground"
@@ -268,7 +268,7 @@ export function LayoutScrubDemo() {
             type="button"
             onClick={() => setMode("dark")}
             className={cn(
-              "px-2.5 py-1 rounded-md font-medium transition-colors",
+              "px-2 py-1 rounded-md font-medium transition-colors text-[11px] sm:text-xs",
               mode === "dark"
                 ? "bg-foreground text-background"
                 : "text-muted-foreground hover:text-foreground"
@@ -278,7 +278,7 @@ export function LayoutScrubDemo() {
           </button>
         </div>
 
-        <div className="flex items-center gap-2 rounded-lg border border-border bg-card p-1">
+        <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-0.5 sm:p-1">
           {(Object.keys(ACCENTS) as AccentColor[]).map((key) => {
             const sw = ACCENTS[key];
             const isActive = accent === key;
@@ -288,7 +288,7 @@ export function LayoutScrubDemo() {
                 type="button"
                 onClick={() => setAccent(key)}
                 className={cn(
-                  "flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors",
+                  "flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors text-[11px] sm:text-xs",
                   isActive
                     ? "bg-muted text-foreground font-medium"
                     : "text-muted-foreground hover:text-foreground"
@@ -296,10 +296,10 @@ export function LayoutScrubDemo() {
                 title={sw.name}
               >
                 <span
-                  className="size-3 rounded-full border border-black/20"
+                  className="size-2.5 sm:size-3 rounded-full border border-black/20 shrink-0"
                   style={{ backgroundColor: sw.swatch }}
                 />
-                <span className="hidden sm:inline">{sw.name}</span>
+                <span className="hidden min-[420px]:inline">{sw.name}</span>
               </button>
             );
           })}
@@ -310,11 +310,11 @@ export function LayoutScrubDemo() {
         id="layout-scrub-preview-container"
         style={themeVars as React.CSSProperties}
         className={cn(
-          "relative min-h-[500px] w-full flex items-center justify-center p-6 sm:p-12 rounded-2xl border border-border bg-background transition-colors duration-200 select-none",
+          "relative min-h-[610px] w-full flex items-start justify-center p-3 sm:p-4 rounded-2xl border border-border bg-background transition-colors duration-200 select-none",
           mode === "dark" && "dark"
         )}
       >
-        <div className="w-full max-w-[440px]">
+        <div className="w-full max-w-[380px]">
           <LayoutScrub
             items={DEMO_ITEMS}
             heading="Templates"
