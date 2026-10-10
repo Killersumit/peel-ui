@@ -49,6 +49,8 @@
   --primary: var(--peel-text-primary);
   --primary-foreground: var(--peel-base);
   --ring: var(--peel-text-primary);
+  --destructive: var(--peel-danger);
+  --destructive-foreground: #ffffff;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -90,6 +92,8 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
