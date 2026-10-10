@@ -75,6 +75,10 @@ Range switcher whose chart follows the thumb and snaps into magnetic detents.
 
 List and grid view switch whose items morph with your thumb.
 
+### [Invite Field](https://peel-ui.vercel.app/components/invite-field) (`invite-field`)
+
+Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -96,6 +100,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
 ```
 
 ## Repository Versions

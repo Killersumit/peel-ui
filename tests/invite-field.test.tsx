@@ -1,9 +1,13 @@
 import * as React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { InviteField } from "@/components/ui/invite-field";
+import { setReducedMotion } from "./setup";
 
 describe("InviteField Component", () => {
+  beforeEach(() => {
+    setReducedMotion(true);
+  });
   it("renders with default emails and flags invalid ones", () => {
     render(
       <InviteField

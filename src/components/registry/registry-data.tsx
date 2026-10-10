@@ -327,6 +327,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Invite Field",
+    slug: "invite-field",
+    category: "Inputs",
+    description:
+      "Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/invite-field.webp"
+          alt="Invite Field email tag input preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

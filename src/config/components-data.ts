@@ -48,6 +48,11 @@ const LayoutScrubDemo = React.lazy(() =>
     default: module.LayoutScrubDemo,
   })),
 );
+const InviteFieldDemo = React.lazy(() =>
+  import("@/components/demos/invite-field-demo").then((module) => ({
+    default: module.InviteFieldDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -55,6 +60,7 @@ import { COOKIE_CONSENT_SOURCE } from "@/config/cookie-consent-source";
 import { NEXT_UP_SOURCE } from "@/config/next-up-source";
 import { DETENT_TABS_SOURCE } from "@/config/detent-tabs-source";
 import { LAYOUT_SCRUB_SOURCE } from "@/config/layout-scrub-source";
+import { INVITE_FIELD_SOURCE } from "@/config/invite-field-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1840,6 +1846,106 @@ export function TemplateView() {
         React.Suspense,
         { fallback: null },
         React.createElement(LayoutScrubDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Invite Field",
+    slug: "invite-field",
+    category: "INPUTS",
+    tagline:
+      "Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited.",
+    description:
+      "Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited.",
+    mechanicalDescription:
+      "Calm GSAP Flip translation with input origin projection, error detection, duplicate prevention ring pulse, and drawn SVG check confirmations.",
+    interactionType:
+      "Email tag input that lifts typed addresses into chips, flags invalid syntax, and flattens into confirmation rows on send.",
+    dependencies: ["gsap", "@gsap/react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json",
+    },
+    props: [
+      {
+        name: "value",
+        type: "string[]",
+        description:
+          "Controlled array of emails; if given, the parent owns the state.",
+      },
+      {
+        name: "defaultValue",
+        type: "string[]",
+        default: "[]",
+        description: "Initial uncontrolled list of emails.",
+      },
+      {
+        name: "onChange",
+        type: "(emails: string[]) => void",
+        description:
+          "Callback fired with the full list after every add, remove, or edit.",
+      },
+      {
+        name: "onSend",
+        type: "(validEmails: string[]) => void | Promise<void>",
+        description: "Called with valid emails only when the user clicks Send.",
+      },
+      {
+        name: "label",
+        type: "string",
+        default: '"Invite teammates"',
+        description: "Field heading label.",
+      },
+      {
+        name: "sentLabel",
+        type: "string",
+        default: '"Invites sent"',
+        description: "Label displayed in the sent confirmation state.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        default: '"name@company.com"',
+        description: "Input placeholder text.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<InviteField defaultValue={["maya@acme.co", "dev@startup.io"]} onSend={handleSend} />`,
+    usageCode: `import { InviteField } from "@/components/ui/invite-field";
+
+export function TeamInvite() {
+  const handleSend = async (emails: string[]) => {
+    await fetch("/api/invite", {
+      method: "POST",
+      body: JSON.stringify({ emails }),
+    });
+  };
+
+  return (
+    <InviteField
+      defaultValue={["maya@acme.co", "dev@startup.io"]}
+      onSend={handleSend}
+    />
+  );
+}`,
+    sourceCode: INVITE_FIELD_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(InviteFieldDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

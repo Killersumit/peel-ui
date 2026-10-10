@@ -228,6 +228,18 @@ Dependencies: `motion`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
 ```
 
+### 17. Invite Field (`invite-field`)
+
+Source: `src/components/ui/invite-field.tsx`.
+
+Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited. Calm GSAP Flip translation with input origin projection, error detection, duplicate prevention ring pulse, and drawn SVG check confirmations. Props: `value`, `defaultValue`, `onChange`, `onSend`, `label`, `sentLabel`, `placeholder`, and `className`.
+
+Dependencies: `gsap`, `@gsap/react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.
