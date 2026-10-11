@@ -319,6 +319,24 @@
           "target": "components/ui/invite-field.tsx"
         }
       ]
+    },
+    {
+      "name": "roadmap-vote",
+      "type": "registry:ui",
+      "title": "Roadmap Vote",
+      "description": "Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/roadmap-vote.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/roadmap-vote.tsx"
+        }
+      ]
     }
   ]
 }

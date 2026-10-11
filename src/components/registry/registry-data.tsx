@@ -349,6 +349,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Roadmap Vote",
+    slug: "roadmap-vote",
+    category: "Actions",
+    description:
+      "Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/roadmap-vote.webp"
+          alt="Roadmap Vote feature request voting list preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

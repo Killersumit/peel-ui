@@ -43,6 +43,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Detent Tabs | `detent-tabs` | Range switcher whose chart follows the thumb and snaps into magnetic detents |
 | Layout Scrub | `layout-scrub` | List and grid view switch whose items morph with your thumb |
 | Invite Field | `invite-field` | Email tag input that turns addresses into chips and confirms with invited rows |
+| Roadmap Vote | `roadmap-vote` | Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above. |
 
 ## Install
 

@@ -53,6 +53,11 @@ const InviteFieldDemo = React.lazy(() =>
     default: module.InviteFieldDemo,
   })),
 );
+const RoadmapVoteDemo = React.lazy(() =>
+  import("@/components/demos/roadmap-vote-demo").then((module) => ({
+    default: module.RoadmapVoteDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -61,6 +66,7 @@ import { NEXT_UP_SOURCE } from "@/config/next-up-source";
 import { DETENT_TABS_SOURCE } from "@/config/detent-tabs-source";
 import { LAYOUT_SCRUB_SOURCE } from "@/config/layout-scrub-source";
 import { INVITE_FIELD_SOURCE } from "@/config/invite-field-source";
+import { ROADMAP_VOTE_SOURCE } from "@/config/roadmap-vote-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -1946,6 +1952,111 @@ export function TeamInvite() {
         React.Suspense,
         { fallback: null },
         React.createElement(InviteFieldDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Roadmap Vote",
+    slug: "roadmap-vote",
+    category: "ACTIONS",
+    tagline:
+      "Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.",
+    description:
+      "Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.",
+    mechanicalDescription:
+      "Coordinated GSAP Flip row translation, 42px clipped rolling numeric counters, and responsive bar width scaling with prefers-reduced-motion support.",
+    interactionType:
+      "Feature request voting list that rolls vote counts, re-sorts rows with calm FLIP motion, and scales demand bars.",
+    dependencies: ["gsap", "@gsap/react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json",
+    },
+    props: [
+      {
+        name: "items",
+        type: "{ id: string; title: string; description?: string; status?: string; votes: number; voted?: boolean }[]",
+        description:
+          "List of feature items with vote counts and user voted state.",
+        required: true,
+      },
+      {
+        name: "heading",
+        type: "string",
+        default: "undefined",
+        description:
+          "Optional section title displayed above the voting list.",
+      },
+      {
+        name: "caption",
+        type: "string",
+        default: "undefined",
+        description:
+          "Optional subtitle or explanatory text below the heading.",
+      },
+      {
+        name: "activeStatus",
+        type: "string",
+        default: '"In progress"',
+        description:
+          "Status text to highlight in text-foreground instead of text-muted-foreground.",
+      },
+      {
+        name: "onVote",
+        type: "(id: string, voted: boolean) => void",
+        description:
+          "Callback invoked when a vote is added or removed.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<RoadmapVote items={items} heading="What should we build next?" />`,
+    usageCode: `import { RoadmapVote } from "@/components/ui/roadmap-vote";
+
+const ITEMS = [
+  {
+    id: "offline",
+    title: "Work offline",
+    description: "Write on the train. Everything syncs when you are back.",
+    status: "Planned",
+    votes: 214,
+  },
+  {
+    id: "share-link",
+    title: "Share a note as a link",
+    description: "Anyone with the link can read it. Nobody can edit.",
+    status: "In progress",
+    votes: 213,
+  },
+];
+
+export function FeatureRoadmap() {
+  return (
+    <RoadmapVote
+      items={ITEMS}
+      heading="What should we build next?"
+      caption="Tap a number to vote. The most-voted goes first."
+      onVote={(id, voted) => console.log(id, voted)}
+    />
+  );
+}`,
+    sourceCode: ROADMAP_VOTE_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(RoadmapVoteDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

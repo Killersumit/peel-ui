@@ -240,6 +240,18 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
 ```
 
+### 18. Roadmap Vote (`roadmap-vote`)
+
+Source: `src/components/ui/roadmap-vote.tsx`.
+
+Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above. Coordinated GSAP Flip row translation, 42px clipped rolling numeric counters, and responsive bar width scaling with prefers-reduced-motion support. Props: `items`, `heading`, `caption`, `activeStatus`, `onVote`, and `className`.
+
+Dependencies: `gsap`, `@gsap/react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

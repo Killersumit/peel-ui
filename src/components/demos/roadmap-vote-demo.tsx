@@ -156,8 +156,8 @@ export function RoadmapVoteDemo() {
       };
 
   return (
-    <div className="w-full max-w-[520px] mx-auto p-2 sm:p-4 flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-1.5 text-xs w-full">
+    <div className="w-full max-w-[480px] mx-auto p-1.5 sm:p-3 flex flex-col gap-2 md:max-h-[calc(100svh-4rem)]">
+      <div className="flex items-center justify-between gap-1.5 text-xs w-full shrink-0">
         <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-0.5 sm:p-1">
           <button
             type="button"
@@ -217,11 +217,11 @@ export function RoadmapVoteDemo() {
         id="roadmap-vote-preview-container"
         style={themeVars as React.CSSProperties}
         className={cn(
-          "relative min-h-[480px] w-full flex items-center justify-center p-6 sm:p-10 rounded-2xl border border-border bg-background transition-colors duration-200",
+          "relative w-full max-h-[min(68vh,620px)] overflow-y-auto overscroll-contain flex flex-col p-4 sm:p-7 rounded-2xl border border-border bg-background transition-colors duration-200",
           mode === "dark" && "dark"
         )}
       >
-        <div className="w-full max-w-[460px]">
+        <div className="w-full max-w-[420px] mx-auto">
           <RoadmapVote
             items={DEFAULT_ITEMS}
             heading="What should we build next?"

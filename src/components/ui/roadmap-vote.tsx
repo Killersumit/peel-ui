@@ -1,7 +1,20 @@
 "use client";
 
 import * as React from "react";
+import * as ReactDOM from "react-dom";
+import gsap from "gsap";
+import { Flip } from "gsap/Flip";
+import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(Flip);
+}
+
+const isReducedMotion = () => {
+  if (typeof window === "undefined") return true;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+};
 
 export interface RoadmapVoteItem {
   id: string;
@@ -42,6 +55,19 @@ export function RoadmapVote({
   const [announcement, setAnnouncement] = React.useState("");
   const activeFocusIdRef = React.useRef<string | null>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const activeTimelineRef = React.useRef<gsap.core.Timeline | null>(null);
+
+  useGSAP(
+    () => {
+      return () => {
+        activeTimelineRef.current?.kill();
+        if (containerRef.current) {
+          gsap.killTweensOf(containerRef.current);
+        }
+      };
+    },
+    { scope: containerRef }
+  );
 
   const itemsWithCounts = React.useMemo(() => {
     return items.map((item, originalIndex) => {
@@ -84,20 +110,18 @@ export function RoadmapVote({
   }, [sortedItems]);
 
   const handleToggleVote = (id: string) => {
+    // Fast-forward any running animation so rapid clicks never stack or glitch.
+    if (activeTimelineRef.current) {
+      activeTimelineRef.current.progress(1);
+      activeTimelineRef.current = null;
+    }
+
     activeFocusIdRef.current = id;
     const item = itemsWithCounts.find((it) => it.id === id);
     if (!item) return;
 
     const prevIndex = sortedItems.findIndex((it) => it.id === id);
     const nextVoted = !item.isVoted;
-
-    setVotedMap((prev) => ({
-      ...prev,
-      [id]: nextVoted,
-    }));
-
-    onVote?.(id, nextVoted);
-
     const nextDelta = nextVoted
       ? item.voted
         ? 0
@@ -129,12 +153,114 @@ export function RoadmapVote({
     });
 
     const nextIndex = projectedList.findIndex((it) => it.id === id);
+    let projectedMax = 0;
+    for (const it of projectedList) {
+      if (it.displayedVotes > projectedMax) {
+        projectedMax = it.displayedVotes;
+      }
+    }
 
     let msg = `${item.title}: ${nextVotes} votes`;
     if (nextIndex !== prevIndex) {
       msg += `, now number ${nextIndex + 1}`;
     }
+
+    if (isReducedMotion() || !containerRef.current) {
+      setVotedMap((prev) => ({
+        ...prev,
+        [id]: nextVoted,
+      }));
+      onVote?.(id, nextVoted);
+      setAnnouncement(msg);
+      return;
+    }
+
+    const rowEls = Array.from(
+      containerRef.current.querySelectorAll<HTMLLIElement>("[data-item-id]")
+    );
+    // Capture geometry before DOM rearrangement for calm translation.
+    const flipState = Flip.getState(rowEls);
+
+    const oldBarPercents = new Map<string, number>();
+    for (const it of sortedItems) {
+      const pct = maxVotes > 0 ? (it.displayedVotes / maxVotes) * 100 : 0;
+      oldBarPercents.set(it.id, pct);
+    }
+
+    const targetBtn = containerRef.current.querySelector<HTMLButtonElement>(
+      `button[data-vote-btn="${id}"]`
+    );
+    const slot1 = targetBtn?.querySelector<HTMLElement>('[data-num-slot="1"]');
+    const slot2 = targetBtn?.querySelector<HTMLElement>('[data-num-slot="2"]');
+    const oldVotes = item.displayedVotes;
+
+    ReactDOM.flushSync(() => {
+      setVotedMap((prev) => ({
+        ...prev,
+        [id]: nextVoted,
+      }));
+    });
+
+    onVote?.(id, nextVoted);
     setAnnouncement(msg);
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        activeTimelineRef.current = null;
+        if (slot2) {
+          slot2.style.visibility = "hidden";
+          gsap.set(slot2, { clearProps: "transform" });
+        }
+        if (slot1) {
+          gsap.set(slot1, { clearProps: "transform" });
+        }
+      },
+    });
+    activeTimelineRef.current = tl;
+
+    if (slot1 && slot2) {
+      slot2.textContent = String(oldVotes);
+      slot2.style.visibility = "visible";
+      if (nextVoted) {
+        gsap.set(slot2, { y: 0 });
+        gsap.set(slot1, { y: 42 });
+        tl.to(slot2, { y: -42, duration: 0.28, ease: "power3.out" }, 0);
+        tl.to(slot1, { y: 0, duration: 0.28, ease: "power3.out" }, 0);
+      } else {
+        gsap.set(slot2, { y: 0 });
+        gsap.set(slot1, { y: -42 });
+        tl.to(slot2, { y: 42, duration: 0.28, ease: "power3.out" }, 0);
+        tl.to(slot1, { y: 0, duration: 0.28, ease: "power3.out" }, 0);
+      }
+    }
+
+    tl.add(
+      Flip.from(flipState, {
+        duration: 0.4,
+        ease: "power3.out",
+        scale: false,
+      }),
+      0
+    );
+
+    const barEls =
+      containerRef.current.querySelectorAll<HTMLElement>("[data-bar-fill]");
+    barEls.forEach((bar) => {
+      const itemId = bar.getAttribute("data-bar-item");
+      if (!itemId) return;
+      const oldPct = oldBarPercents.get(itemId) ?? 0;
+      const targetItem = projectedList.find((x) => x.id === itemId);
+      const newPct =
+        projectedMax > 0 && targetItem
+          ? (targetItem.displayedVotes / projectedMax) * 100
+          : 0;
+      tl.fromTo(
+        bar,
+        { width: `${oldPct}%` },
+        { width: `${newPct}%`, duration: 0.4, ease: "power3.out" },
+        0
+      );
+    });
   };
 
   React.useLayoutEffect(() => {
@@ -205,7 +331,19 @@ export function RoadmapVote({
                       : "bg-transparent text-foreground hover:bg-muted"
                   )}
                 >
-                  <span className="block">{item.displayedVotes}</span>
+                  <span className="relative block h-[42px] leading-[42px] overflow-hidden select-none">
+                    <span
+                      data-num-slot="1"
+                      className="block h-[42px] leading-[42px]"
+                    >
+                      {item.displayedVotes}
+                    </span>
+                    <span
+                      data-num-slot="2"
+                      aria-hidden="true"
+                      className="absolute inset-0 block h-[42px] leading-[42px] invisible pointer-events-none"
+                    />
+                  </span>
                 </button>
                 <span className="mt-1.5 text-[12px] text-muted-foreground select-none">
                   {item.isVoted ? "your vote" : "votes"}
@@ -240,6 +378,8 @@ export function RoadmapVote({
                 className="absolute bottom-0 left-0 right-0 h-[2px] w-full bg-border overflow-hidden"
               >
                 <div
+                  data-bar-fill
+                  data-bar-item={item.id}
                   className="h-full bg-foreground"
                   style={{ width: `${percent}%` }}
                 />
