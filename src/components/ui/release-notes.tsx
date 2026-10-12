@@ -42,6 +42,8 @@ export function ReleaseNotes({
   className,
 }: ReleaseNotesProps) {
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const [slotAValue, setSlotAValue] = React.useState(releases[0]?.version ?? "");
+  const [slotBValue, setSlotBValue] = React.useState(releases[0]?.version ?? "");
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
   const bandRef = React.useRef<HTMLDivElement>(null);
   const releaseRefs = React.useRef<(HTMLElement | null)[]>([]);
@@ -65,6 +67,8 @@ export function ReleaseNotes({
     function roll(targetVersion: string, direction: number) {
       if (checkReducedMotion()) {
         displayedVersionRef.current = targetVersion;
+        setSlotAValue(targetVersion);
+        setSlotBValue(targetVersion);
         if (spanARef.current) spanARef.current.textContent = targetVersion;
         if (slotARef.current) gsap.set(slotARef.current, { y: 0, autoAlpha: 1 });
         if (slotBRef.current) gsap.set(slotBRef.current, { autoAlpha: 0 });
@@ -98,6 +102,11 @@ export function ReleaseNotes({
         return;
       }
 
+      if (isSlotA) {
+        setSlotBValue(targetVersion);
+      } else {
+        setSlotAValue(targetVersion);
+      }
       incomingSpan.textContent = targetVersion;
 
       const dir = direction >= 0 ? 1 : -1;
@@ -231,13 +240,13 @@ export function ReleaseNotes({
         )}
       >
         <div className="flex items-end justify-between">
-          <div className="h-[96px] overflow-hidden -ml-1 relative">
+          <div className="h-[96px] overflow-hidden -ml-1 relative flex-1 min-w-0">
             <div ref={slotARef} className="absolute inset-0">
               <span
                 ref={spanARef}
                 className="block text-[100px] leading-[96px] font-semibold tracking-[-0.065em] tabular-nums"
               >
-                {activeRelease?.version}
+                {slotAValue}
               </span>
             </div>
             <div
@@ -248,11 +257,13 @@ export function ReleaseNotes({
               <span
                 ref={spanBRef}
                 className="block text-[100px] leading-[96px] font-semibold tracking-[-0.065em] tabular-nums"
-              />
+              >
+                {slotBValue}
+              </span>
             </div>
           </div>
 
-          <div className="text-right text-[13px] tabular-nums pb-[10px]">
+          <div className="text-right text-[13px] tabular-nums pb-[10px] shrink-0">
             <div className="font-medium">
               {activeIndex === 0
                 ? "Latest release"

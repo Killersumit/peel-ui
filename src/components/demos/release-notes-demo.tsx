@@ -204,8 +204,8 @@ export function ReleaseNotesDemo() {
       };
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-1.5 sm:p-3 flex flex-col items-center gap-3">
-      <div className="flex items-center justify-between gap-1.5 text-xs w-full max-w-[480px] shrink-0">
+    <div className="w-full max-w-[480px] mx-auto p-1.5 sm:p-3 flex flex-col gap-2.5">
+      <div className="flex items-center justify-between gap-1.5 text-xs w-full shrink-0">
         <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-0.5 sm:p-1">
           <button
             type="button"
@@ -251,7 +251,12 @@ export function ReleaseNotesDemo() {
                 title={sw.name}
               >
                 <span
-                  className="size-2.5 sm:size-3 rounded-full border border-black/20 shrink-0"
+                  className={cn(
+                    "size-2.5 sm:size-3 rounded-full shrink-0",
+                    key === "ink"
+                      ? "border border-zinc-400 dark:border-zinc-500"
+                      : "border border-black/20"
+                  )}
                   style={{ backgroundColor: sw.swatch }}
                 />
                 <span className="hidden min-[420px]:inline">{sw.name}</span>
@@ -265,12 +270,12 @@ export function ReleaseNotesDemo() {
         id="release-notes-preview-container"
         style={themeVars as React.CSSProperties}
         className={cn(
-          "relative w-full flex items-center justify-center p-3 sm:p-6 rounded-2xl border border-border bg-background transition-colors duration-200",
+          "relative w-full flex items-center justify-center transition-colors duration-200",
           mode === "dark" && "dark"
         )}
       >
         <div className="w-full max-w-[480px]">
-          <ReleaseNotes releases={DEFAULT_RELEASES} height={600} />
+          <ReleaseNotes releases={DEFAULT_RELEASES} height={480} />
         </div>
       </div>
     </div>
