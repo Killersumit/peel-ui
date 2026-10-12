@@ -1,7 +1,19 @@
 "use client";
 
 import * as React from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+function checkReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 export interface ReleaseChange {
   tag: string;
@@ -34,75 +46,176 @@ export function ReleaseNotes({
   const bandRef = React.useRef<HTMLDivElement>(null);
   const releaseRefs = React.useRef<(HTMLElement | null)[]>([]);
 
+  const slotARef = React.useRef<HTMLDivElement>(null);
+  const slotBRef = React.useRef<HTMLDivElement>(null);
+  const spanARef = React.useRef<HTMLSpanElement>(null);
+  const spanBRef = React.useRef<HTMLSpanElement>(null);
+  const activeSlotRef = React.useRef<"A" | "B">("A");
+  const displayedVersionRef = React.useRef<string>(releases[0]?.version ?? "");
+  const isRollingRef = React.useRef<boolean>(false);
+  const pendingTargetRef = React.useRef<{
+    version: string;
+    direction: number;
+  } | null>(null);
+  const currentTimelineRef = React.useRef<gsap.core.Timeline | null>(null);
+
   const isOwnScroll = height !== undefined;
 
-  React.useEffect(() => {
-    const bandEl = bandRef.current;
-    if (!bandEl || releases.length === 0) return;
+  const rollNumeral = React.useCallback(
+    function roll(targetVersion: string, direction: number) {
+      if (checkReducedMotion()) {
+        displayedVersionRef.current = targetVersion;
+        if (spanARef.current) spanARef.current.textContent = targetVersion;
+        if (slotARef.current) gsap.set(slotARef.current, { y: 0, autoAlpha: 1 });
+        if (slotBRef.current) gsap.set(slotBRef.current, { autoAlpha: 0 });
+        activeSlotRef.current = "A";
+        isRollingRef.current = false;
+        pendingTargetRef.current = null;
+        return;
+      }
 
-    if (isOwnScroll) {
-      const container = scrollContainerRef.current;
-      if (!container) return;
-
-      const handleScroll = () => {
-        // Pin to the first release when resting at the very top.
-        if (container.scrollTop <= 4) {
-          setActiveIndex(0);
-          return;
+      if (targetVersion === displayedVersionRef.current) {
+        if (pendingTargetRef.current?.version === targetVersion) {
+          pendingTargetRef.current = null;
         }
+        return;
+      }
 
-        if (
-          container.scrollHeight - container.scrollTop - container.clientHeight <= 2
-        ) {
-          setActiveIndex(releases.length - 1);
-          return;
-        }
+      if (isRollingRef.current) {
+        pendingTargetRef.current = { version: targetVersion, direction };
+        return;
+      }
 
-        const bandRect = bandEl.getBoundingClientRect();
-        const threshold = bandRect.bottom + 24;
+      isRollingRef.current = true;
+      const isSlotA = activeSlotRef.current === "A";
+      const currentSlot = isSlotA ? slotARef.current : slotBRef.current;
+      const incomingSlot = isSlotA ? slotBRef.current : slotARef.current;
+      const incomingSpan = isSlotA ? spanBRef.current : spanARef.current;
+      const nextSlotName = isSlotA ? "B" : "A";
 
-        let nextIndex = 0;
-        for (let i = 0; i < releases.length; i++) {
-          const el = releaseRefs.current[i];
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= threshold) {
-              nextIndex = i;
-            }
+      if (!currentSlot || !incomingSlot || !incomingSpan) {
+        isRollingRef.current = false;
+        return;
+      }
+
+      incomingSpan.textContent = targetVersion;
+
+      const dir = direction >= 0 ? 1 : -1;
+      const oldY = dir > 0 ? -96 : 96;
+      const newStartY = dir > 0 ? 96 : -96;
+
+      gsap.set(incomingSlot, { y: newStartY, autoAlpha: 1 });
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          displayedVersionRef.current = targetVersion;
+          activeSlotRef.current = nextSlotName;
+          gsap.set(currentSlot, { autoAlpha: 0 });
+          isRollingRef.current = false;
+
+          if (
+            pendingTargetRef.current &&
+            pendingTargetRef.current.version !== targetVersion
+          ) {
+            const next = pendingTargetRef.current;
+            pendingTargetRef.current = null;
+            roll(next.version, next.direction);
+          } else {
+            pendingTargetRef.current = null;
           }
+        },
+      });
+
+      currentTimelineRef.current = tl;
+
+      tl.to(
+        currentSlot,
+        {
+          y: oldY,
+          duration: 0.32,
+          ease: "power3.out",
+        },
+        0
+      );
+
+      tl.to(
+        incomingSlot,
+        {
+          y: 0,
+          duration: 0.32,
+          ease: "power3.out",
+        },
+        0
+      );
+    },
+    []
+  );
+
+  const handleActivate = React.useCallback(
+    (index: number, direction: number) => {
+      const targetRelease = releases[index];
+      if (!targetRelease) return;
+
+      setActiveIndex(index);
+      rollNumeral(targetRelease.version, direction);
+    },
+    [releases, rollNumeral]
+  );
+
+  useGSAP(
+    () => {
+      const bandEl = bandRef.current;
+      if (!bandEl || releases.length === 0) return;
+
+      const scroller = isOwnScroll ? scrollContainerRef.current : undefined;
+      const getThreshold = () => (bandEl.offsetHeight || 138) + 24;
+
+      releases.forEach((_, i) => {
+        const el = releaseRefs.current[i];
+        if (!el) return;
+
+        ScrollTrigger.create({
+          trigger: el,
+          scroller,
+          start: i === 0 ? "top bottom" : () => `top ${getThreshold()}px`,
+          end: () => `bottom ${getThreshold()}px`,
+          onToggle: (self) => {
+            if (self.isActive) {
+              handleActivate(i, self.direction || 1);
+            }
+          },
+        });
+      });
+
+      const handleScrollRest = () => {
+        if (scroller ? scroller.scrollTop <= 4 : window.scrollY <= 4) {
+          handleActivate(0, -1);
         }
-        setActiveIndex(nextIndex);
       };
 
-      container.addEventListener("scroll", handleScroll, { passive: true });
-      return () => container.removeEventListener("scroll", handleScroll);
-    } else {
-      const handleWindowScroll = () => {
-        if (window.scrollY <= 4) {
-          setActiveIndex(0);
-          return;
-        }
+      const targetScroller = scroller || window;
+      targetScroller.addEventListener("scroll", handleScrollRest, {
+        passive: true,
+      });
 
-        const bandRect = bandEl.getBoundingClientRect();
-        const threshold = bandRect.bottom + 24;
+      // Refresh layout positions after fonts load to avoid offset drift.
+      if (typeof document !== "undefined" && document.fonts?.ready) {
+        document.fonts.ready
+          .then(() => {
+            ScrollTrigger.refresh();
+          })
+          .catch(() => {});
+      }
 
-        let nextIndex = 0;
-        for (let i = 0; i < releases.length; i++) {
-          const el = releaseRefs.current[i];
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= threshold) {
-              nextIndex = i;
-            }
-          }
-        }
-        setActiveIndex(nextIndex);
+      return () => {
+        targetScroller.removeEventListener("scroll", handleScrollRest);
       };
-
-      window.addEventListener("scroll", handleWindowScroll, { passive: true });
-      return () => window.removeEventListener("scroll", handleWindowScroll);
+    },
+    {
+      scope: scrollContainerRef,
+      dependencies: [releases, isOwnScroll, handleActivate],
     }
-  }, [releases.length, isOwnScroll]);
+  );
 
   const activeRelease = releases[activeIndex] ?? releases[0];
 
@@ -118,10 +231,25 @@ export function ReleaseNotes({
         )}
       >
         <div className="flex items-end justify-between">
-          <div className="h-[96px] overflow-hidden -ml-1">
-            <span className="block text-[100px] leading-[96px] font-semibold tracking-[-0.065em] tabular-nums">
-              {activeRelease?.version}
-            </span>
+          <div className="h-[96px] overflow-hidden -ml-1 relative">
+            <div ref={slotARef} className="absolute inset-0">
+              <span
+                ref={spanARef}
+                className="block text-[100px] leading-[96px] font-semibold tracking-[-0.065em] tabular-nums"
+              >
+                {activeRelease?.version}
+              </span>
+            </div>
+            <div
+              ref={slotBRef}
+              className="absolute inset-0"
+              style={{ visibility: "hidden" }}
+            >
+              <span
+                ref={spanBRef}
+                className="block text-[100px] leading-[96px] font-semibold tracking-[-0.065em] tabular-nums"
+              />
+            </div>
           </div>
 
           <div className="text-right text-[13px] tabular-nums pb-[10px]">
@@ -141,7 +269,7 @@ export function ReleaseNotes({
             <div
               key={rel.version}
               className={cn(
-                "h-[2px] rounded-full",
+                "h-[2px] rounded-full transition-all duration-300 motion-reduce:transition-none",
                 i === activeIndex
                   ? "w-[40px] bg-primary-foreground opacity-100"
                   : "w-[14px] bg-primary-foreground opacity-[0.28]"
@@ -164,8 +292,8 @@ export function ReleaseNotes({
               }}
               data-release-version={release.version}
               className={cn(
-                "pb-[52px]",
-                isLast && "min-h-[300px]",
+                "pb-[52px] transition-opacity duration-300 motion-reduce:transition-none",
+                isLast && "min-h-[500px]",
                 isActive ? "opacity-100" : "opacity-[0.38]"
               )}
             >
@@ -233,7 +361,10 @@ export function ReleaseNotes({
   }
 
   return (
-    <div className={cn("relative w-full text-foreground", className)}>
+    <div
+      ref={scrollContainerRef}
+      className={cn("relative w-full text-foreground", className)}
+    >
       {content}
     </div>
   );

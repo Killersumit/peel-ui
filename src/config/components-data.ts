@@ -58,6 +58,11 @@ const RoadmapVoteDemo = React.lazy(() =>
     default: module.RoadmapVoteDemo,
   })),
 );
+const ReleaseNotesDemo = React.lazy(() =>
+  import("@/components/demos/release-notes-demo").then((module) => ({
+    default: module.ReleaseNotesDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -67,6 +72,7 @@ import { DETENT_TABS_SOURCE } from "@/config/detent-tabs-source";
 import { LAYOUT_SCRUB_SOURCE } from "@/config/layout-scrub-source";
 import { INVITE_FIELD_SOURCE } from "@/config/invite-field-source";
 import { ROADMAP_VOTE_SOURCE } from "@/config/roadmap-vote-source";
+import { RELEASE_NOTES_SOURCE } from "@/config/release-notes-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -2057,6 +2063,106 @@ export function FeatureRoadmap() {
         React.Suspense,
         { fallback: null },
         React.createElement(RoadmapVoteDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Release Notes",
+    slug: "release-notes",
+    category: "ACTIONS",
+    tagline:
+      "Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.",
+    description:
+      "Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.",
+    mechanicalDescription:
+      "Coordinated GSAP ScrollTrigger tracking per release, pinned 96px clipped rolling numeric counters, and responsive indicator tick transitions.",
+    interactionType:
+      "Changelog and release notes section that rolls a giant pinned version numeral to the release being read during scroll.",
+    dependencies: ["gsap", "@gsap/react", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+    },
+    props: [
+      {
+        name: "releases",
+        type: "{ version: string; date: string; title: string; changes: { tag: string; lead: string; detail?: string }[] }[]",
+        description:
+          "List of releases, ordered newest first (2 to 12 releases).",
+        required: true,
+      },
+      {
+        name: "highlightTag",
+        type: "string",
+        default: '"New"',
+        description:
+          "Changes with this tag show the tag in text-foreground instead of text-muted-foreground.",
+      },
+      {
+        name: "height",
+        type: "number | string",
+        default: "undefined",
+        description:
+          "If given, the component scrolls inside its own bounded box of this height. If omitted, the page scrolls and the band sticks to the top of the viewport.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<ReleaseNotes releases={releases} height={600} />`,
+    usageCode: `import { ReleaseNotes } from "@/components/ui/release-notes";
+
+const RELEASES = [
+  {
+    version: "2.4",
+    date: "Oct 6, 2026",
+    title: "Work offline",
+    changes: [
+      {
+        tag: "New",
+        lead: "Write on the train.",
+        detail: "Everything syncs when you are back.",
+      },
+      {
+        tag: "Improved",
+        lead: "Search is twice as fast",
+        detail: "on long notes.",
+      },
+    ],
+  },
+  {
+    version: "2.3",
+    date: "Sep 15, 2026",
+    title: "Share a note as a link",
+    changes: [
+      {
+        tag: "New",
+        lead: "Anyone with the link can read.",
+        detail: "Nobody can edit.",
+      },
+    ],
+  },
+];
+
+export function Changelog() {
+  return <ReleaseNotes releases={RELEASES} height={600} />;
+}`,
+    sourceCode: RELEASE_NOTES_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(ReleaseNotesDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

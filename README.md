@@ -44,6 +44,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Layout Scrub | `layout-scrub` | List and grid view switch whose items morph with your thumb |
 | Invite Field | `invite-field` | Email tag input that turns addresses into chips and confirms with invited rows |
 | Roadmap Vote | `roadmap-vote` | Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above. |
+| Release Notes | `release-notes` | Changelog and release notes section. A giant version number stays pinned in an accent band and rolls as you scroll. |
 
 ## Install
 

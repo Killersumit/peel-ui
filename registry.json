@@ -306,6 +306,24 @@
           "target": "components/ui/roadmap-vote.tsx"
         }
       ]
+    },
+    {
+      "name": "release-notes",
+      "type": "registry:ui",
+      "title": "Release Notes",
+      "description": "Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.",
+      "dependencies": [
+        "gsap",
+        "@gsap/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/release-notes.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/release-notes.tsx"
+        }
+      ]
     }
   ]
 }

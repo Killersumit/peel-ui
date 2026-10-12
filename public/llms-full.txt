@@ -252,7 +252,20 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
 ```
 
+### 19. Release Notes (`release-notes`)
+
+Source: `src/components/ui/release-notes.tsx`.
+
+Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll. Coordinated GSAP ScrollTrigger tracking per release, pinned 96px clipped rolling numeric counters, and responsive indicator tick transitions. Props: `releases`, `highlightTag`, `height`, and `className`.
+
+Dependencies: `gsap`, `@gsap/react`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.
+
 

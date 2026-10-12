@@ -83,6 +83,10 @@ Email tag input for inviting teammates. Type or paste emails and they become chi
 
 Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.
 
+### [Release Notes](https://peel-ui.vercel.app/components/release-notes) (`release-notes`)
+
+Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -106,6 +110,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
 ```
 
 ## Repository Versions

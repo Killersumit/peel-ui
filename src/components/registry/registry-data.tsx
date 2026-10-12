@@ -371,6 +371,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Release Notes",
+    slug: "release-notes",
+    category: "Actions",
+    description:
+      "Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/release-notes.webp"
+          alt="Release Notes changelog preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [
