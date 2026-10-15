@@ -28,16 +28,15 @@ export function SkillPile({
 }: SkillPileProps) {
   const activeSkills = React.useMemo(() => skills.slice(0, 24), [skills]);
   const [isPhysicsActive, setIsPhysicsActive] = React.useState(false);
-  const [pillVisibility, setPillVisibility] = React.useState<boolean[]>(() =>
-    new Array(activeSkills.length).fill(false)
-  );
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const trayRef = React.useRef<HTMLDivElement>(null);
   const pillRefs = React.useRef<(HTMLSpanElement | null)[]>([]);
 
+  const isPhysicsActiveRef = React.useRef(false);
   const engineRef = React.useRef<Engine | null>(null);
   const bodiesRef = React.useRef<MatterBody[]>([]);
+  const isAddedRef = React.useRef<boolean[]>([]);
   const sizesRef = React.useRef<{ width: number; height: number }[]>([]);
   const wasSleepingRef = React.useRef<boolean[]>([]);
   const timersRef = React.useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -79,21 +78,23 @@ export function SkillPile({
 
     const bodies = bodiesRef.current;
     const sizes = sizesRef.current;
+    const isAdded = isAddedRef.current;
     let anyAwake = false;
 
     for (let i = 0; i < bodies.length; i++) {
+      if (!isAdded[i]) continue;
+
       const body = bodies[i];
       const el = pillRefs.current[i];
-      if (!body || !el) continue;
+      const s = sizes[i];
+      if (!body || !el || !s) continue;
 
       if (!body.isSleeping) {
         anyAwake = true;
         wasSleepingRef.current[i] = false;
-        const s = sizes[i];
         el.style.transform = `translate3d(${body.position.x - s.width / 2}px, ${body.position.y - s.height / 2}px, 0) rotate(${body.angle}rad)`;
       } else if (!wasSleepingRef.current[i]) {
         wasSleepingRef.current[i] = true;
-        const s = sizes[i];
         el.style.transform = `translate3d(${body.position.x - s.width / 2}px, ${body.position.y - s.height / 2}px, 0) rotate(${body.angle}rad)`;
       }
     }
@@ -114,10 +115,10 @@ export function SkillPile({
   }, [loop]);
 
   const startLoop = React.useCallback(() => {
-    if (frameIdRef.current === null && !isPausedRef.current && isPhysicsActive) {
+    if (frameIdRef.current === null && !isPausedRef.current && isPhysicsActiveRef.current) {
       frameIdRef.current = requestAnimationFrame(loopRef.current);
     }
-  }, [isPhysicsActive]);
+  }, []);
 
   const updateWalls = React.useCallback(
     (engine: Engine, width: number, height: number) => {
@@ -205,7 +206,7 @@ export function SkillPile({
 
       if (instant) {
         Composite.add(engine.world, newBodies);
-        setPillVisibility(new Array(activeSkills.length).fill(true));
+        isAddedRef.current = new Array(activeSkills.length).fill(true);
         pendingPillsRef.current = 0;
 
         // Step simulation directly to avoid jarring drop animation when settling instantly
@@ -218,25 +219,39 @@ export function SkillPile({
           const el = pillRefs.current[i];
           const s = sizes[i];
           if (b && el && s) {
+            el.style.opacity = "1";
+            el.style.pointerEvents = "auto";
             el.style.transform = `translate3d(${b.position.x - s.width / 2}px, ${b.position.y - s.height / 2}px, 0) rotate(${b.angle}rad)`;
           }
         }
         return;
       }
 
-      setPillVisibility(new Array(activeSkills.length).fill(false));
+      isAddedRef.current = new Array(activeSkills.length).fill(false);
       pendingPillsRef.current = activeSkills.length;
+
+      for (let i = 0; i < activeSkills.length; i++) {
+        const el = pillRefs.current[i];
+        if (el) {
+          el.style.opacity = "0";
+          el.style.pointerEvents = "none";
+        }
+      }
 
       const initialTimer = setTimeout(() => {
         newBodies.forEach((body, index) => {
           const pillTimer = setTimeout(() => {
             Composite.add(engine.world, body);
             pendingPillsRef.current = Math.max(0, pendingPillsRef.current - 1);
-            setPillVisibility((prev) => {
-              const next = [...prev];
-              next[index] = true;
-              return next;
-            });
+            isAddedRef.current[index] = true;
+
+            const el = pillRefs.current[index];
+            const s = sizes[index];
+            if (el && s) {
+              el.style.opacity = "1";
+              el.style.pointerEvents = "auto";
+              el.style.transform = `translate3d(${body.position.x - s.width / 2}px, ${body.position.y - s.height / 2}px, 0) rotate(${body.angle}rad)`;
+            }
             startLoop();
           }, index * 110);
 
@@ -284,6 +299,7 @@ export function SkillPile({
       engineRef.current = engine;
 
       updateWalls(engine, trayW, trayH);
+      isPhysicsActiveRef.current = true;
       setIsPhysicsActive(true);
 
       const prefersReduced =
@@ -292,6 +308,7 @@ export function SkillPile({
 
       startDropSequence(engine, prefersReduced);
     } catch {
+      isPhysicsActiveRef.current = false;
       setIsPhysicsActive(false);
     }
   }, [startDropSequence, updateWalls]);
@@ -317,7 +334,7 @@ export function SkillPile({
           stopLoop();
         }
       },
-      { threshold: 0.3 }
+      { threshold: [0, 0.3, 0.6] }
     );
 
     io.observe(tray);
@@ -371,15 +388,17 @@ export function SkillPile({
         engineRef.current = null;
       }
     };
-  }, [clearTimers, initPhysics, startDropSequence, startLoop, stopLoop, updateWalls]);
+  // Mount physics observers once to prevent unintended unmount teardowns
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePointerDown = (
     index: number,
     e: React.PointerEvent<HTMLSpanElement>
   ) => {
-    if (!isPhysicsActive || !engineRef.current) return;
+    if (!isPhysicsActiveRef.current || !engineRef.current) return;
     const body = bodiesRef.current[index];
-    if (!body || !pillVisibility[index]) return;
+    if (!body || !isAddedRef.current[index]) return;
 
     const tray = trayRef.current;
     if (!tray) return;
@@ -457,7 +476,7 @@ export function SkillPile({
   };
 
   const handleReset = () => {
-    if (engineRef.current && isPhysicsActive) {
+    if (engineRef.current && isPhysicsActiveRef.current) {
       startDropSequence(engineRef.current, false);
     }
   };
@@ -487,7 +506,6 @@ export function SkillPile({
         >
           {activeSkills.map((skill, index) => {
             const tone = skill.tone ?? "outline";
-            const isVisible = !isPhysicsActive || pillVisibility[index];
 
             return (
               <span
@@ -504,7 +522,6 @@ export function SkillPile({
                   isPhysicsActive
                     ? "absolute top-0 left-0 origin-center touch-none active:cursor-grabbing"
                     : "",
-                  !isVisible && "opacity-0 pointer-events-none",
                   tone === "accent" && "bg-primary text-primary-foreground",
                   tone === "ink" && "bg-foreground text-background",
                   tone === "outline" &&
