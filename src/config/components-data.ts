@@ -63,6 +63,11 @@ const ReleaseNotesDemo = React.lazy(() =>
     default: module.ReleaseNotesDemo,
   })),
 );
+const SkillPileDemo = React.lazy(() =>
+  import("@/components/demos/skill-pile-demo").then((module) => ({
+    default: module.SkillPileDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -73,6 +78,7 @@ import { LAYOUT_SCRUB_SOURCE } from "@/config/layout-scrub-source";
 import { INVITE_FIELD_SOURCE } from "@/config/invite-field-source";
 import { ROADMAP_VOTE_SOURCE } from "@/config/roadmap-vote-source";
 import { RELEASE_NOTES_SOURCE } from "@/config/release-notes-source";
+import { SKILL_PILE_SOURCE } from "@/config/skill-pile-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -2163,6 +2169,94 @@ export function Changelog() {
         React.Suspense,
         { fallback: null },
         React.createElement(ReleaseNotesDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Skill Pile",
+    slug: "skill-pile",
+    category: "ACTIONS",
+    tagline:
+      "Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.",
+    description:
+      "Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.",
+    mechanicalDescription:
+      "Matter.js rigid body simulation with chamfered pill geometries, sleeping physics bodies, fixed timestep updates, and spring pointer constraints.",
+    interactionType:
+      "Physics skills pile where pills drop, settle, and can be grabbed and thrown with touch and mouse dragging.",
+    dependencies: ["matter-js", "clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+    },
+    props: [
+      {
+        name: "skills",
+        type: '{ label: string; tone?: "accent" | "ink" | "outline" }[]',
+        description: "List of skills or service tags (4 to 24 items).",
+        required: true,
+      },
+      {
+        name: "height",
+        type: "string",
+        default: '"min(400px, 64vh)"',
+        description: "Tray height as a CSS length.",
+      },
+      {
+        name: "hint",
+        type: "string",
+        default: '"Grab one. Throw it."',
+        description: "Left side hint text beneath the tray.",
+      },
+      {
+        name: "resetLabel",
+        type: "string",
+        default: '"Drop again"',
+        description: "Right side button text.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<SkillPile skills={SKILLS} />`,
+    usageCode: `import { SkillPile } from "@/components/ui/skill-pile";
+
+const SKILLS = [
+  { label: "Brand identity", tone: "accent" },
+  { label: "Web design", tone: "ink" },
+  { label: "Motion", tone: "outline" },
+  { label: "React", tone: "ink" },
+  { label: "Next.js", tone: "outline" },
+  { label: "Figma", tone: "accent" },
+  { label: "Copywriting", tone: "outline" },
+  { label: "Icons", tone: "ink" },
+  { label: "GSAP", tone: "outline" },
+  { label: "Tailwind", tone: "accent" },
+  { label: "Prototyping", tone: "outline" },
+  { label: "Illustration", tone: "ink" },
+  { label: "SEO", tone: "outline" },
+  { label: "Art direction", tone: "ink" },
+];
+
+export function Services() {
+  return <SkillPile skills={SKILLS} />;
+}`,
+    sourceCode: SKILL_PILE_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(SkillPileDemo)
       ),
     defaultSurfaceTheme: "dark",
   },

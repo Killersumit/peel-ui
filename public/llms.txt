@@ -87,6 +87,10 @@ Feature request voting list for a public roadmap. Tap a vote count and the row c
 
 Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.
 
+### [Skill Pile](https://peel-ui.vercel.app/components/skill-pile) (`skill-pile`)
+
+Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -111,6 +115,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json
 ```
 
 ## Repository Versions

@@ -451,6 +451,7 @@ function checkImportsAllowlist(): CheckResult {
     "gsap",
     "@gsap/react",
     "lucide-react",
+    "matter-js",
   ]);
 
   const itemFilesNormalized = new Set<string>(

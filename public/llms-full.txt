@@ -264,6 +264,18 @@ Dependencies: `gsap`, `@gsap/react`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
 ```
 
+### 20. Skill Pile (`skill-pile`)
+
+Source: `src/components/ui/skill-pile.tsx`.
+
+Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections. Rigid body 2D physics simulation with chamfered pill geometries, sleeping physics bodies, fixed timestep updates, and spring pointer constraints. Props: `skills`, `height`, `hint`, `resetLabel`, and `className`.
+
+Dependencies: `matter-js`.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

@@ -355,6 +355,23 @@
           "target": "components/ui/release-notes.tsx"
         }
       ]
+    },
+    {
+      "name": "skill-pile",
+      "type": "registry:ui",
+      "title": "Skill Pile",
+      "description": "Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.",
+      "dependencies": [
+        "matter-js"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/skill-pile.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skill-pile.tsx"
+        }
+      ]
     }
   ]
 }

@@ -393,6 +393,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Skill Pile",
+    slug: "skill-pile",
+    category: "Actions",
+    description:
+      "Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/skill-pile.webp"
+          alt="Skill Pile physics tags preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [
