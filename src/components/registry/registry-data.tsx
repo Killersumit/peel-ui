@@ -415,6 +415,28 @@ export const REGISTRY_COMPONENTS: ComponentMetadata[] = [
       </div>
     ),
   },
+  {
+    name: "Notification Inbox",
+    slug: "notification-inbox",
+    category: "Actions",
+    description:
+      "Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.",
+    cliCommand:
+      "npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+    theme: "dark",
+    component: () => (
+      <div className="-m-4 h-52 sm:h-56 w-[calc(100%+2rem)] overflow-hidden">
+        <Image
+          src="/previews/notification-inbox.webp"
+          alt="Notification bell with an inbox popover preview"
+          width={760}
+          height={440}
+          loading="lazy"
+          className="size-full object-cover"
+        />
+      </div>
+    ),
+  },
 ];
 
 export const CATEGORIES = [

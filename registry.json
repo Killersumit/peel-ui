@@ -341,6 +341,21 @@
           "target": "components/ui/skill-pile.tsx"
         }
       ]
+    },
+    {
+      "name": "notification-inbox",
+      "type": "registry:ui",
+      "title": "Notification Inbox",
+      "description": "Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/notification-inbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/notification-inbox.tsx"
+        }
+      ]
     }
   ]
 }

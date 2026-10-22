@@ -1,10 +1,11 @@
 import * as React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   NotificationInbox,
   type NotificationItem,
 } from "@/components/ui/notification-inbox";
+import { setReducedMotion } from "./setup";
 
 const MOCK_NOTIFICATIONS: NotificationItem[] = [
   {
@@ -38,6 +39,10 @@ const MOCK_NOTIFICATIONS: NotificationItem[] = [
 ];
 
 describe("NotificationInbox Component", () => {
+  beforeEach(() => {
+    setReducedMotion(true);
+  });
+
   it("renders bell button with correct aria attributes and unread badge", () => {
     render(<NotificationInbox notifications={MOCK_NOTIFICATIONS} />);
 

@@ -46,6 +46,7 @@ Peel UI is a shadcn registry of React components that treat the screen like mach
 | Roadmap Vote | `roadmap-vote` | Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above. |
 | Release Notes | `release-notes` | Changelog and release notes section. A giant version number stays pinned in an accent band and rolls as you scroll. |
 | Skill Pile | `skill-pile` | Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. |
+| Notification Inbox | `notification-inbox` | Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar. |
 
 ## Install
 

@@ -276,6 +276,18 @@ Dependencies: `matter-js`.
 npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json
 ```
 
+### 21. Notification Inbox (`notification-inbox`)
+
+Source: `src/components/ui/notification-inbox.tsx`.
+
+Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar. Keyframed harmonic bell oscillations on arrival, clipped vertical numeric rolling badge, reverse clip-path popover transitions, expanding row entries with accent background flash, and staggered bar sweep clearances. Props: `notifications`, `onRead`, `onReadAll`, and `className`.
+
+Dependencies: none.
+
+```bash
+npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json
+```
+
 ## License
 
 The repository is licensed under the MIT License. See `LICENSE`.

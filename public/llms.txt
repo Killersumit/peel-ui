@@ -91,6 +91,10 @@ Changelog and release notes section. A giant version number stays pinned in an a
 
 Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.
 
+### [Notification Inbox](https://peel-ui.vercel.app/components/notification-inbox) (`notification-inbox`)
+
+Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.
+
 ## Installation
 
 Install a registry item with the shadcn CLI and its public registry JSON:
@@ -116,6 +120,7 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
 npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json
+npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json
 ```
 
 ## Repository Versions

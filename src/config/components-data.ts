@@ -68,6 +68,11 @@ const SkillPileDemo = React.lazy(() =>
     default: module.SkillPileDemo,
   })),
 );
+const NotificationInboxDemo = React.lazy(() =>
+  import("@/components/demos/notification-inbox-demo").then((module) => ({
+    default: module.NotificationInboxDemo,
+  })),
+);
 import { SAVE_STATE_PILL_SOURCE } from "@/config/save-state-pill-source";
 import { FILTER_CHIPS_SOURCE } from "@/config/filter-chips-source";
 import { NOTE_BUTTON_SOURCE } from "@/config/note-button-source";
@@ -79,6 +84,7 @@ import { INVITE_FIELD_SOURCE } from "@/config/invite-field-source";
 import { ROADMAP_VOTE_SOURCE } from "@/config/roadmap-vote-source";
 import { RELEASE_NOTES_SOURCE } from "@/config/release-notes-source";
 import { SKILL_PILE_SOURCE } from "@/config/skill-pile-source";
+import { NOTIFICATION_INBOX_SOURCE } from "@/config/notification-inbox-source";
 
 export type ComponentCategory = "ACTIONS" | "INPUTS" | "SECURITY";
 
@@ -2257,6 +2263,92 @@ export function Services() {
         React.Suspense,
         { fallback: null },
         React.createElement(SkillPileDemo)
+      ),
+    defaultSurfaceTheme: "dark",
+  },
+  {
+    name: "Notification Inbox",
+    slug: "notification-inbox",
+    category: "ACTIONS",
+    tagline:
+      "Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.",
+    description:
+      "Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.",
+    mechanicalDescription:
+      "Harmonic bell ring oscillations on arrival, clipped vertical rolling badge numbers, reverse clip-path popover reveal, natural height grid row expansions with accent background flash, and sequential unread bar sweep clearances.",
+    interactionType:
+      "Notification bell with an inbox popover showing arrivals, unread counts, filter tabs, and fast clearing.",
+    dependencies: ["clsx", "tailwind-merge"],
+    install: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+    },
+    installCmd: {
+      npm: "npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      pnpm: "pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      yarn: "npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+      bun: "bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json",
+    },
+    props: [
+      {
+        name: "notifications",
+        type: "{ id: string; title: string; body?: string; time: string; read: boolean }[]",
+        description: "List of notifications, newest first.",
+        required: true,
+      },
+      {
+        name: "onRead",
+        type: "(id: string) => void",
+        description: "Callback invoked when an unread notification row is clicked.",
+      },
+      {
+        name: "onReadAll",
+        type: "() => void",
+        description: "Callback invoked when the mark all read button is clicked.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional CSS classes merged with the root container.",
+      },
+    ],
+    usageSnippet: `<NotificationInbox notifications={NOTIFICATIONS} onRead={handleRead} onReadAll={handleReadAll} />`,
+    usageCode: `import { NotificationInbox } from "@/components/ui/notification-inbox";
+
+const NOTIFICATIONS = [
+  {
+    id: "1",
+    title: "Maya replied to your note",
+    body: "Sounds right. I will move it to Planned.",
+    time: "5m",
+    read: false,
+  },
+  {
+    id: "2",
+    title: "Build 481 passed",
+    body: "Deployed to staging in 38 seconds.",
+    time: "1h",
+    read: false,
+  },
+];
+
+export function Header() {
+  return (
+    <NotificationInbox
+      notifications={NOTIFICATIONS}
+      onRead={(id) => console.log("read", id)}
+      onReadAll={() => console.log("read all")}
+    />
+  );
+}`,
+    sourceCode: NOTIFICATION_INBOX_SOURCE,
+    component: () =>
+      React.createElement(
+        React.Suspense,
+        { fallback: null },
+        React.createElement(NotificationInboxDemo)
       ),
     defaultSurfaceTheme: "dark",
   },
