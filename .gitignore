@@ -9,3 +9,9 @@ Thumbs.db
 *.swp
 .vercel
 .env*
+node_modules
+dist
+.env.local
+.vercel
+.next
+dist
