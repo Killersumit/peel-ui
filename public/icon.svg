@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <style>
+    .p-stem { fill: #111214; }
+    @media (prefers-color-scheme: dark) {
+      .p-stem { fill: #F5F5F7; }
+    }
+  </style>
+  <!-- Bold Geometric P with rounded outer stem & D-bowl -->
+  <path
+    class="p-stem"
+    d="M24 22C24 15.3726 29.3726 10 36 10H46C63.6731 10 78 24.3269 78 42C78 59.6731 63.6731 74 46 74H44V82C44 87.5228 39.5228 92 34 92C28.4772 92 24 87.5228 24 82V22Z"
+  />
+  <!-- Signature Bottom-Right Green Squircle Dot -->
+  <rect x="50" y="70" width="22" height="22" rx="6.5" fill="#5E9E5A" />
+</svg>

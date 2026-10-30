@@ -1,128 +1,155 @@
-# Peel UI
-> React UI components distributed through a shadcn registry.
+# Peel UI (v0.2.0)
 
-Peel UI is a component registry. Each registry item can be installed into a project with the shadcn CLI.
+> Open-source registry of 120fps tactile React primitives crafted with Motion, GSAP, and Tailwind CSS.
+> Repository: https://github.com/killersumit/peel-ui
+> Website: https://peel-ui.vercel.app
 
-- Website: https://peel-ui.vercel.app
-- GitHub: https://github.com/Killersumit/peel-ui
-- Registry Index: https://peel-ui.vercel.app/r/index.json
-- Full Technical Specification: https://peel-ui.vercel.app/llms-full.txt
-- License: MIT (https://github.com/Killersumit/peel-ui/blob/main/LICENSE)
+## Overview
 
-## Registry Components
-
-### [Save State Pill](https://peel-ui.vercel.app/components/save-state-pill) (`save-state-pill`)
-
-Displays idle, saving, saved, failed, offline, and conflict states, with retry and conflict-review callbacks.
-
-### [Slide to Confirm](https://peel-ui.vercel.app/components/slide-to-confirm) (`slide-to-confirm`)
-
-Calls its confirmation callback when the drag reaches 75% of the track and supports reset.
-
-### [Magnetic Split Button](https://peel-ui.vercel.app/components/magnetic-split-button) (`magnetic-split-button`)
-
-Provides a primary action and a menu of selectable actions.
-
-### [Tactile OTP Input](https://peel-ui.vercel.app/components/tactile-otp-input) (`tactile-otp-input`)
-
-Accepts numeric input in configurable digit slots and calls its completion callback when all slots are filled.
-
-### [Privacy Shutter](https://peel-ui.vercel.app/components/privacy-shutter) (`privacy-shutter`)
-
-Uses a draggable shutter to reveal or conceal an API key, with copy and lock controls.
-
-### [Voice Pill](https://peel-ui.vercel.app/components/voice-pill) (`voice-pill`)
-
-Uses microphone audio or a simulated signal, with an optional canvas waveform and slide-to-cancel.
-
-### [Tactile Filter Chips](https://peel-ui.vercel.app/components/filter-chips) (`filter-chips`)
-
-Supports single or multiple selection, optional counts, disabled options, and a clear action.
-
-### [Note Button](https://peel-ui.vercel.app/components/note-button) (`note-button`)
-
-Opens a note editor from a trigger and can persist note text in localStorage.
-
-### [Skeleton Handoff](https://peel-ui.vercel.app/components/skeleton-handoff) (`skeleton-handoff`)
-
-Matches skeleton blocks to content by ID and transitions between loading, ready, and error states.
-
-### [Moiré Field](https://peel-ui.vercel.app/components/moire-field) (`moire-field`)
-
-Full-bleed interference pattern background with dual gratings, configurable pitch (6 to 32) and thickness (0 to 1), calm falloff masks, and pointer damping.
-
-### [Moiré Intro](https://peel-ui.vercel.app/components/moire-intro) (`moire-intro`)
-
-Progress-driven full-screen intro with dual line gratings that calm into register before a mechanical settle and alternating slat reveal.
-
-### [Waitlist Join](https://peel-ui.vercel.app/components/waitlist-join) (`waitlist-join`)
-
-Email input with live social proof that morphs into a personal confirmation card on submit.
-
-### [Cookie Consent](https://peel-ui.vercel.app/components/cookie-consent) (`cookie-consent`)
-
-Calm cookie choice card and floating trigger with zero tracking, keyboard navigation, and theme inheritance.
-
-### [Next Up](https://peel-ui.vercel.app/components/next-up) (`next-up`)
-
-Setup checklist card showing the single next thing to do with calm FLIP reordering, progress tracking, and instant accessibility.
-
-### [Detent Tabs](https://peel-ui.vercel.app/components/detent-tabs) (`detent-tabs`)
-
-Range switcher whose chart follows the thumb and snaps into magnetic detents.
-
-### [Layout Scrub](https://peel-ui.vercel.app/components/layout-scrub) (`layout-scrub`)
-
-List and grid view switch whose items morph with your thumb.
-
-### [Invite Field](https://peel-ui.vercel.app/components/invite-field) (`invite-field`)
-
-Email tag input for inviting teammates. Type or paste emails and they become chips, invalid ones are flagged, and sending turns them into a list of who was invited.
-
-### [Roadmap Vote](https://peel-ui.vercel.app/components/roadmap-vote) (`roadmap-vote`)
-
-Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above.
-
-### [Release Notes](https://peel-ui.vercel.app/components/release-notes) (`release-notes`)
-
-Changelog and release notes section. A giant version number stays pinned in an accent band and rolls to the release you are reading as you scroll.
-
-### [Skill Pile](https://peel-ui.vercel.app/components/skill-pile) (`skill-pile`)
-
-Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. For portfolio, agency and service sections.
-
-### [Notification Inbox](https://peel-ui.vercel.app/components/notification-inbox) (`notification-inbox`)
-
-Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar.
+Peel UI provides physics-based, tactile component primitives designed with concentric squircle geometry, machined dark surfaces, and critically damped compositor springs. All primitives are 100% free under the MIT License and compatible with the shadcn CLI registry pattern.
 
 ## Installation
 
-Install a registry item with the shadcn CLI and its public registry JSON:
+Install components into your project using the shadcn CLI:
 
 ```bash
-npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json
+# Add a single component
+npx shadcn@latest add https://peel-ui.vercel.app/r/<slug>.json
+
+# Example: Slide to Confirm
 npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json
-npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json
 ```
 
-## Repository Versions
+## Component Primitives Directory
 
-The repository package manifest specifies React 19.2.8, Next.js 16.3.6, and Tailwind CSS ^4.
+### 1. Morphing Share Island
+- **Slug**: `morphing-share-island`
+- **URL**: https://peel-ui.vercel.app/components/morphing-share-island
+- **Description**: A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/morphing-share-island.json`
+
+### 2. Save State Pill
+- **Slug**: `save-state-pill`
+- **URL**: https://peel-ui.vercel.app/components/save-state-pill
+- **Description**: Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/save-state-pill.json`
+
+### 3. Skill Pile
+- **Slug**: `skill-pile`
+- **URL**: https://peel-ui.vercel.app/components/skill-pile
+- **Description**: Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/skill-pile.json`
+
+### 4. Slide to Confirm
+- **Slug**: `slide-to-confirm`
+- **URL**: https://peel-ui.vercel.app/components/slide-to-confirm
+- **Description**: Mechanical verification trigger with high-friction drag track and 75% magnetic snap pocket.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json`
+
+### 5. Magnetic Split Button
+- **Slug**: `magnetic-split-button`
+- **URL**: https://peel-ui.vercel.app/components/magnetic-split-button
+- **Description**: Dual-capsule action trigger with proximity resistance and spring latching.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/magnetic-split-button.json`
+
+### 6. Tactile OTP Input
+- **Slug**: `tactile-otp-input`
+- **URL**: https://peel-ui.vercel.app/components/tactile-otp-input
+- **Description**: Numeric verification code input with sliding focus box and mechanical digit roll.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/tactile-otp-input.json`
+
+### 7. Tactile Filter Chips
+- **Slug**: `filter-chips`
+- **URL**: https://peel-ui.vercel.app/components/filter-chips
+- **Description**: Hardware-inspired filter group supporting radio selection, multi-select, and spring-bound indicator morphing.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/filter-chips.json`
+
+### 8. Invite Field
+- **Slug**: `invite-field`
+- **URL**: https://peel-ui.vercel.app/components/invite-field
+- **Description**: Interactive teammate invitation field with real-time email tag chip tokenization and GSAP Flip layout morphing.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/invite-field.json`
+
+### 9. Note Button
+- **Slug**: `note-button`
+- **URL**: https://peel-ui.vercel.app/components/note-button
+- **Description**: Tactile floating notepad trigger expanding into a persistent, line-numbered code note sheet with keyboard management.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/note-button.json`
+
+### 10. Detent Tabs
+- **Slug**: `detent-tabs`
+- **URL**: https://peel-ui.vercel.app/components/detent-tabs
+- **Description**: Range switcher whose dynamic preview follows the user's thumb and snaps cleanly into magnetic detent positions.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/detent-tabs.json`
+
+### 11. Layout Scrub
+- **Slug**: `layout-scrub`
+- **URL**: https://peel-ui.vercel.app/components/layout-scrub
+- **Description**: Continuous scrub control morphing card list layout into multi-column grid layout with spatial consistency.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/layout-scrub.json`
+
+### 12. Privacy Shutter
+- **Slug**: `privacy-shutter`
+- **URL**: https://peel-ui.vercel.app/components/privacy-shutter
+- **Description**: Security credential shroud with spring-loaded physical slider and automatic release peek cover.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/privacy-shutter.json`
+
+### 13. Cookie Consent
+- **Slug**: `cookie-consent`
+- **URL**: https://peel-ui.vercel.app/components/cookie-consent
+- **Description**: Quiet, respectful privacy choice card with zero telemetry tracking, keyboard navigation, and machined carbon shell.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/cookie-consent.json`
+
+### 14. Moiré Field
+- **Slug**: `moire-field`
+- **URL**: https://peel-ui.vercel.app/components/moire-field
+- **Description**: Optical interference pattern canvas with dual rotating gratings, gentle falloff masks, and pointer tracking.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/moire-field.json`
+
+### 15. Moiré Intro
+- **Slug**: `moire-intro`
+- **URL**: https://peel-ui.vercel.app/components/moire-intro
+- **Description**: Full-screen atmospheric page loader with optical grating interference, mechanical lock settle, and slide exit.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/moire-intro.json`
+
+### 16. Skeleton Handoff
+- **Slug**: `skeleton-handoff`
+- **URL**: https://peel-ui.vercel.app/components/skeleton-handoff
+- **Description**: Measured loading blocks that travel directly into resolved content positions using GSAP Flip state transitions.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/skeleton-handoff.json`
+
+### 17. Release Notes
+- **Slug**: `release-notes`
+- **URL**: https://peel-ui.vercel.app/components/release-notes
+- **Description**: Changelog timeline where monumental pinned version numerals roll smoothly into accent bands during scroll.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/release-notes.json`
+
+### 18. Voice Pill
+- **Slug**: `voice-pill`
+- **URL**: https://peel-ui.vercel.app/components/voice-pill
+- **Description**: Hardware voice capsule with real-time audio AnalyserNode frequency bars and slide-to-cancel physics.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/voice-pill.json`
+
+### 19. Waitlist Join
+- **Slug**: `waitlist-join`
+- **URL**: https://peel-ui.vercel.app/components/waitlist-join
+- **Description**: Tactile email capture card with layout-morphing confirmation, dynamic rank queue position, and instant social sharing.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/waitlist-join.json`
+
+### 20. Next Up
+- **Slug**: `next-up`
+- **URL**: https://peel-ui.vercel.app/components/next-up
+- **Description**: Setup checklist card focusing human attention on the single next actionable task with calm GSAP Flip reordering.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/next-up.json`
+
+### 21. Roadmap Vote
+- **Slug**: `roadmap-vote`
+- **URL**: https://peel-ui.vercel.app/components/roadmap-vote
+- **Description**: Public feature backlog ranking list where items reorder with GSAP Flip when their vote tallies pass neighbours.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/roadmap-vote.json`
+
+### 22. Notification Inbox
+- **Slug**: `notification-inbox`
+- **URL**: https://peel-ui.vercel.app/components/notification-inbox
+- **Description**: Tactile notification bell trigger with unread badge counter roll and anchored glass inbox panel.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/notification-inbox.json`

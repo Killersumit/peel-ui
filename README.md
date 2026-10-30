@@ -1,78 +1,160 @@
 <div align="center">
 
 <a href="https://peel-ui.vercel.app">
-  <img src="public/peel-logo.png" alt="Peel UI" width="96" />
+  <img src="public/peel-logo.png" width="88" alt="Peel UI Logo" />
 </a>
 
 # Peel UI
 
-**Tactile React components, built around deliberate motion.**
+**Tactile React components, built around deliberate 120fps motion.**
 
-[Live demos](https://peel-ui.vercel.app) · [Components](https://peel-ui.vercel.app/components) · [Follow on X](https://x.com/Sumit1476136)
+[Live site](https://peel-ui.vercel.app) · [Components](https://peel-ui.vercel.app/components) · [Sponsors](https://peel-ui.vercel.app/sponsors) · [Follow on X](https://x.com/Sumit1476136)
 
-![License: MIT](https://img.shields.io/badge/license-MIT-84ff00?style=flat-square&labelColor=08090a)
-![shadcn registry](https://img.shields.io/badge/shadcn-registry-84ff00?style=flat-square&labelColor=08090a)
-![Built with Motion and GSAP](https://img.shields.io/badge/built_with-Motion_%2B_GSAP-84ff00?style=flat-square&labelColor=08090a)
+<br />
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-84ff00?style=flat-square&labelColor=08090a)](LICENSE)
+[![shadcn registry](https://img.shields.io/badge/shadcn-registry-84ff00?style=flat-square&labelColor=08090a)](https://ui.shadcn.com)
+[![Motion + GSAP](https://img.shields.io/badge/Motion-GSAP-84ff00?style=flat-square&labelColor=08090a)](https://motion.dev)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-84ff00?style=flat-square&labelColor=08090a)](https://tailwindcss.com)
 
 </div>
 
-<!-- After recording a short GIF, uncomment:
-<p align="center"><img src="public/readme/hero.gif" alt="Peel UI components in motion" width="720" /></p>
--->
+---
 
-Peel UI is a shadcn registry of React components that treat the screen like machined hardware: drag tracks with magnetic detents, springs instead of easing curves, controls that settle instead of fade. Install a component and you own the code. There is no package to depend on.
+Peel UI is an open-source shadcn registry of React components that treat the screen like machined hardware: drag tracks with magnetic detents, critically damped springs instead of linear easing curves, and controls that settle instead of fade. Install a component and you own the code—there is no black-box package to depend on.
+
+---
 
 ## Components
 
-| Component | Install name | Interaction |
-| --- | --- | --- |
-| Slide to Confirm | `slide-to-confirm` | Friction drag with a magnetic confirmation threshold |
-| Magnetic Split Button | `magnetic-split-button` | Primary and secondary actions that pull apart on a spring latch |
-| Tactile OTP Input | `tactile-otp-input` | Numeric input with a floating focus frame |
-| Privacy Shutter | `privacy-shutter` | Drag-to-peek cover for sensitive values |
-| Voice Pill | `voice-pill` | Audio capture with a live waveform and slide-to-cancel |
-| Save State Pill | `save-state-pill` | Save, offline, retry and conflict states in one morphing pill |
-| Filter Chips | `filter-chips` | Single or multi-select chips that reflow on a spring |
-| Note Button | `note-button` | A button that morphs into a persistent scratchpad |
-| Skeleton Handoff | `skeleton-handoff` | Loading blocks travel into matching content without scaling real text |
-| Moiré Field | `moire-field` | Full-bleed interference pattern background with dual gratings and pointer damping |
-| Moiré Intro | `moire-intro` | Progress-driven dual line gratings calm into register before a mechanical exit reveal |
-| Waitlist Join | `waitlist-join` | Email input with live social proof that morphs into a confirmation card |
-| Cookie Consent | `cookie-consent` | Calm cookie choice card and floating trigger with zero tracking |
-| Next Up | `next-up` | Setup checklist card that shows the single next thing to do with calm FLIP reordering |
-| Detent Tabs | `detent-tabs` | Range switcher whose chart follows the thumb and snaps into magnetic detents |
-| Layout Scrub | `layout-scrub` | List and grid view switch whose items morph with your thumb |
-| Invite Field | `invite-field` | Email tag input that turns addresses into chips and confirms with invited rows |
-| Roadmap Vote | `roadmap-vote` | Feature request voting list for a public roadmap. Tap a vote count and the row climbs when it passes the one above. |
-| Release Notes | `release-notes` | Changelog and release notes section. A giant version number stays pinned in an accent band and rolls as you scroll. |
-| Skill Pile | `skill-pile` | Physics skills pile. Text pills drop into a tray, stack, and can be grabbed and thrown. |
-| Notification Inbox | `notification-inbox` | Notification bell with an inbox popover. The bell rings when a new notification arrives, the badge count rolls, and unread items carry an accent bar. |
+| Component | Install slug | Interaction |
+| :--- | :--- | :--- |
+| **Morphing Share Island** | `morphing-share-island` | Spring-morphing share pill fanning out into a 4-action radial dock with differential spring stagger and auto-reset confirmation. |
+| **Save State Pill** | `save-state-pill` | Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps. |
+| **Skill Pile** | `skill-pile` | Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing. |
+| **Slide to Confirm** | `slide-to-confirm` | Mechanical verification trigger with high-friction drag track and 75% magnetic snap pocket. |
+| **Magnetic Split Button** | `magnetic-split-button` | Dual-capsule action trigger with proximity resistance and spring latching. |
+| **Tactile OTP Input** | `tactile-otp-input` | Numeric verification code input with sliding focus box and mechanical digit roll. |
+| **Tactile Filter Chips** | `filter-chips` | Hardware-inspired filter group supporting radio selection, multi-select, and spring-bound indicator morphing. |
+| **Invite Field** | `invite-field` | Interactive teammate invitation field with real-time email tag chip tokenization and GSAP Flip layout morphing. |
+| **Note Button** | `note-button` | Tactile floating notepad trigger expanding into a persistent, line-numbered code note sheet with keyboard management. |
+| **Detent Tabs** | `detent-tabs` | Range switcher whose dynamic preview follows the user's thumb and snaps cleanly into magnetic detent positions. |
+| **Layout Scrub** | `layout-scrub` | Continuous scrub control morphing card list layout into multi-column grid layout with spatial consistency. |
+| **Privacy Shutter** | `privacy-shutter` | Security credential shroud with spring-loaded physical slider and automatic release peek cover. |
+| **Cookie Consent** | `cookie-consent` | Quiet, respectful privacy choice card with zero telemetry tracking, keyboard navigation, and machined carbon shell. |
+| **Moiré Field** | `moire-field` | Optical interference pattern canvas with dual rotating gratings, gentle falloff masks, and pointer tracking. |
+| **Moiré Intro** | `moire-intro` | Full-screen atmospheric page loader with optical grating interference, mechanical lock settle, and slide exit. |
+| **Skeleton Handoff** | `skeleton-handoff` | Measured loading blocks that travel directly into resolved content positions using GSAP Flip state transitions. |
+| **Release Notes** | `release-notes` | Changelog timeline where monumental pinned version numerals roll smoothly into accent bands during scroll. |
+| **Voice Pill** | `voice-pill` | Hardware voice capsule with real-time audio AnalyserNode frequency bars and slide-to-cancel physics. |
+| **Waitlist Join** | `waitlist-join` | Tactile email capture card with layout-morphing confirmation, dynamic rank queue position, and instant social sharing. |
+| **Next Up** | `next-up` | Setup checklist card focusing human attention on the single next actionable task with calm GSAP Flip reordering. |
+| **Roadmap Vote** | `roadmap-vote` | Public feature backlog ranking list where items reorder with GSAP Flip when their vote tallies pass neighbours. |
+| **Notification Inbox** | `notification-inbox` | Tactile notification bell trigger with unread badge counter roll and anchored glass inbox panel. |
 
-## Install
+---
 
-```bash
-npx shadcn@latest add Killersumit/peel-ui/slide-to-confirm
-```
+## Install via `shadcn` CLI
 
-Swap `slide-to-confirm` for any install name above. The hosted URL form works too:
+Every component in Peel UI is distributed as an official shadcn registry item. You can install any primitive directly into your project using its hosted JSON endpoint:
 
 ```bash
 npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 ```
 
-Your project needs to be set up with `npx shadcn@latest init`, which provides `@/lib/utils`. The CLI installs each component's own dependencies.
-
-## Run locally
+Works out of the box with your preferred package manager:
 
 ```bash
-git clone https://github.com/Killersumit/peel-ui.git
-cd peel-ui
-npm install
-npm run dev
+# pnpm
+pnpm dlx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
+
+# bun
+bunx --bun shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
+
+# yarn
+yarn dlx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 ```
 
-Components live in `src/components/ui`. After changing a component or `registry.json`, run `npm run registry:build`.
+### Optional: Configure `@peel-ui` Namespace
+
+To install using short component slugs, add the Peel UI registry namespace to your project's `components.json`:
+
+```json
+{
+  "registries": {
+    "@peel-ui": "https://peel-ui.vercel.app/r/{name}.json"
+  }
+}
+```
+
+Now you can add components with clean shorthand:
+
+```bash
+npx shadcn@latest add @peel-ui/slide-to-confirm
+npx shadcn@latest add @peel-ui/morphing-share-island
+```
+
+---
+
+## Using with AI Coding Agents
+
+Peel UI provides machine-readable specifications designed for AI coding agents:
+
+- **Option 1 (`llms.txt` — Zero Setup):** Point Claude Code, Cursor, OpenCode, or Windsurf directly to [`https://peel-ui.vercel.app/llms.txt`](https://peel-ui.vercel.app/llms.txt), or click the **"Copy .md for LLMs"** button on any component workspace page to paste its complete TypeScript props, physics, and interaction specs into your chat.
+- **Option 2 (`shadcn` MCP):** Once `@peel-ui` is configured in your `components.json`, initialize the shadcn MCP client in your agent:
+  ```bash
+  # Claude Code
+  npx shadcn@latest mcp init --client claude
+
+  # Cursor
+  npx shadcn@latest mcp init --client cursor
+
+  # VS Code / Windsurf
+  npx shadcn@latest mcp init --client vscode
+  ```
+  Then ask your agent naturally:
+  > *"Add @peel-ui/morphing-share-island and wire it to my card share button."*
+
+---
+
+## Sponsor Peel UI
+
+Peel UI is 100% free and MIT-licensed. There are no paywalls, hidden tiers, or telemetry tracking.
+
+Ongoing maintenance, physics tuning, and new component engineering are supported directly by our sponsors. If Peel UI saves your team engineering weeks or elevates your product craft, consider becoming a monthly sponsor:
+
+- **Diamond Sponsor** ($500 / month) — Top placement across site hero, catalog header, and README.
+- **Gold Sponsor** ($250 / month) — Prominent logo placement on website and component workspace.
+- **Silver Sponsor** ($100 / month) — Named attribution across sponsors index and release notes.
+
+View sponsorship tiers at [peel-ui.vercel.app/sponsors](https://peel-ui.vercel.app/sponsors), or reach out directly on [X (@Sumit1476136)](https://x.com/Sumit1476136) or via email at [killer1191x@gmail.com](mailto:killer1191x@gmail.com).
+
+---
+
+## Run Locally
+
+```bash
+# Clone repository
+git clone https://github.com/killersumit/peel-ui.git
+cd peel-ui
+
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+
+# Re-generate public registry JSON endpoints
+npm run registry:build
+
+# Production build
+npm run build
+```
+
+---
 
 ## License
 
-[MIT](LICENSE)
+[MIT License](LICENSE) — Free for personal, commercial, and client software.
+
+Built by [@killersumit](https://github.com/killersumit) · [X (@Sumit1476136)](https://x.com/Sumit1476136)

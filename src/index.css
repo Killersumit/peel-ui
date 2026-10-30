@@ -1,0 +1,205 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+@theme inline {
+  --color-peel-base: var(--peel-base);
+  --color-peel-surface: var(--peel-surface);
+  --color-peel-surface-raised: var(--peel-surface-raised);
+  --color-peel-surface-active: var(--peel-surface-active);
+
+  --color-peel-border: var(--peel-border);
+  --color-peel-border-subtle: var(--peel-border-subtle);
+
+  --color-peel-text-primary: var(--peel-text-primary);
+  --color-peel-text-secondary: var(--peel-text-secondary);
+  --color-peel-text-tertiary: var(--peel-text-tertiary);
+  --color-peel-text-mono: var(--peel-text-mono);
+
+  --color-peel-lime: var(--peel-lime);
+  --color-peel-lime-foreground: var(--peel-lime-foreground);
+  --color-peel-lime-muted: var(--peel-lime-muted);
+
+  --color-peel-coral: var(--peel-coral);
+  --color-peel-coral-foreground: var(--peel-coral-foreground);
+  --color-peel-coral-muted: var(--peel-coral-muted);
+
+  --color-peel-success: var(--peel-success);
+  --color-peel-danger: var(--peel-danger);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-sans: "Inter", "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  /* SURFACE LUMINANCE LADDER (OKLCH Perceptual Lightness Steps) */
+  --surface-well: #060709;          /* L* ~3.2% — Sunken concave stage / input well (INSIDE) */
+  --surface-canvas: #08090A;        /* L* ~4.5% — Primary page void background (GROUND) */
+  --surface-chassis-top: #16181E;   /* L* ~9.8% — Top edge of raised card/navbar (OUTSIDE) */
+  --surface-chassis-bottom: #101216;/* L* ~7.0% — Bottom edge of raised card/navbar (OUTSIDE) */
+  --surface-control: #1B1E25;       /* L* ~13.0% — Tactile button / keycap / pill at rest */
+  --surface-control-hover: #232730; /* L* ~16.8% — Tactile button / keycap on hover */
+
+  /* TYPOGRAPHY & ICONOGRAPHY HIERARCHY (Halation-Free APCA Contrast) */
+  --text-primary: #F5F5F7;          /* Titanium White — Headlines, active labels, primary CTA fill */
+  --text-muted-display: rgba(245, 245, 247, 0.44); /* Secondary headline clause opacity split */
+  --text-secondary: #8E9299;        /* Muted Neutral — Body copy, inactive nav links */
+  --text-tertiary: #555961;         /* Engraved Pewter — Captions, counts, slashes, subtle icons */
+
+  /* FUNCTIONAL SIGNAL ACCENTS (< 2% Screen Area Budget) */
+  --signal-emerald: #5E9E5A;        /* Signature Peel Mark Green — Brand dot, subtle badge tint */
+  --signal-lime: #84FF00;           /* High-Contrast Tactile Active — 6px live dots, confirmed thumb */
+
+  /* BACKWARD-COMPATIBLE MAPPINGS (Strict Anodized Carbon & Titanium) */
+  --peel-well: var(--surface-well);
+  --peel-base: var(--surface-canvas);
+  --peel-surface: #12141a;
+  --peel-surface-raised: #181b22;
+  --peel-surface-active: #1e2129;
+
+  /* Theme Fallbacks for shadcn / component primitives */
+  --background: var(--peel-base);
+  --foreground: var(--text-primary);
+  --card: var(--peel-surface);
+  --card-foreground: var(--text-primary);
+  --muted: var(--peel-surface-raised);
+  --muted-foreground: var(--text-secondary);
+  --border: #232730;
+  --input: var(--peel-surface-active);
+  --primary: var(--text-primary);
+  --primary-foreground: var(--peel-base);
+  --accent: var(--peel-surface-raised);
+  --accent-foreground: var(--text-primary);
+  --ring: var(--text-primary);
+  --destructive: #ff453a;
+  --destructive-foreground: #ffffff;
+
+  /* Banned Light-Card Checkerboard Overhaul: Dark Carbon Fallbacks */
+  --peel-light-surface: var(--surface-chassis-bottom);
+  --peel-light-raised: var(--surface-chassis-top);
+  --peel-light-well: var(--surface-well);
+  --peel-light-text: var(--text-primary);
+  --peel-light-muted: var(--text-secondary);
+
+  /* Structural Lines */
+  --peel-border: #232730;
+  --peel-border-subtle: #1a1d24;
+  --peel-border-focus: #F5F5F7;
+
+  /* Typography Fallbacks */
+  --peel-text-primary: var(--text-primary);
+  --peel-text-secondary: var(--text-secondary);
+  --peel-text-tertiary: var(--text-tertiary);
+  --peel-text-mono: #8E9299;
+
+  /* Signal Accents: Strictly Anodized Carbon, Titanium & Emerald/Lime Signals */
+  --peel-lime: var(--signal-lime);
+  --peel-lime-foreground: #060709;
+  --peel-lime-muted: rgba(132, 255, 0, 0.10);
+  --peel-coral: var(--text-primary);
+  --peel-coral-foreground: #08090a;
+  --peel-coral-muted: rgba(245, 245, 247, 0.08);
+  --peel-sky: #8E9299;
+  --peel-success: var(--signal-emerald);
+  --peel-danger: #8E9299;
+  --destructive: #8E9299;
+}
+
+html, body {
+  font-family: "Inter", "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--surface-canvas);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+  overflow-x: hidden;
+}
+
+code, pre, .font-mono {
+  font-family: "JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+/* OUTSIDE / RAISED CONVEX SURFACE (Law 2: Ramachandran's Overhead Lighting) */
+.bevel-machined {
+  background: linear-gradient(180deg, #16181E 0%, #101216 100%);
+  border: none;
+  box-shadow:
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.085),
+    inset 0px 0px 0px 1px rgba(255, 255, 255, 0.03),
+    inset 0px -1px 0px 0px rgba(0, 0, 0, 0.85),
+    0px 14px 28px -8px rgba(0, 0, 0, 0.78);
+}
+
+.bevel-machined:hover {
+  background: linear-gradient(180deg, #1B1E25 0%, #14161B 100%);
+  box-shadow:
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.125),
+    inset 0px 0px 0px 1px rgba(255, 255, 255, 0.045),
+    inset 0px -1px 0px 0px rgba(0, 0, 0, 0.9),
+    0px 18px 34px -8px rgba(0, 0, 0, 0.85);
+}
+
+/* INSIDE / CARVED CONCAVE WELL (Law 2: Sunken dark cavity with top shadow + bottom lip) */
+.well-recessed {
+  background-color: #060709;
+  border: none;
+  box-shadow:
+    inset 0px 2px 8px 0px rgba(0, 0, 0, 0.92),
+    inset 0px 0px 0px 1px rgba(255, 255, 255, 0.035),
+    0px 1px 0px 0px rgba(255, 255, 255, 0.05);
+}
+
+.glass-specular {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16),
+    0px 10px 24px -6px rgba(0, 0, 0, 0.55);
+}
+
+.text-display-hero {
+  font-size: clamp(2.6rem, 4.4vw, 4.75rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.97;
+}
