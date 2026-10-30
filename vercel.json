@@ -1,11 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "buildCommand": "npx vite build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!r/|previews/|sponsors/|assets/|icon\.svg|peel-logo\.svg|peel-logo\.png|llms\.txt|robots\.txt|sitemap\.xml).*)",
+      "source": "/((?!r/|previews/|sponsors/|assets/|icon\.svg|icons\.svg|favicon\.svg|peel-logo\.svg|peel-logo\.png|llms\.txt|registry\.json|robots\.txt|sitemap\.xml).*)",
       "destination": "/index.html"
     }
   ]
