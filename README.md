@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://peel-ui.vercel.app">
-  <img src="public/peel-logo.png" width="88" alt="Peel UI Logo" />
+  <img src="public/peel-logo.svg" width="88" alt="Peel UI Logo" />
 </a>
 
 # Peel UI
