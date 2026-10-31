@@ -155,6 +155,52 @@ const masterRootPath = path.join(publicDir, "registry.json");
 fs.writeFileSync(masterRPath, JSON.stringify(masterRegistry, null, 2) + "\n");
 fs.writeFileSync(masterRootPath, JSON.stringify(masterRegistry, null, 2) + "\n");
 
+// 4. Generate public/sitemap.xml
+const sitemapEntries = [
+  { loc: "https://peel-ui.vercel.app/", changefreq: "weekly", priority: "1.0" },
+  { loc: "https://peel-ui.vercel.app/components", changefreq: "daily", priority: "0.9" },
+  { loc: "https://peel-ui.vercel.app/sponsors", changefreq: "weekly", priority: "0.8" },
+  { loc: "https://peel-ui.vercel.app/privacy", changefreq: "monthly", priority: "0.5" },
+  { loc: "https://peel-ui.vercel.app/terms", changefreq: "monthly", priority: "0.5" },
+  { loc: "https://peel-ui.vercel.app/refund", changefreq: "monthly", priority: "0.5" },
+  ...items.map((it) => ({
+    loc: `https://peel-ui.vercel.app/components/${it.slug}`,
+    changefreq: "weekly",
+    priority: "0.85",
+  })),
+];
+
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Pages -->
+${sitemapEntries
+  .slice(0, 6)
+  .map(
+    (e) => `  <url>
+    <loc>${e.loc}</loc>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`
+  )
+  .join("\n")}
+
+  <!-- Component Primitives -->
+${sitemapEntries
+  .slice(6)
+  .map(
+    (e) => `  <url>
+    <loc>${e.loc}</loc>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`
+  )
+  .join("\n")}
+</urlset>
+`;
+
+const sitemapPath = path.join(publicDir, "sitemap.xml");
+fs.writeFileSync(sitemapPath, sitemapXml);
+
 console.log(
-  `[build-registry] Successfully generated ${registryItemsManifest.length} item payloads in public/r/ and master registry.json!`
+  `[build-registry] Successfully generated ${registryItemsManifest.length} item payloads in public/r/, master registry.json, and sitemap.xml!`
 );
