@@ -29,6 +29,7 @@ Peel UI is an open-source shadcn registry of React components that treat the scr
 
 | Component | Install slug | Interaction |
 | :--- | :--- | :--- |
+| **Shortcut Teacher** | `shortcut-teacher` | Silent pointer click counter revealing an anchored keycap hint after 3 repeated clicks until learned or dismissed. |
 | **Morphing Share Island** | `morphing-share-island` | Spring-morphing share pill fanning out into a 4-action radial dock with differential spring stagger and auto-reset confirmation. |
 | **Save State Pill** | `save-state-pill` | Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps. |
 | **Skill Pile** | `skill-pile` | Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing. |

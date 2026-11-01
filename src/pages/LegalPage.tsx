@@ -65,17 +65,17 @@ export default function LegalPage() {
         {/* ── 1. Header & Minimal Switcher ── */}
         <header className="pb-8 border-b border-white/[0.07]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h1 className="font-sans font-medium tracking-[-0.04em] text-[clamp(2rem,3.6vw,2.75rem)] leading-none text-[#F5F5F7]">
+            <h1 className="font-sans font-medium tracking-[-0.038em] leading-[1.06] text-[clamp(1.75rem,3.4vw,2.75rem)] text-[#F5F5F7] text-balance">
               {activeTab === "privacy" && "Privacy Policy"}
               {activeTab === "terms" && "Terms of Service"}
               {activeTab === "refund" && "Refund & Sponsorship"}
             </h1>
 
             {/* Compact 3-Tab Pill Switcher */}
-            <div className="p-1 rounded-[12px] bg-[#060709] shadow-[inset_0_1px_4px_rgba(0,0,0,0.9),inset_0_0_0_1px_rgba(255,255,255,0.04)] inline-flex items-center gap-1 self-start sm:self-auto select-none">
+            <div className="p-1 rounded-[12px] bg-[#060709] shadow-[inset_0_1px_4px_rgba(0,0,0,0.9),inset_0_0_0_1px_rgba(255,255,255,0.04)] inline-flex items-center gap-1 self-start sm:self-auto select-none shrink-0">
               <Link
                 to="/privacy"
-                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap transition-colors flex items-center ${
+                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap shrink-0 transition-colors flex items-center ${
                   activeTab === "privacy"
                     ? "bg-[#1B1E25] text-[#F5F5F7] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.4)]"
                     : "text-[#8E9299] hover:text-[#F5F5F7]"
@@ -85,7 +85,7 @@ export default function LegalPage() {
               </Link>
               <Link
                 to="/terms"
-                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap transition-colors flex items-center ${
+                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap shrink-0 transition-colors flex items-center ${
                   activeTab === "terms"
                     ? "bg-[#1B1E25] text-[#F5F5F7] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.4)]"
                     : "text-[#8E9299] hover:text-[#F5F5F7]"
@@ -95,7 +95,7 @@ export default function LegalPage() {
               </Link>
               <Link
                 to="/refund"
-                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap transition-colors flex items-center ${
+                className={`h-8 px-3.5 rounded-[8px] text-[12.5px] font-medium tracking-[-0.01em] whitespace-nowrap shrink-0 transition-colors flex items-center ${
                   activeTab === "refund"
                     ? "bg-[#1B1E25] text-[#F5F5F7] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.4)]"
                     : "text-[#8E9299] hover:text-[#F5F5F7]"
@@ -107,7 +107,7 @@ export default function LegalPage() {
           </div>
 
           {/* 1-Sentence Plain-English Summary */}
-          <p className="mt-5 text-[16px] leading-[1.6] text-[#F5F5F7]/90 font-normal text-pretty">
+          <p className="mt-5 max-w-[48ch] text-[15px] sm:text-[16px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] font-normal text-pretty">
             {activeTab === "privacy" &&
               "Peel UI does not track you, does not use cookies, and never sends anything you type in component demos to a server."}
             {activeTab === "terms" &&
@@ -126,29 +126,29 @@ export default function LegalPage() {
             <>
               {/* Section 1 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Zero Analytics &amp; Zero Cookies
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   We do not run Google Analytics, Vercel Analytics, tracking pixels, or cookies. Your browsing activity on Peel UI is never tracked, recorded, or sold.
                 </p>
               </section>
 
               {/* Section 2 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Local Browser Storage
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   We only use your browser&apos;s local storage for two optional conveniences:{" "}
-                  <code className="text-[#F5F5F7] font-mono text-[13px]">peel-pkg-manager</code> (to remember if you prefer pnpm, npm, yarn, or bun) and{" "}
-                  <code className="text-[#F5F5F7] font-mono text-[13px]">peel-note:demo</code> (to keep text typed in the Note Button demo across reloads). This data never leaves your device.{" "}
+                  <code className="text-[#F5F5F7] font-mono text-[12px]">peel-pkg-manager</code> (to remember if you prefer pnpm, npm, yarn, or bun) and{" "}
+                  <code className="text-[#F5F5F7] font-mono text-[12px]">peel-note:demo</code> (to keep text typed in the Note Button demo across reloads). This data never leaves your device.{" "}
                   <button
                     type="button"
                     onClick={clearStorage}
                     className="text-[#F5F5F7] underline underline-offset-4 decoration-white/30 hover:decoration-white cursor-pointer"
                   >
-                    Click here to clear saved browser data
+                    Clear saved browser data
                   </button>
                   {clearedNotice && (
                     <span className="text-[var(--peel-lime)] ml-1.5 font-medium">
@@ -160,20 +160,20 @@ export default function LegalPage() {
 
               {/* Section 3 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Component Demo Inputs
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   Every interactive component on this site runs strictly in your browser&apos;s temporary memory. Emails, OTP numbers, notes, or votes typed into demos are never sent to any backend server.
                 </p>
               </section>
 
               {/* Section 4 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Contact
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   Questions about privacy? Reach out on X at{" "}
                   <a
                     href="https://x.com/Sumit1476136"
@@ -203,10 +203,10 @@ export default function LegalPage() {
             <>
               {/* Section 1 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   MIT License for All Components
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   All UI primitives and source code in Peel UI are licensed under the{" "}
                   <strong className="text-[#F5F5F7] font-medium">MIT License</strong>. You can copy, paste, modify, and ship them inside unlimited personal, client, or commercial projects for free without attribution.
                 </p>
@@ -214,30 +214,30 @@ export default function LegalPage() {
 
               {/* Section 2 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Brand &amp; Website Identity
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   While the components are free to use anywhere, you may not clone the Peel UI website, logo mark, or brand name to launch a competing component directory or impersonate Peel UI.
                 </p>
               </section>
 
               {/* Section 3 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Provided &quot;As-Is&quot;
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   All code is provided &quot;as is&quot; without warranty of any kind. The owner (@Sumit1476136) is not liable for any damages or issues arising from using these components in production.
                 </p>
               </section>
 
               {/* Section 4 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Contact
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   For any legal or licensing questions, message{" "}
                   <a
                     href="https://x.com/Sumit1476136"
@@ -274,10 +274,10 @@ export default function LegalPage() {
             <>
               {/* Section 1 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Direct Support &amp; No Profit Guarantee
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   Every monthly sponsorship goes directly to the owner (
                   <a
                     href="https://x.com/Sumit1476136"
@@ -297,50 +297,50 @@ export default function LegalPage() {
 
               {/* Section 2 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   72-Hour Refund Rule &amp; Tax Subtraction
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   You may request a refund within{" "}
-                  <strong className="text-[#F5F5F7] font-medium">72 hours of payment</strong>{" "}
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">72</span> hours of payment</strong>{" "}
                   only if your logo and X shoutout have not been published yet. Once your brand is live on the website, README, or X, the month is non-refundable.
                 </p>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   <strong className="text-[#F5F5F7] font-medium">
-                    We never refund 100% of the full amount you sent—we only refund the exact net amount we received after subtracting tax and payment fees.
+                    We never refund <span className="tabular-nums">100%</span> of the full amount you sent—we only refund the exact net amount we received after subtracting tax and payment fees.
                   </strong>{" "}
                   For example, if you pay{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$150</strong> and{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$2</strong> is deducted in tax/fees when we receive it, we will only send back{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$148</strong>. If your bank or payment processor deducts an additional tax or fee when receiving the refund, we are not responsible for that deduction.
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$150</span></strong> and{" "}
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$2</span></strong> is deducted in tax/fees when we receive it, we will only send back{" "}
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$148</span></strong>. If your bank or payment processor deducts an additional tax or fee when receiving the refund, we are not responsible for that deduction.
                 </p>
               </section>
 
               {/* Section 3 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   Price Changes &amp; Active Month Protection
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   The owner can change sponsorship prices at any time. However,{" "}
                   <strong className="text-[#F5F5F7] font-medium">
                     if you already paid for an active month, a price increase will never affect you during that month.
                   </strong>{" "}
                   For example, if you pay{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$150 on January 1</strong>{" "}
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$150</span> on January <span className="tabular-nums">1</span></strong>{" "}
                   for the Diamond tier and the price increases from{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$150 to $200 on January 4</strong>, you do not pay anything extra for January. When your monthly cycle ends on{" "}
-                  <strong className="text-[#F5F5F7] font-medium">January 31</strong>, the new{" "}
-                  <strong className="text-[#F5F5F7] font-medium">$200</strong> rate will apply if you choose to renew for February.
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$150</span> to <span className="tabular-nums">$200</span> on January <span className="tabular-nums">4</span></strong>, you do not pay anything extra for January. When your monthly cycle ends on{" "}
+                  <strong className="text-[#F5F5F7] font-medium">January <span className="tabular-nums">31</span></strong>, the new{" "}
+                  <strong className="text-[#F5F5F7] font-medium"><span className="tabular-nums">$200</span></strong> rate will apply if you choose to renew for February.
                 </p>
               </section>
 
               {/* Section 4 */}
               <section className="py-8 space-y-3">
-                <h2 className="text-[16px] font-medium tracking-[-0.015em] text-[#F5F5F7]">
+                <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
                   How to Contact (X or Email Only)
                 </h2>
-                <p className="text-[14.5px] leading-[1.72] text-[#8E9299] text-pretty">
+                <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   Do not use GitHub to request refunds or send sponsor assets. Contact the owner directly on X at{" "}
                   <a
                     href="https://x.com/Sumit1476136"

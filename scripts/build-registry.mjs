@@ -151,9 +151,11 @@ const masterRegistry = {
 
 const masterRPath = path.join(publicRDir, "registry.json");
 const masterRootPath = path.join(publicDir, "registry.json");
+const rootRegistryPath = path.join(rootDir, "registry.json");
 
 fs.writeFileSync(masterRPath, JSON.stringify(masterRegistry, null, 2) + "\n");
 fs.writeFileSync(masterRootPath, JSON.stringify(masterRegistry, null, 2) + "\n");
+fs.writeFileSync(rootRegistryPath, JSON.stringify(masterRegistry, null, 2) + "\n");
 
 // 4. Generate public/sitemap.xml
 const sitemapEntries = [

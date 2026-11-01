@@ -199,7 +199,7 @@ export default function Footer({ minimal }: FooterProps = {}) {
                   </motion.div>
 
                   {/* Core Orb with Peel Monogram */}
-                  <div className="size-14 rounded-full bg-[#13151A] group-hover:bg-[#191C22] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_28px_rgba(94,158,90,0.24)] flex items-center justify-center transition-all duration-300 group-hover:scale-105 relative z-10 border border-white/[0.08]">
+                  <div className="size-14 rounded-full bg-gradient-to-b from-[#16181E] to-[#101216] group-hover:from-[#1B1E25] group-hover:to-[#14161B] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_0_0_1px_rgba(255,255,255,0.04),0_12px_24px_-6px_rgba(0,0,0,0.75)] flex items-center justify-center transition-all duration-300 group-hover:scale-105 relative z-10">
                     <svg
                       viewBox="0 0 100 100"
                       fill="none"
@@ -224,8 +224,8 @@ export default function Footer({ minimal }: FooterProps = {}) {
                   </div>
                 </div>
 
-                {/* Quiet Hover Label */}
-                <div className="mt-4 font-mono text-[11px] font-medium tracking-[0.08em] text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center gap-1 whitespace-nowrap">
+                {/* Quiet Hover Label placed cleanly below seal rim */}
+                <div className="mt-6 font-mono text-[11px] font-medium tracking-[0.08em] text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center gap-1 whitespace-nowrap">
                   <span>Explore tiers</span>
                   <ArrowUpRight size={12} weight="bold" />
                 </div>
@@ -255,19 +255,19 @@ export default function Footer({ minimal }: FooterProps = {}) {
         <nav aria-label="Legal and license links" className="flex items-center gap-5 whitespace-nowrap">
           <Link
             to="/privacy"
-            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors"
+            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors whitespace-nowrap shrink-0"
           >
             Privacy
           </Link>
           <Link
             to="/terms"
-            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors"
+            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors whitespace-nowrap shrink-0"
           >
             Terms
           </Link>
           <Link
             to="/refund"
-            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors"
+            className="text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors whitespace-nowrap shrink-0"
           >
             Refund Policy
           </Link>
@@ -275,7 +275,7 @@ export default function Footer({ minimal }: FooterProps = {}) {
             href="https://github.com/killersumit/peel-ui/blob/main/LICENSE"
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[11px] text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors"
+            className="font-mono text-[11px] text-[var(--peel-text-tertiary)] hover:text-[#F5F5F7] transition-colors whitespace-nowrap shrink-0"
           >
             MIT License
           </a>

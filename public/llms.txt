@@ -22,7 +22,13 @@ npx shadcn@latest add https://peel-ui.vercel.app/r/slide-to-confirm.json
 
 ## Component Primitives Directory
 
-### 1. Morphing Share Island
+### 1. Shortcut Teacher
+- **Slug**: `shortcut-teacher`
+- **URL**: https://peel-ui.vercel.app/components/shortcut-teacher
+- **Description**: Silent pointer click counter that reveals an anchored keycap hint after three repeated uses until learned.
+- **Install**: `npx shadcn@latest add https://peel-ui.vercel.app/r/shortcut-teacher.json`
+
+### 2. Morphing Share Island
 - **Slug**: `morphing-share-island`
 - **URL**: https://peel-ui.vercel.app/components/morphing-share-island
 - **Description**: A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.

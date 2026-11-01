@@ -57,7 +57,7 @@ function renderSyntaxLine(line: string) {
       )
     ) {
       return (
-        <span key={i} className="text-[#F5F5F7] font-semibold">
+        <span key={i} className="text-[#F5F5F7] font-medium">
           {token}
         </span>
       );
@@ -225,7 +225,7 @@ ${item.code}
         aria-hidden="true"
       />
 
-      <div className="max-w-[1040px] mx-auto w-full px-3 sm:px-6 pt-28 pb-24">
+      <div className="max-w-[1040px] mx-auto w-full px-5 sm:px-6 pt-28 pb-24">
         {/* Mobile Component Stepper Bar */}
         <div className="flex lg:hidden items-center justify-between gap-2 mb-6">
           <Link
@@ -498,10 +498,11 @@ ${item.code}
                 {activeTab === "preview" ? (
                   /* Sunken Stage Well */
                   <div
+                    data-stage-theme={stageTheme}
                     className={cn(
                       "rounded-[14px] px-2.5 py-6 sm:p-10 min-h-[380px] sm:min-h-[480px] flex flex-col items-center justify-center relative overflow-x-hidden transition-colors duration-200",
                       stageTheme === "light"
-                        ? "bg-[#F7F7F8] shadow-[inset_0_1px_6px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(0,0,0,0.06)]"
+                        ? "bg-[#F5F3EF] shadow-[inset_0_1px_6px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(0,0,0,0.06)]"
                         : "bg-[#060709] shadow-[inset_0_2px_8px_rgba(0,0,0,0.92),inset_0_0_0_1px_rgba(255,255,255,0.035)]"
                     )}
                   >

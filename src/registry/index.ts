@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import shortcutTeacherCode from "./primitives/shortcut-teacher.tsx?raw";
 import morphingShareIslandCode from "./primitives/morphing-share-island.tsx?raw";
 import slideToConfirmCode from "./primitives/slide-to-confirm.tsx?raw";
 import magneticSplitButtonCode from "./primitives/magnetic-split-button.tsx?raw";
@@ -26,6 +27,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { ShortcutTeacher } from "./primitives/shortcut-teacher";
 import { MorphingShareIsland } from "./primitives/morphing-share-island";
 import { SlideToConfirm } from "./primitives/slide-to-confirm";
 import { MagneticSplitButton } from "./primitives/magnetic-split-button";
@@ -54,6 +56,44 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
   {
+    slug: "shortcut-teacher",
+    title: "Shortcut Teacher",
+    category: "new-release",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "Silent pointer click counter that reveals an anchored keycap hint after two repeated uses until learned.",
+    interactionNotes:
+      "Monitors fine-pointer clicks per action, surfaces a quiet anchored shortcut hint on the second click, and permanently dismisses it once executed via keyboard or dismissed.",
+    dependencies: ["motion", "@phosphor-icons/react"],
+    filePath: "src/registry/primitives/shortcut-teacher.tsx",
+    code: shortcutTeacherCode,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Current stage theme mode.",
+      },
+      {
+        name: "onAction",
+        type: '(actionId: string, method: "pointer" | "keyboard") => void',
+        description: "Callback invoked when an action triggers.",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        description: "Key trigger to reset learned shortcuts and counts.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: (props) => React.createElement(ShortcutTeacher, props),
+  },
+  {
     slug: "morphing-share-island",
     title: "Morphing Share Island",
     category: "new-release",
@@ -62,17 +102,11 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
     leadPitch:
       "A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.",
     interactionNotes:
-      "Driven by interruptible motion/react springs with differential icon stagger, shared layoutId tooltips, clipboard integration, and an automated replay sequence.",
+      "Driven by interruptible motion/react springs with differential icon stagger, top light/dark theme switch, and auto-reset confirmation.",
     dependencies: ["motion", "@phosphor-icons/react"],
     filePath: "src/registry/primitives/morphing-share-island.tsx",
     code: morphingShareIslandCode,
     props: [
-      {
-        name: "defaultTheme",
-        type: '"obsidian" | "paper" | "titanium"',
-        defaultValue: '"obsidian"',
-        description: "Initial surface palette.",
-      },
       {
         name: "shareUrl",
         type: "string",
@@ -85,10 +119,15 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
         description: "Callback when an action is selected.",
       },
       {
-        name: "showControls",
-        type: "boolean",
-        defaultValue: "true",
-        description: "Whether to display the bottom theme & replay dock.",
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Current stage theme mode.",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        description: "Key trigger to reset morphing pill state.",
       },
       {
         name: "className",

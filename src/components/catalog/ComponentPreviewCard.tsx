@@ -86,8 +86,8 @@ export function ComponentPreviewCard({ item, isWide = false }: ComponentPreviewC
         <span className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[-0.015em] leading-none whitespace-nowrap">
           {item.title}
           {item.isNew && (
-            <span className="text-[11px] font-medium leading-none text-[#76B872] bg-[#5E9E5A]/12 px-1.5 py-0.5 rounded-[5px] whitespace-nowrap shrink-0">
-              New
+            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.08em] leading-none text-[#76B872] bg-[#5E9E5A]/12 px-1.5 py-0.5 rounded-[5px] whitespace-nowrap shrink-0">
+              NEW
             </span>
           )}
         </span>

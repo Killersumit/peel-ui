@@ -4,6 +4,24 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "shortcut-teacher",
+      "type": "registry:ui",
+      "title": "Shortcut Teacher",
+      "description": "Silent pointer click counter that reveals an anchored keycap hint after two repeated uses until learned.",
+      "dependencies": [
+        "motion",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/shortcut-teacher.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/shortcut-teacher.tsx"
+        }
+      ]
+    },
+    {
       "name": "morphing-share-island",
       "type": "registry:ui",
       "title": "Morphing Share Island",

@@ -12,9 +12,9 @@ export default function SponsorsPage() {
   });
   return (
     <div className="relative min-h-screen w-full bg-[var(--peel-base)] text-[var(--peel-text-primary)] selection:bg-[var(--peel-lime)] selection:text-[var(--peel-lime-foreground)]">
-      {/* Background Dot Matrix */}
+      {/* Background Dot Matrix (Fixed & Composited: Zero Repaint on Scroll) */}
       <div
-        className="pointer-events-none absolute inset-0 -z-20 [background-image:radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,#000_20%,transparent_100%)]"
+        className="pointer-events-none fixed inset-0 -z-20 [background-image:radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,#000_20%,transparent_100%)] transform-gpu"
         aria-hidden="true"
       />
 
@@ -36,15 +36,10 @@ export default function SponsorsPage() {
               ===================================================================== */}
           <div className="rounded-[22px] p-7 bg-gradient-to-b from-[#1A1D24] to-[#111318] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_0_0_1px_rgba(255,255,255,0.06),0_16px_32px_-12px_rgba(0,0,0,0.8)] flex flex-col justify-between">
             <div>
-              {/* Top Row: Tier Name + Inline Mono Tag */}
-              <div className="flex items-center justify-between">
-                <h2 className="text-[18px] font-medium tracking-[-0.015em] text-[#F5F5F7] whitespace-nowrap">
-                  Diamond
-                </h2>
-                <span className="text-[11px] font-medium tracking-[-0.01em] text-[#8E9299] px-2.5 py-0.5 rounded-[6px] bg-white/[0.04] whitespace-nowrap shrink-0">
-                  Most popular
-                </span>
-              </div>
+              {/* Tier Name */}
+              <h2 className="text-[18px] font-medium tracking-[-0.015em] text-[#F5F5F7] whitespace-nowrap">
+                Diamond
+              </h2>
 
               {/* Price */}
               <div className="mt-2 flex items-baseline gap-1">
@@ -239,7 +234,7 @@ export default function SponsorsPage() {
           </span>
           <a
             href="mailto:killer1191x@gmail.com?subject=Peel%20UI%20Sponsorship"
-            className="text-[#686C75] hover:text-[#F5F5F7] transition-colors duration-150 inline-flex items-center gap-1 self-start sm:self-auto"
+            className="text-[#686C75] hover:text-[#F5F5F7] transition-colors duration-150 inline-flex items-center gap-1 self-start sm:self-auto whitespace-nowrap shrink-0"
           >
             or email me →
           </a>

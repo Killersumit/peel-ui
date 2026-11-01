@@ -34,6 +34,11 @@
 
   <!-- Component Primitives -->
   <url>
+    <loc>https://peel-ui.vercel.app/components/shortcut-teacher</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://peel-ui.vercel.app/components/morphing-share-island</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
