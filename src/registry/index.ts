@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import tactile3dBarCode from "./primitives/tactile-3d-bar.tsx?raw";
 import shortcutTeacherCode from "./primitives/shortcut-teacher.tsx?raw";
 import morphingShareIslandCode from "./primitives/morphing-share-island.tsx?raw";
 import slideToConfirmCode from "./primitives/slide-to-confirm.tsx?raw";
@@ -27,6 +28,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { Tactile3DBar } from "./primitives/tactile-3d-bar";
 import { ShortcutTeacher } from "./primitives/shortcut-teacher";
 import { MorphingShareIsland } from "./primitives/morphing-share-island";
 import { SlideToConfirm } from "./primitives/slide-to-confirm";
@@ -55,6 +57,44 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
+  {
+    slug: "tactile-3d-bar",
+    title: "Tactile 3D Bar",
+    category: "new-release",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "A 7-day tactile bar chart where selecting a bar physically turns it in 3D space with a machined bevel and focus blur.",
+    interactionNotes:
+      "Uses motion/react interruptible springs with 3D preserve-3d perspective tilt, side bevel reveal, background focus blur, and arrow key navigation.",
+    dependencies: ["motion"],
+    filePath: "src/registry/primitives/tactile-3d-bar.tsx",
+    code: tactile3dBarCode,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Stage theme mode (dark carbon or light warm paper).",
+      },
+      {
+        name: "onSelectBar",
+        type: "(day: string, value: number) => void",
+        description: "Callback invoked when a bar is selected.",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        description: "Key trigger to reset selected bar state.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: (props) => React.createElement(Tactile3DBar, props),
+  },
   {
     slug: "shortcut-teacher",
     title: "Shortcut Teacher",

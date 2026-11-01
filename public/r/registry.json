@@ -4,6 +4,23 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "tactile-3d-bar",
+      "type": "registry:ui",
+      "title": "Tactile 3D Bar",
+      "description": "A 7-day tactile bar chart where selecting a bar physically turns it in 3D space with a machined bevel and focus blur.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tactile-3d-bar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tactile-3d-bar.tsx"
+        }
+      ]
+    },
+    {
       "name": "shortcut-teacher",
       "type": "registry:ui",
       "title": "Shortcut Teacher",
