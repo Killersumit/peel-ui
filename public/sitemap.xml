@@ -34,27 +34,17 @@
 
   <!-- Component Primitives -->
   <url>
+    <loc>https://peel-ui.vercel.app/components/interactive-file-tree</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://peel-ui.vercel.app/components/tactile-3d-bar</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://peel-ui.vercel.app/components/shortcut-teacher</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://peel-ui.vercel.app/components/morphing-share-island</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://peel-ui.vercel.app/components/save-state-pill</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://peel-ui.vercel.app/components/skill-pile</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -89,6 +79,11 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://peel-ui.vercel.app/components/morphing-share-island</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://peel-ui.vercel.app/components/detent-tabs</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -109,6 +104,11 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://peel-ui.vercel.app/components/skill-pile</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://peel-ui.vercel.app/components/moire-field</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -125,6 +125,11 @@
   </url>
   <url>
     <loc>https://peel-ui.vercel.app/components/release-notes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://peel-ui.vercel.app/components/save-state-pill</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

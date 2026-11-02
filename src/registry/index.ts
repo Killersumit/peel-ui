@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import interactiveFileTreeCode from "./primitives/interactive-file-tree.tsx?raw";
 import tactile3dBarCode from "./primitives/tactile-3d-bar.tsx?raw";
 import shortcutTeacherCode from "./primitives/shortcut-teacher.tsx?raw";
 import morphingShareIslandCode from "./primitives/morphing-share-island.tsx?raw";
@@ -28,6 +29,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { InteractiveFileTree } from "./primitives/interactive-file-tree";
 import { Tactile3DBar } from "./primitives/tactile-3d-bar";
 import { ShortcutTeacher } from "./primitives/shortcut-teacher";
 import { MorphingShareIsland } from "./primitives/morphing-share-island";
@@ -57,6 +59,41 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
+  {
+    slug: "interactive-file-tree",
+    title: "Interactive File Tree",
+    category: "new-release",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "A 2-zone concentric file tree and syntax preview chassis with collapsible code drawer and emerald green syntax tokens.",
+    interactionNotes:
+      "Features layoutId active row pill with click-to-toggle code collapse, interruptible accordion springs, and zero-slop pre-tokenized emerald syntax engine.",
+    dependencies: ["motion", "@phosphor-icons/react"],
+    filePath: "src/registry/primitives/interactive-file-tree.tsx",
+    code: interactiveFileTreeCode,
+    supportsReplay: true,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Surface mode (obsidian dark or warm paper light).",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        defaultValue: "0",
+        description: "Reset trigger for tree state and open file.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: InteractiveFileTree,
+  },
   {
     slug: "tactile-3d-bar",
     title: "Tactile 3D Bar",
@@ -132,107 +169,6 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
       },
     ],
     component: (props) => React.createElement(ShortcutTeacher, props),
-  },
-  {
-    slug: "morphing-share-island",
-    title: "Morphing Share Island",
-    category: "new-release",
-    isNew: true,
-    catalogCardTheme: "dark",
-    leadPitch:
-      "A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.",
-    interactionNotes:
-      "Driven by interruptible motion/react springs with differential icon stagger, top light/dark theme switch, and auto-reset confirmation.",
-    dependencies: ["motion", "@phosphor-icons/react"],
-    filePath: "src/registry/primitives/morphing-share-island.tsx",
-    code: morphingShareIslandCode,
-    props: [
-      {
-        name: "shareUrl",
-        type: "string",
-        defaultValue: '"https://peel-ui.vercel.app"',
-        description: "URL copied to clipboard or shared.",
-      },
-      {
-        name: "onAction",
-        type: '(action: "copy" | "post" | "send" | "qr") => void',
-        description: "Callback when an action is selected.",
-      },
-      {
-        name: "theme",
-        type: '"light" | "dark"',
-        defaultValue: '"dark"',
-        description: "Current stage theme mode.",
-      },
-      {
-        name: "replayKey",
-        type: "number",
-        description: "Key trigger to reset morphing pill state.",
-      },
-      {
-        name: "className",
-        type: "string",
-        description: "Optional container class name.",
-      },
-    ],
-    component: (props) => React.createElement(MorphingShareIsland, props),
-  },
-  {
-    slug: "save-state-pill",
-    title: "Save State Pill",
-    category: "new-release",
-    isNew: true,
-    isCompactHeroFeatured: true,
-    catalogCardTheme: "dark",
-    leadPitch:
-      "Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps.",
-    interactionNotes:
-      "Cycles smoothly between saving spinner, saved checkmark, offline warning, and conflict state with zero layout thrashing via layoutId and critically damped spring transitions.",
-    dependencies: ["motion", "lucide-react"],
-    filePath: "src/registry/primitives/save-state-pill.tsx",
-    code: saveStatePillCode,
-    props: [
-      {
-        name: "state",
-        type: '"idle" | "saving" | "saved" | "error" | "offline"',
-        defaultValue: '"idle"',
-        description: "Current network save lifecycle state.",
-      },
-      {
-        name: "lastSavedAt",
-        type: "Date",
-        description: "Timestamp of last confirmed successful sync.",
-      },
-      {
-        name: "onRetry",
-        type: "() => void",
-        description: "Callback invoked when clicking retry in error state.",
-      },
-    ],
-    component: () => React.createElement("div", { className: "w-full flex items-center justify-center p-2" }, React.createElement(SaveStatePillDemo)),
-  },
-  {
-    slug: "skill-pile",
-    title: "Skill Pile",
-    category: "new-release",
-    isNew: true,
-    previewImage: "/previews/skill-pile.webp",
-    catalogCardTheme: "dark",
-    leadPitch:
-      "Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing.",
-    interactionNotes:
-      "Runs on Matter.js rigid-body physics engine. Pills fall into an invisible container, collide realistically, and can be dragged or flung across the canvas with momentum.",
-    dependencies: ["matter-js"],
-    filePath: "src/registry/primitives/skill-pile.tsx",
-    code: skillPileCode,
-    props: [
-      {
-        name: "skills",
-        type: "SkillItem[]",
-        description: "Array of skill tag definitions with label and accent tone.",
-      },
-    ],
-    component: () => React.createElement("div", { className: "w-full h-full flex items-center justify-center overflow-hidden" }, React.createElement(SkillPileDemo)),
   },
 
   // =========================================================================
@@ -436,6 +372,49 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // CATEGORY 3: SURFACES & NAVIGATION
   // =========================================================================
   {
+    slug: "morphing-share-island",
+    title: "Morphing Share Island",
+    category: "surfaces-navigation",
+    catalogCardTheme: "dark",
+    leadPitch:
+      "A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.",
+    interactionNotes:
+      "Driven by interruptible motion/react springs with differential icon stagger, top light/dark theme switch, and auto-reset confirmation.",
+    dependencies: ["motion", "@phosphor-icons/react"],
+    filePath: "src/registry/primitives/morphing-share-island.tsx",
+    code: morphingShareIslandCode,
+    props: [
+      {
+        name: "shareUrl",
+        type: "string",
+        defaultValue: '"https://peel-ui.vercel.app"',
+        description: "URL copied to clipboard or shared.",
+      },
+      {
+        name: "onAction",
+        type: '(action: "copy" | "post" | "send" | "qr") => void',
+        description: "Callback when an action is selected.",
+      },
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Current stage theme mode.",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        description: "Key trigger to reset morphing pill state.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: (props) => React.createElement(MorphingShareIsland, props),
+  },
+  {
     slug: "detent-tabs",
     title: "Detent Tabs",
     category: "surfaces-navigation",
@@ -535,6 +514,28 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // CATEGORY 4: MOTION & DISPLAY
   // =========================================================================
   {
+    slug: "skill-pile",
+    title: "Skill Pile",
+    category: "motion-display",
+    previewImage: "/previews/skill-pile.webp",
+    catalogCardTheme: "dark",
+    leadPitch:
+      "Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing.",
+    interactionNotes:
+      "Runs on Matter.js rigid-body physics engine. Pills fall into an invisible container, collide realistically, and can be dragged or flung across the canvas with momentum.",
+    dependencies: ["matter-js"],
+    filePath: "src/registry/primitives/skill-pile.tsx",
+    code: skillPileCode,
+    props: [
+      {
+        name: "skills",
+        type: "SkillItem[]",
+        description: "Array of skill tag definitions with label and accent tone.",
+      },
+    ],
+    component: () => React.createElement("div", { className: "w-full h-full flex items-center justify-center overflow-hidden" }, React.createElement(SkillPileDemo)),
+  },
+  {
     slug: "moire-field",
     title: "Moiré Field",
     category: "motion-display",
@@ -626,6 +627,39 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 5: FEEDBACK & STATUS
   // =========================================================================
+  {
+    slug: "save-state-pill",
+    title: "Save State Pill",
+    category: "feedback-status",
+    isCompactHeroFeatured: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps.",
+    interactionNotes:
+      "Cycles smoothly between saving spinner, saved checkmark, offline warning, and conflict state with zero layout thrashing via layoutId and critically damped spring transitions.",
+    dependencies: ["motion", "lucide-react"],
+    filePath: "src/registry/primitives/save-state-pill.tsx",
+    code: saveStatePillCode,
+    props: [
+      {
+        name: "state",
+        type: '"idle" | "saving" | "saved" | "error" | "offline"',
+        defaultValue: '"idle"',
+        description: "Current network save lifecycle state.",
+      },
+      {
+        name: "lastSavedAt",
+        type: "Date",
+        description: "Timestamp of last confirmed successful sync.",
+      },
+      {
+        name: "onRetry",
+        type: "() => void",
+        description: "Callback invoked when clicking retry in error state.",
+      },
+    ],
+    component: () => React.createElement("div", { className: "w-full flex items-center justify-center p-2" }, React.createElement(SaveStatePillDemo)),
+  },
   {
     slug: "voice-pill",
     title: "Voice Pill",

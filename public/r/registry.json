@@ -4,6 +4,24 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "interactive-file-tree",
+      "type": "registry:ui",
+      "title": "Interactive File Tree",
+      "description": "A 2-zone concentric file tree and syntax preview chassis with collapsible code drawer and emerald green syntax tokens.",
+      "dependencies": [
+        "motion",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/interactive-file-tree.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/interactive-file-tree.tsx"
+        }
+      ]
+    },
+    {
       "name": "tactile-3d-bar",
       "type": "registry:ui",
       "title": "Tactile 3D Bar",
@@ -35,59 +53,6 @@
           "path": "components/ui/shortcut-teacher.tsx",
           "type": "registry:ui",
           "target": "components/ui/shortcut-teacher.tsx"
-        }
-      ]
-    },
-    {
-      "name": "morphing-share-island",
-      "type": "registry:ui",
-      "title": "Morphing Share Island",
-      "description": "A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.",
-      "dependencies": [
-        "motion",
-        "@phosphor-icons/react"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "components/ui/morphing-share-island.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/morphing-share-island.tsx"
-        }
-      ]
-    },
-    {
-      "name": "save-state-pill",
-      "type": "registry:ui",
-      "title": "Save State Pill",
-      "description": "Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps.",
-      "dependencies": [
-        "motion",
-        "lucide-react"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "components/ui/save-state-pill.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/save-state-pill.tsx"
-        }
-      ]
-    },
-    {
-      "name": "skill-pile",
-      "type": "registry:ui",
-      "title": "Skill Pile",
-      "description": "Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing.",
-      "dependencies": [
-        "matter-js"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "components/ui/skill-pile.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/skill-pile.tsx"
         }
       ]
     },
@@ -224,6 +189,24 @@
       ]
     },
     {
+      "name": "morphing-share-island",
+      "type": "registry:ui",
+      "title": "Morphing Share Island",
+      "description": "A compact share pill that spring-morphs into a 4-action radial dock and collapses into a confirmed state.",
+      "dependencies": [
+        "motion",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/morphing-share-island.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/morphing-share-island.tsx"
+        }
+      ]
+    },
+    {
       "name": "detent-tabs",
       "type": "registry:ui",
       "title": "Detent Tabs",
@@ -294,6 +277,23 @@
       ]
     },
     {
+      "name": "skill-pile",
+      "type": "registry:ui",
+      "title": "Skill Pile",
+      "description": "Rigid-body 2D physics tag stack driven by Matter.js with realistic gravity, mass, friction, and draggable impulse throwing.",
+      "dependencies": [
+        "matter-js"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/skill-pile.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skill-pile.tsx"
+        }
+      ]
+    },
+    {
       "name": "moire-field",
       "type": "registry:ui",
       "title": "Moiré Field",
@@ -359,6 +359,24 @@
           "path": "components/ui/release-notes.tsx",
           "type": "registry:ui",
           "target": "components/ui/release-notes.tsx"
+        }
+      ]
+    },
+    {
+      "name": "save-state-pill",
+      "type": "registry:ui",
+      "title": "Save State Pill",
+      "description": "Spring-morphing toolbar status capsule with offline queuing, error recovery, and relative timestamps.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/save-state-pill.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/save-state-pill.tsx"
         }
       ]
     },
