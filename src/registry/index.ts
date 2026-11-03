@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import morphingFeedbackCode from "./primitives/morphing-feedback.tsx?raw";
 import interactiveFileTreeCode from "./primitives/interactive-file-tree.tsx?raw";
 import tactile3dBarCode from "./primitives/tactile-3d-bar.tsx?raw";
 import shortcutTeacherCode from "./primitives/shortcut-teacher.tsx?raw";
@@ -29,6 +30,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { MorphingFeedback } from "./primitives/morphing-feedback";
 import { InteractiveFileTree } from "./primitives/interactive-file-tree";
 import { Tactile3DBar } from "./primitives/tactile-3d-bar";
 import { ShortcutTeacher } from "./primitives/shortcut-teacher";
@@ -59,6 +61,46 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
+  {
+    slug: "morphing-feedback",
+    title: "Morphing Feedback",
+    category: "new-release",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "A 3-stage morphing feedback trigger that expands into a concentric composer and collapses into a confirmed checkmark.",
+    interactionNotes:
+      "Uses motion/react shared-layout projection with concentric radius preservation, category chip detent, and escape key dismissing.",
+    dependencies: ["motion", "@phosphor-icons/react"],
+    filePath: "src/registry/primitives/morphing-feedback.tsx",
+    code: morphingFeedbackCode,
+    supportsReplay: true,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Surface mode (obsidian dark or warm paper light).",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        defaultValue: "0",
+        description: "Reset trigger to return composer back to idle pill.",
+      },
+      {
+        name: "onSubmitFeedback",
+        type: '(feedback: { category: "Bug" | "Idea" | "Praise"; text: string }) => void',
+        description: "Callback invoked when feedback is submitted.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: MorphingFeedback,
+  },
   {
     slug: "interactive-file-tree",
     title: "Interactive File Tree",

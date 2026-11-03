@@ -4,6 +4,24 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "morphing-feedback",
+      "type": "registry:ui",
+      "title": "Morphing Feedback",
+      "description": "A 3-stage morphing feedback trigger that expands into a concentric composer and collapses into a confirmed checkmark.",
+      "dependencies": [
+        "motion",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/morphing-feedback.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/morphing-feedback.tsx"
+        }
+      ]
+    },
+    {
       "name": "interactive-file-tree",
       "type": "registry:ui",
       "title": "Interactive File Tree",

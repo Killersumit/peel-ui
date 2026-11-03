@@ -118,6 +118,7 @@ export default function ComponentWorkspacePage() {
   usePageMeta({
     title: item ? `${item.title} — Peel UI` : "Components — Peel UI",
     description: item?.leadPitch || "Explore tactile UI component primitives.",
+    image: item?.previewImage,
   });
 
   const handleSetPkgManager = (pm: PkgManager) => {
