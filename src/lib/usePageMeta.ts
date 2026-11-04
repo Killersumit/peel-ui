@@ -17,7 +17,19 @@ export function usePageMeta({
   const location = useLocation();
 
   useEffect(() => {
-    // 1. Document title & title meta tags
+    // 1. Purge all X / Twitter meta tags completely from the DOM
+    document
+      .querySelectorAll('meta[name^="twitter:"], meta[property^="twitter:"]')
+      .forEach((el) => el.remove());
+
+    // 2. Purge OpenGraph detail text (og:title, og:description) completely from the DOM
+    const existingOgTitle = document.querySelector('meta[property="og:title"]');
+    if (existingOgTitle) existingOgTitle.remove();
+
+    const existingOgDesc = document.querySelector('meta[property="og:description"]');
+    if (existingOgDesc) existingOgDesc.remove();
+
+    // 3. Document title & Google/browser title tag
     document.title = title;
 
     let metaTitle = document.querySelector('meta[name="title"]');
@@ -28,23 +40,7 @@ export function usePageMeta({
     }
     metaTitle.setAttribute("content", title);
 
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-      ogTitle = document.createElement("meta");
-      ogTitle.setAttribute("property", "og:title");
-      document.head.appendChild(ogTitle);
-    }
-    ogTitle.setAttribute("content", title);
-
-    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (!twitterTitle) {
-      twitterTitle = document.createElement("meta");
-      twitterTitle.setAttribute("name", "twitter:title");
-      document.head.appendChild(twitterTitle);
-    }
-    twitterTitle.setAttribute("content", title);
-
-    // 2. Descriptions
+    // 4. Google/browser description tag
     if (description && description.trim().length > 0) {
       let metaDesc = document.querySelector('meta[name="description"]');
       if (!metaDesc) {
@@ -53,34 +49,12 @@ export function usePageMeta({
         document.head.appendChild(metaDesc);
       }
       metaDesc.setAttribute("content", description);
-
-      let ogDesc = document.querySelector('meta[property="og:description"]');
-      if (!ogDesc) {
-        ogDesc = document.createElement("meta");
-        ogDesc.setAttribute("property", "og:description");
-        document.head.appendChild(ogDesc);
-      }
-      ogDesc.setAttribute("content", description);
-
-      let twitterDesc = document.querySelector('meta[name="twitter:description"]');
-      if (!twitterDesc) {
-        twitterDesc = document.createElement("meta");
-        twitterDesc.setAttribute("name", "twitter:description");
-        document.head.appendChild(twitterDesc);
-      }
-      twitterDesc.setAttribute("content", description);
     } else {
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.remove();
-
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.remove();
-
-      const twitterDesc = document.querySelector('meta[name="twitter:description"]');
-      if (twitterDesc) twitterDesc.remove();
     }
 
-    // 3. Dynamic canonical URL & Open Graph URL sync
+    // 5. Canonical URL & OpenGraph URL sync
     const rawPath =
       canonicalPath ??
       (typeof window !== "undefined" ? window.location.pathname : location.pathname);
@@ -107,10 +81,8 @@ export function usePageMeta({
     }
     ogUrl.setAttribute("content", canonicalUrl);
 
-    // 4. Dedicated Image Handling (Strict: Omit/Remove if no explicit real image provided)
+    // 6. OpenGraph Image (STRICT: ONLY image when explicit real asset exists; otherwise empty/removed)
     const ogImage = document.querySelector('meta[property="og:image"]');
-    const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    let twitterCard = document.querySelector('meta[name="twitter:card"]');
 
     if (image && typeof image === "string" && image.trim().length > 0) {
       const fullImageUrl = image.startsWith("http")
@@ -125,30 +97,8 @@ export function usePageMeta({
       } else {
         ogImage.setAttribute("content", fullImageUrl);
       }
-
-      if (!twitterImage) {
-        const el = document.createElement("meta");
-        el.setAttribute("name", "twitter:image");
-        el.setAttribute("content", fullImageUrl);
-        document.head.appendChild(el);
-      } else {
-        twitterImage.setAttribute("content", fullImageUrl);
-      }
-
-      if (!twitterCard) {
-        twitterCard = document.createElement("meta");
-        twitterCard.setAttribute("name", "twitter:card");
-        document.head.appendChild(twitterCard);
-      }
-      twitterCard.setAttribute("content", "summary_large_image");
     } else {
-      // Remove any generic or stale og:image and twitter:image tags completely from DOM
       if (ogImage) ogImage.remove();
-      if (twitterImage) twitterImage.remove();
-
-      if (twitterCard) {
-        twitterCard.setAttribute("content", "summary");
-      }
     }
   }, [title, description, canonicalPath, image, location.pathname]);
 }
