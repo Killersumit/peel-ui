@@ -25,7 +25,7 @@ export default function LegalPage() {
 
   const pageDesc =
     activeTab === "privacy"
-      ? "Peel UI does not track you, does not use cookies, and never sends anything you type in component demos to a server."
+      ? "Peel UI uses OpenPanel for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."
       : activeTab === "terms"
         ? "All Peel UI components are 100% free to use in personal and commercial projects under the MIT License."
         : "Sponsorship policy, net-of-tax refund rules, and active month rate-lock terms.";
@@ -109,7 +109,7 @@ export default function LegalPage() {
           {/* 1-Sentence Plain-English Summary */}
           <p className="mt-5 max-w-[48ch] text-[15px] sm:text-[16px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] font-normal text-pretty">
             {activeTab === "privacy" &&
-              "Peel UI does not track you, does not use cookies, and never sends anything you type in component demos to a server."}
+              "Peel UI uses OpenPanel for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."}
             {activeTab === "terms" &&
               "All Peel UI components are 100% free to use in personal and commercial projects under the MIT License—just don't clone our website and pretend to be us."}
             {activeTab === "refund" &&
@@ -124,14 +124,30 @@ export default function LegalPage() {
               ================================================================= */}
           {activeTab === "privacy" && (
             <>
-              {/* Section 1 */}
+              {/* Effective Date */}
+              <div className="pt-6 pb-2 text-[12.5px] font-mono text-[#686C75]">
+                Last updated: November 6, 2026
+              </div>
+
+              {/* Section 1: Analytics (OpenPanel) */}
               <section className="py-8 space-y-3">
                 <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
-                  Zero Analytics &amp; Zero Cookies
+                  Analytics (OpenPanel)
                 </h2>
                 <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
-                  We do not run Google Analytics, Vercel Analytics, tracking pixels, or cookies. Your browsing activity on Peel UI is never tracked, recorded, or sold.
+                  We use OpenPanel, a privacy-first, open-source analytics tool, to understand how visitors interact with Peel UI. Session replay is disabled.
                 </p>
+                <div className="space-y-2.5 pt-1 text-[14px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
+                  <p>
+                    <strong className="text-[#F5F5F7] font-medium">What we collect:</strong> Anonymous data such as pages visited, session duration, referrer, browser/OS version, device type, and general geolocation (city/country). We also collect any custom event properties we explicitly configure (e.g., button clicks).
+                  </p>
+                  <p>
+                    <strong className="text-[#F5F5F7] font-medium">What we do not collect:</strong> We do not use cookies. We do not store your IP address. We do not create persistent profiles or track you across other websites.
+                  </p>
+                  <p>
+                    <strong className="text-[#F5F5F7] font-medium">How it works:</strong> A temporary, anonymous identifier is generated server-side and rotated daily, making it impossible to track you over time.
+                  </p>
+                </div>
               </section>
 
               {/* Section 2 */}

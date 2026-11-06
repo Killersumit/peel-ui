@@ -17,7 +17,7 @@ export function BackedBySection() {
           Diamond sponsors
         </span>
 
-        {/* Top Row: 2 wide squircle tiles */}
+        {/* Top Row: 2 wide squircle tiles (First tile visible on mobile, both on md+) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <Link
             to="/sponsors"
@@ -35,7 +35,7 @@ export function BackedBySection() {
           <Link
             to="/sponsors"
             aria-label="Become a Diamond Sponsor"
-            className="h-[132px] rounded-[22px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex items-center justify-center gap-2 p-6 transition-all duration-200 group focus:outline-none"
+            className="hidden md:flex h-[132px] rounded-[22px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] items-center justify-center gap-2 p-6 transition-all duration-200 group focus:outline-none"
           >
             <span className="text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center">
               <Plus size={14} />
@@ -46,11 +46,11 @@ export function BackedBySection() {
           </Link>
         </div>
 
-        {/* Bottom Row: 1 centered wide squircle tile */}
+        {/* Bottom Row: 1 centered wide squircle tile (Hidden on mobile to show exactly 1 slot) */}
         <Link
           to="/sponsors"
           aria-label="Become a Diamond Sponsor"
-          className="mt-4 w-full md:w-[calc(50%-8px)] mx-auto h-[132px] rounded-[22px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex items-center justify-center gap-2 p-6 transition-all duration-200 group focus:outline-none"
+          className="hidden md:flex mt-4 w-full md:w-[calc(50%-8px)] mx-auto h-[132px] rounded-[22px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] items-center justify-center gap-2 p-6 transition-all duration-200 group focus:outline-none"
         >
           <span className="text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center">
             <Plus size={14} />
@@ -67,9 +67,9 @@ export function BackedBySection() {
           Gold sponsors
         </span>
 
-        {/* 3-column symmetric row */}
+        {/* 3-column symmetric row on desktop, 1 slot visible on mobile */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-          {/* Tile 1: Open Gold Slot */}
+          {/* Tile 1: Open Gold Slot (Visible on mobile & desktop) */}
           <Link
             to="/sponsors"
             aria-label="Become a Gold Sponsor"
@@ -88,11 +88,11 @@ export function BackedBySection() {
             </span>
           </Link>
 
-          {/* Tile 2: Open Gold Slot */}
+          {/* Tile 2: Open Gold Slot (Hidden on mobile) */}
           <Link
             to="/sponsors"
             aria-label="Become a Gold Sponsor"
-            className="h-[104px] rounded-[18px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center gap-1.5 p-5 transition-all duration-200 group focus:outline-none"
+            className="hidden md:flex h-[104px] rounded-[18px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex-col items-center justify-center gap-1.5 p-5 transition-all duration-200 group focus:outline-none"
           >
             <div className="flex items-center gap-1.5">
               <span className="text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center">
@@ -107,11 +107,11 @@ export function BackedBySection() {
             </span>
           </Link>
 
-          {/* Tile 3: Open Gold Slot */}
+          {/* Tile 3: Open Gold Slot (Hidden on mobile) */}
           <Link
             to="/sponsors"
             aria-label="Become a Gold Sponsor"
-            className="h-[104px] rounded-[18px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center gap-1.5 p-5 transition-all duration-200 group focus:outline-none"
+            className="hidden md:flex h-[104px] rounded-[18px] bg-gradient-to-b from-[#14161B] to-[#0E1013] hover:from-[#191C22] hover:to-[#121418] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.025),0_12px_24px_-10px_rgba(0,0,0,0.7)] flex-col items-center justify-center gap-1.5 p-5 transition-all duration-200 group focus:outline-none"
           >
             <div className="flex items-center gap-1.5">
               <span className="text-[var(--peel-text-tertiary)] group-hover:text-[#F5F5F7] transition-colors inline-flex items-center">
