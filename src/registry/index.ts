@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import tactileThemeSwitchCode from "./primitives/tactile-theme-switch.tsx?raw";
 import morphingFeedbackCode from "./primitives/morphing-feedback.tsx?raw";
 import interactiveFileTreeCode from "./primitives/interactive-file-tree.tsx?raw";
 import tactile3dBarCode from "./primitives/tactile-3d-bar.tsx?raw";
@@ -30,6 +31,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { TactileThemeSwitch } from "./primitives/tactile-theme-switch";
 import { MorphingFeedback } from "./primitives/morphing-feedback";
 import { InteractiveFileTree } from "./primitives/interactive-file-tree";
 import { Tactile3DBar } from "./primitives/tactile-3d-bar";
@@ -61,6 +63,51 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
+  {
+    slug: "tactile-theme-switch",
+    title: "Tactile Theme Switch",
+    category: "tactile-inputs",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "A precision mechanical rocker switch with sliding raised hardware thumb, radial sunburst morph, lunar starlight rays, and live workspace theme synchronization.",
+    interactionNotes:
+      "Features a critically damped spring sliding thumb with tap compression, SVG radial sun ray expansion, spring-scaled lunar starlight points, and bidirectional keyboard/touch detent navigation.",
+    dependencies: ["motion"],
+    filePath: "src/registry/primitives/tactile-theme-switch.tsx",
+    code: tactileThemeSwitchCode,
+    supportsReplay: true,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        description: "Controlled theme state (dark obsidian or light warm paper).",
+      },
+      {
+        name: "defaultTheme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Initial theme state when uncontrolled.",
+      },
+      {
+        name: "onThemeChange",
+        type: '(theme: "dark" | "light") => void',
+        description: "Callback invoked when switch is flipped.",
+      },
+      {
+        name: "showLabels",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Whether to render 'Light' and 'Dark' typography labels.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: TactileThemeSwitch,
+  },
   {
     slug: "morphing-feedback",
     title: "Morphing Feedback",

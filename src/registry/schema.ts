@@ -47,5 +47,6 @@ export interface PeelRegistryItem {
     accentHex?: string;
     replayKey?: number;
     theme?: "dark" | "light";
+    onThemeChange?: (theme: "dark" | "light") => void;
   }>;
 }

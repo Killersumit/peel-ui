@@ -517,7 +517,14 @@ ${item.code}
                       aria-hidden="true"
                     />
                     <div className="relative z-10 w-full flex flex-col items-center justify-center">
-                      <ItemComponent key={`${previewKey}-${stageTheme}`} replayKey={previewKey} theme={stageTheme} />
+                      <ItemComponent
+                        key={`${previewKey}-${stageTheme}`}
+                        replayKey={previewKey}
+                        theme={stageTheme}
+                        {...(item.slug === "tactile-theme-switch"
+                          ? { onThemeChange: (t: "dark" | "light") => setStageTheme(t) }
+                          : {})}
+                      />
                     </div>
                   </div>
                 ) : (

@@ -4,6 +4,23 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "tactile-theme-switch",
+      "type": "registry:ui",
+      "title": "Tactile Theme Switch",
+      "description": "A precision mechanical rocker switch with sliding raised hardware thumb, radial sunburst morph, lunar starlight rays, and live workspace theme synchronization.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/tactile-theme-switch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tactile-theme-switch.tsx"
+        }
+      ]
+    },
+    {
       "name": "morphing-feedback",
       "type": "registry:ui",
       "title": "Morphing Feedback",
