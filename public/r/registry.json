@@ -4,6 +4,24 @@
   "homepage": "https://peel-ui.vercel.app",
   "items": [
     {
+      "name": "ai-inline-status",
+      "type": "registry:ui",
+      "title": "AI Inline Status",
+      "description": "An unboxed, naked inline AI status and streaming response primitive with kinetic multi-phase signal icons, travelling light glint shader, and slot-rolled status transitions.",
+      "dependencies": [
+        "motion",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/ui/ai-inline-status.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ai-inline-status.tsx"
+        }
+      ]
+    },
+    {
       "name": "tactile-theme-switch",
       "type": "registry:ui",
       "title": "Tactile Theme Switch",

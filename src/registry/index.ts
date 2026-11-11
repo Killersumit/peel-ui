@@ -2,6 +2,7 @@ import React from "react";
 import type { PeelRegistryItem, ComponentCategory } from "./schema";
 
 // Raw primitive source files (for CodeInspector, copy actions, and CLI payloads)
+import aiInlineStatusCode from "./primitives/ai-inline-status.tsx?raw";
 import tactileThemeSwitchCode from "./primitives/tactile-theme-switch.tsx?raw";
 import morphingFeedbackCode from "./primitives/morphing-feedback.tsx?raw";
 import interactiveFileTreeCode from "./primitives/interactive-file-tree.tsx?raw";
@@ -31,6 +32,7 @@ import skillPileCode from "./primitives/skill-pile.tsx?raw";
 import notificationInboxCode from "./primitives/notification-inbox.tsx?raw";
 
 // Live Component Implementations
+import { AiInlineStatus } from "./primitives/ai-inline-status";
 import { TactileThemeSwitch } from "./primitives/tactile-theme-switch";
 import { MorphingFeedback } from "./primitives/morphing-feedback";
 import { InteractiveFileTree } from "./primitives/interactive-file-tree";
@@ -63,6 +65,46 @@ export const REGISTRY_ITEMS: PeelRegistryItem[] = [
   // =========================================================================
   // CATEGORY 1: NEW RELEASE
   // =========================================================================
+  {
+    slug: "ai-inline-status",
+    title: "AI Inline Status",
+    category: "feedback-status",
+    isNew: true,
+    catalogCardTheme: "dark",
+    leadPitch:
+      "An unboxed, naked inline AI status and streaming response primitive with kinetic multi-phase signal icons, travelling light glint shader, and slot-rolled status transitions.",
+    interactionNotes:
+      "Choreographs 4 distinct phases (thinking, searching, writing, done) using popLayout spring swaps, continuous text-clip metallic glint, live elapsed micro-timer, and unboxed token-streamed response typography with click-to-replay detent.",
+    dependencies: ["motion", "@phosphor-icons/react"],
+    filePath: "src/registry/primitives/ai-inline-status.tsx",
+    code: aiInlineStatusCode,
+    supportsReplay: true,
+    props: [
+      {
+        name: "theme",
+        type: '"light" | "dark"',
+        defaultValue: '"dark"',
+        description: "Surface mode (obsidian dark or warm paper light).",
+      },
+      {
+        name: "replayKey",
+        type: "number",
+        defaultValue: "0",
+        description: "Reset trigger to replay status sequence from start.",
+      },
+      {
+        name: "onPhaseChange",
+        type: '(phase: "thinking" | "searching" | "writing" | "done") => void',
+        description: "Callback invoked on each status phase transition.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Optional container class name.",
+      },
+    ],
+    component: AiInlineStatus,
+  },
   {
     slug: "tactile-theme-switch",
     title: "Tactile Theme Switch",
