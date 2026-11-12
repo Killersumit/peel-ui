@@ -25,7 +25,7 @@ export default function LegalPage() {
 
   const pageDesc =
     activeTab === "privacy"
-      ? "Peel UI uses OpenPanel for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."
+      ? "Peel UI uses Umami (self-hosted) for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."
       : activeTab === "terms"
         ? "All Peel UI components are 100% free to use in personal and commercial projects under the MIT License."
         : "Sponsorship policy, net-of-tax refund rules, and active month rate-lock terms.";
@@ -109,7 +109,7 @@ export default function LegalPage() {
           {/* 1-Sentence Plain-English Summary */}
           <p className="mt-5 max-w-[48ch] text-[15px] sm:text-[16px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] font-normal text-pretty">
             {activeTab === "privacy" &&
-              "Peel UI uses OpenPanel for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."}
+              "Peel UI uses Umami (self-hosted) for privacy-first, cookie-less anonymous analytics. We never store personal data or send component demo inputs to a server."}
             {activeTab === "terms" &&
               "All Peel UI components are 100% free to use in personal and commercial projects under the MIT License—just don't clone our website and pretend to be us."}
             {activeTab === "refund" &&
@@ -126,16 +126,16 @@ export default function LegalPage() {
             <>
               {/* Effective Date */}
               <div className="pt-6 pb-2 text-[12.5px] font-mono text-[#686C75]">
-                Last updated: November 6, 2026
+                Last updated: November 12, 2026
               </div>
 
-              {/* Section 1: Analytics (OpenPanel) */}
+              {/* Section 1: Analytics (Umami - Self-Hosted) */}
               <section className="py-8 space-y-3">
                 <h2 className="text-[15px] font-medium tracking-[-0.015em] leading-[1.3] text-[#F5F5F7]">
-                  Analytics (OpenPanel)
+                  Analytics (Umami — Self-Hosted)
                 </h2>
                 <p className="text-[15px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
-                  We use OpenPanel, a privacy-first, open-source analytics tool, to understand how visitors interact with Peel UI. Session replay is disabled.
+                  We use Umami (self-hosted), a privacy-first, open-source analytics tool, to understand how visitors interact with Peel UI. Session replay is disabled.
                 </p>
                 <div className="space-y-2.5 pt-1 text-[14px] leading-[1.6] tracking-[-0.012em] text-[#8E9299] max-w-[50ch] text-pretty">
                   <p>

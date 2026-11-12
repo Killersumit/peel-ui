@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@openpanel/web": "^1.4.4",
     "@phosphor-icons/react": "^2.1.10",
     "@types/matter-js": "^0.20.2",
     "clsx": "^2.1.1",
